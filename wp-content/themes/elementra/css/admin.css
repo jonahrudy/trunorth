@@ -2720,7 +2720,7 @@ input[type="hidden"][name^="elementra_options_field_"] + .elementra_options_item
   -webkit-transition: border-color 0.3s ease 0s;
   -ms-transition: border-color 0.3s ease 0s;
   transition: border-color 0.3s ease 0s;
-  background-image: url(/wp-content/themes/elementra/images/transparent.png);
+  background-image: url(https://trunorth.pages.dev/wp-content/themes/elementra/images/transparent.png);
   background-position: left top;
   background-repeat: repeat;
   background-size: 12px 12px;
@@ -2881,7 +2881,7 @@ input[type="button"].elementra_media_selector {
   right: 0;
   bottom: 0;
   background: #e7e9ec;
-  background-image: url(/wp-content/themes/elementra/images/stripe-black.png);
+  background-image: url(https://trunorth.pages.dev/wp-content/themes/elementra/images/stripe-black.png);
   bottom: -1px;
   cursor: pointer;
 }
@@ -3159,7 +3159,7 @@ input[type="button"].elementra_media_selector {
 -----------------------------------------------------------------*/
 /* Internal */
 .iColorPickerTable .iColorPicker_moreColors {
-  background-image: url(/wp-content/themes/elementra/images/colorpicker-morecolors.png);
+  background-image: url(https://trunorth.pages.dev/wp-content/themes/elementra/images/colorpicker-morecolors.png);
   background-repeat: no-repeat;
   display: inline-block;
   margin-left: 0.5em;
