@@ -1,8 +1,8 @@
 @font-face {
   font-family: 'trx_addons_icons';
-  src: url('/wp-content/plugins/trx_addons/css/font-icons/font/trx_addons_icons.eot?90673962');
-  src: url('/wp-content/plugins/trx_addons/css/font-icons/font/trx_addons_icons.eot?90673962#iefix') format('embedded-opentype'),
-       url('/wp-content/plugins/trx_addons/css/font-icons/font/trx_addons_icons.svg?90673962#trx_addons_icons') format('svg');
+  src: url('https://trunorth.pages.dev/wp-content/plugins/trx_addons/css/font-icons/font/trx_addons_icons.eot?90673962');
+  src: url('https://trunorth.pages.dev/wp-content/plugins/trx_addons/css/font-icons/font/trx_addons_icons.eot?90673962#iefix') format('embedded-opentype'),
+       url('https://trunorth.pages.dev/wp-content/plugins/trx_addons/css/font-icons/font/trx_addons_icons.svg?90673962#trx_addons_icons') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -17,7 +17,7 @@
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   @font-face {
     font-family: 'trx_addons_icons';
-    src: url('/wp-content/plugins/trx_addons/css/font-icons/font/trx_addons_icons.svg?90673962#trx_addons_icons') format('svg');
+    src: url('https://trunorth.pages.dev/wp-content/plugins/trx_addons/css/font-icons/font/trx_addons_icons.svg?90673962#trx_addons_icons') format('svg');
   }
 }
 */
