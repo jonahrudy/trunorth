@@ -93,7 +93,7 @@
   display: block;
   width: var(--trx-addons-media-selector-width);
   height: var(--trx-addons-media-selector-width);
-  background-image: url(/wp-content/plugins/trx_addons/css/images/no-image.jpg);
+  background-image: url(https://trunorth.pages.dev/wp-content/plugins/trx_addons/css/images/no-image.jpg);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
