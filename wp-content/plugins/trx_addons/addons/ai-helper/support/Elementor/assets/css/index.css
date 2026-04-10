@@ -117,7 +117,7 @@
 }
 
 .elementor-context-menu-list .elementor-context-menu-list__item-ai-generate-texts .elementor-context-menu-list__item__icon > i {
-  background-image: url(/wp-content/plugins/trx_addons/addons/ai-helper/images/chatbot.png);
+  background-image: url(https://trunorth.pages.dev/wp-content/plugins/trx_addons/addons/ai-helper/images/chatbot.png);
   background-position: center;
   background-repeat: no-repeat;
   background-size: 120%;
