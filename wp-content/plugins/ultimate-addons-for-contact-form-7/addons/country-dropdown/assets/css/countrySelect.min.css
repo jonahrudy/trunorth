@@ -151,7 +151,7 @@
     height: 15px;
     -webkit-box-shadow: 0 0 1px 0 #888;
     box-shadow: 0 0 1px 0 #888;
-    background-image: url(/wp-content/plugins/ultimate-addons-for-contact-form-7/addons/country-dropdown/assets/img/flags.png);
+    background-image: url(https://trunorth.pages.dev/wp-content/plugins/ultimate-addons-for-contact-form-7/addons/country-dropdown/assets/img/flags.png);
     background-repeat: no-repeat;
     background-color: #dbdbdb;
     background-position: 20px 0;
@@ -184,7 +184,7 @@ only screen and (min-device-pixel-ratio:2),
 only screen and (min-resolution:192dpi),
 only screen and (min-resolution:2dppx) {
     .country-select .flag {
-        background-image: url(/wp-content/plugins/ultimate-addons-for-contact-form-7/addons/country-dropdown/assets/img/flags@2x.png);
+        background-image: url(https://trunorth.pages.dev/wp-content/plugins/ultimate-addons-for-contact-form-7/addons/country-dropdown/assets/img/flags@2x.png);
         background-size: 5630px 15px
     }
 }
