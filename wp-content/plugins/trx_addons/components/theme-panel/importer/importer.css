@@ -255,7 +255,7 @@
   min-width: 5em;
 }
 #trx_importer_progress .import_progress_status.step_in_progress {
-  background-image: url(/wp-content/plugins/trx_addons/components/theme-panel/importer/images/ajax-loader.gif);
+  background-image: url(https://trunorth.pages.dev/wp-content/plugins/trx_addons/components/theme-panel/importer/images/ajax-loader.gif);
   padding-left: 40px;
 }
 #trx_importer_progress .import_progress_status:before {

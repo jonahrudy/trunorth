@@ -250,7 +250,7 @@ body.elementor-editor-active #page_preloader {
   right: 0;
   bottom: 0;
   background-color: var(--trx-addons-loading-overlay);
-  background-image: url(/wp-content/plugins/trx_addons/css/images/preloader.png) !important;
+  background-image: url(https://trunorth.pages.dev/wp-content/plugins/trx_addons/css/images/preloader.png) !important;
   background-position: center !important;
   background-repeat: no-repeat !important;
   background-size: var(--trx-addons-loading-size);
@@ -797,7 +797,7 @@ body.ua_mobile.ua_ios.sc_stack_section_present .sc_stack_section_on + :not(.sc_s
 }
 
 .iColorPickerTable .iColorPicker_moreColors {
-  background-image: url(/wp-content/plugins/trx_addons/css/images/colorpicker_morecolors.png);
+  background-image: url(https://trunorth.pages.dev/wp-content/plugins/trx_addons/css/images/colorpicker_morecolors.png);
   background-repeat: no-repeat;
   display: inline-block;
   vertical-align: middle;
