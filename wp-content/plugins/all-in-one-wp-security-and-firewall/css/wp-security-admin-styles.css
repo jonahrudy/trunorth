@@ -115,7 +115,7 @@
 }
 
 .aio_success_with_icon {
-	background-image: url("/wp-content/plugins/all-in-one-wp-security-and-firewall/images/success.png");
+	background-image: url("https://trunorth.pages.dev/wp-content/plugins/all-in-one-wp-security-and-firewall/images/success.png");
 	background-repeat: no-repeat;
 	color: #529901;
 	padding-left: 20px;
@@ -124,14 +124,14 @@
 
 .aio_error_with_icon {
 	color: #F00;
-	background-image: url("/wp-content/plugins/all-in-one-wp-security-and-firewall/images/error.png");
+	background-image: url("https://trunorth.pages.dev/wp-content/plugins/all-in-one-wp-security-and-firewall/images/error.png");
 	background-repeat: no-repeat;
 	padding-left: 20px;
 	font-size: 14px;
 }
 
 .aio_info_with_icon {
-	background-image: url("/wp-content/plugins/all-in-one-wp-security-and-firewall/images/info-icon.png");
+	background-image: url("https://trunorth.pages.dev/wp-content/plugins/all-in-one-wp-security-and-firewall/images/info-icon.png");
 	background-repeat: no-repeat;
 	color: #16B;
 	padding-left: 20px;
