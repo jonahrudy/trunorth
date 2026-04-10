@@ -1,0 +1,4 @@
+# Ignore common junk only
+.DS_Store
+node_modules/
+*.log
