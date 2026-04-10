@@ -3021,7 +3021,7 @@ a.elementra_skip_link_anchor {
 
 .elementra_loading,
 .trx_addons_loading {
-  background-image: url(/wp-content/themes/elementra/images/preloader.png) !important;
+  background-image: url(https://trunorth.pages.dev/wp-content/themes/elementra/images/preloader.png) !important;
   background-position: center !important;
   background-repeat: no-repeat !important;
 }
