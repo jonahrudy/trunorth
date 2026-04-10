@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'trx_addons_icons';
-  src: url('/wp-content/plugins/trx_addons/css/font-icons/font/trx_addons_icons.eot?67690418');
-  src: url('/wp-content/plugins/trx_addons/css/font-icons/font/trx_addons_icons.eot?67690418#iefix') format('embedded-opentype'),
-       url('/wp-content/plugins/trx_addons/css/font-icons/font/trx_addons_icons.woff2?67690418') format('woff2'),
-       url('/wp-content/plugins/trx_addons/css/font-icons/font/trx_addons_icons.woff?67690418') format('woff'),
-       url('/wp-content/plugins/trx_addons/css/font-icons/font/trx_addons_icons.ttf?67690418') format('truetype'),
-       url('/wp-content/plugins/trx_addons/css/font-icons/font/trx_addons_icons.svg?67690418#trx_addons_icons') format('svg');
+  src: url('https://trunorth.pages.dev/wp-content/plugins/trx_addons/css/font-icons/font/trx_addons_icons.eot?67690418');
+  src: url('https://trunorth.pages.dev/wp-content/plugins/trx_addons/css/font-icons/font/trx_addons_icons.eot?67690418#iefix') format('embedded-opentype'),
+       url('https://trunorth.pages.dev/wp-content/plugins/trx_addons/css/font-icons/font/trx_addons_icons.woff2?67690418') format('woff2'),
+       url('https://trunorth.pages.dev/wp-content/plugins/trx_addons/css/font-icons/font/trx_addons_icons.woff?67690418') format('woff'),
+       url('https://trunorth.pages.dev/wp-content/plugins/trx_addons/css/font-icons/font/trx_addons_icons.ttf?67690418') format('truetype'),
+       url('https://trunorth.pages.dev/wp-content/plugins/trx_addons/css/font-icons/font/trx_addons_icons.svg?67690418#trx_addons_icons') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -15,7 +15,7 @@
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   @font-face {
     font-family: 'trx_addons_icons';
-    src: url('/wp-content/plugins/trx_addons/css/font-icons/font/trx_addons_icons.svg?67690418#trx_addons_icons') format('svg');
+    src: url('https://trunorth.pages.dev/wp-content/plugins/trx_addons/css/font-icons/font/trx_addons_icons.svg?67690418#trx_addons_icons') format('svg');
   }
 }
 */

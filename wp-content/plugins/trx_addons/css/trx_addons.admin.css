@@ -1907,7 +1907,7 @@ img.trx_addons_image_preview {
   -webkit-transition: border-color 0.3s ease;
   -ms-transition: border-color 0.3s ease;
   transition: border-color 0.3s ease;
-  background-image: url(/wp-content/plugins/trx_addons/css/images/transparent.png);
+  background-image: url(https://trunorth.pages.dev/wp-content/plugins/trx_addons/css/images/transparent.png);
   background-position: left top;
   background-repeat: repeat;
   background-size: 12px 12px;
