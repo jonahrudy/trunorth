@@ -1048,7 +1048,7 @@ body.single-cpt_layouts.body_style_boxed .trx-addons-layout--single-preview {
 }
 
 body.single-cpt_layouts[class*="cpt_layouts-template"] {
-  background-image: url(/wp-content/plugins/trx_addons/components/cpt/layouts/images/transparent.png);
+  background-image: url(https://trunorth.pages.dev/wp-content/plugins/trx_addons/components/cpt/layouts/images/transparent.png);
   background-repeat: repeat;
 }
 
