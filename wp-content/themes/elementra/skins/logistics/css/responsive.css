@@ -551,7 +551,7 @@
   }
 
   /* Sticky sidebar */
-  body.fixed_blocks_sticky .sidebar {
+  body.fixed_blocks_sticky .sidebar:not(.elementor-element) {
     position: static;
     top: auto !important;
   }
@@ -1908,4 +1908,4 @@
   }
 }
 
-/*# sourceMappingURL=responsive.css.map */
+

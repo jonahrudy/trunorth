@@ -158,15 +158,7 @@ jQuery( window ).on( 'load', function() {
 		// Widgets Editor
 		//----------------------------------------------------------
 		if ( editor_type == 'widgets' && editor.$writing_flow ) {
-		
 			if ( elementra_apply_filters( 'elementra_filter_add_scheme_to_widgets_editor', true ) ) {
-
-				// Add the class 'scheme_xxx' to the just opened panel
-				// after the panel header is clicked
-				// editor.$writing_flow.on( 'click', '.components-panel__body-toggle', function() {
-				// 	set_color_scheme( jQuery( this ).closest( '.components-panel__body' ).find( '.editor-styles-wrapper' ) );
-				// } );
-			
 				// Create an observer to add the class 'scheme_xxx' to the each new sidebar
 				elementra_remove_observer( 'elementra-check-editor-styles-wrapper' );
 				elementra_create_observer( 'elementra-check-editor-styles-wrapper', editor.$writing_flow, function( mutationsList ) {
