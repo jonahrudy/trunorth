@@ -43,9 +43,9 @@
 
 .widget_categories_list .categories_list_style_1 .categories_list_title {
   margin: 0.5em 0 0;
-  -webkit-transition: color 0.3s ease;
-  -ms-transition: color 0.3s ease;
-  transition: color 0.3s ease;
+  -webkit-transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+  -ms-transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+  transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .widget_categories_list .categories_list_style_1 .categories_list_item:hover .categories_list_title {
@@ -189,9 +189,9 @@
   font-weight: 300;
   margin: 0.3em 0;
   text-transform: none;
-  -webkit-transition: color 0.3s ease;
-  -ms-transition: color 0.3s ease;
-  transition: color 0.3s ease;
+  -webkit-transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+  -ms-transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+  transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .widget_categories_list .categories_list_style_3 .categories_list_item:hover .categories_list_title,
@@ -218,4 +218,4 @@
   width: auto;
 }
 
-/*# sourceMappingURL=categories_list.css.map */
+

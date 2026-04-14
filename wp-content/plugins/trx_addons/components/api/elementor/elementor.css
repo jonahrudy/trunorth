@@ -217,6 +217,13 @@
   animation-fill-mode: unset;
 }
 
+.sc_parallax.e-con:where(:not(.e-div-block-base)), .sc_parallax.elementor-element:where(:not(.e-con)):where(:not(.e-div-block-base)) .elementor-widget-container, .sc_parallax.elementor-element:where(:not(.e-con)):where(:not(.e-div-block-base)),
+.sc_parallax_mouse.e-con:where(:not(.e-div-block-base)),
+.sc_parallax_mouse.elementor-element:where(:not(.e-con)):where(:not(.e-div-block-base)) .elementor-widget-container,
+.sc_parallax_mouse.elementor-element:where(:not(.e-con)):where(:not(.e-div-block-base)) {
+  transition: background 0.3s, border 0.3s, border-radius 0.3s, box-shadow 0.3s;
+}
+
 .sc_parallax_sticky, .sc_parallax_sticky.e-con, .sc_parallax_sticky.elementor-section, .sc_parallax_sticky.elementor-column, .sc_parallax_sticky.elementor-element {
   position: sticky;
 }
@@ -1713,4 +1720,4 @@ body.elementor-editor-active footer.footer_wrap:hover {
   }
 }
 
-/*# sourceMappingURL=elementor.css.map */
+

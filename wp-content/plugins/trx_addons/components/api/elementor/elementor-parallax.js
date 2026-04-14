@@ -440,6 +440,12 @@
 
 				parallax_type += '|layers';
 
+				// Fix for Elementor 3.31.5+ - it adds transitions for 'transform' to containers/widgets and slows down parallax and mouse animations
+				// (commented, because clearing transition for transform is added in the elementor.scss)
+				// if ( ! $target.hasClass( 'trx_addons_no_transition' ) ) {
+				// 	$target.addClass( 'trx_addons_no_transition' );
+				// }
+
 				var layout_data = {
 						selector: $target,
 						image: false,
@@ -569,11 +575,13 @@
 				var hsection_offset = block.hsection.length ? block.hsection.data( 'hscroll-section-offset' ) || 0 : 0;
 				hscroller_offset += hsection_offset;
 				// Get block sizes
-				block.sizes = {
-					width: block.selector.outerWidth(),
-					height: block.selector.outerHeight(),
-					top: block.selector.offset().top + hscroller_offset
-				};
+				if ( ! block.hasOwnProperty( 'sizes' ) || block.flow == 'entrance' ) {
+					block.sizes = {
+						width: block.selector.outerWidth(),
+						height: block.selector.outerHeight(),
+						top: block.selector.offset().top + hscroller_offset
+					};
+				}
 				if ( block.flow == 'sticky' ) {	//block.selector.hasClass( 'sc_parallax_sticky' ) ) {
 					var $parent = block.selector.parent();
 					block.sizes.parent_selector = $parent;
@@ -878,7 +886,6 @@
 						bottom_delta = params.flow == 'entrance' && params.range_start == 0
 											? wh * ( 1 - params.range_start / 100 ) / 10
 											: 0;
-
 					// Set a start settings for the object
 					// via imitation his place at the top or bottom of the range
 					var obj_visible = true;
