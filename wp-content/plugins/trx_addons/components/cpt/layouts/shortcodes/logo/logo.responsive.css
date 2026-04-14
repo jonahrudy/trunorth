@@ -18,10 +18,10 @@
 }
 @media (max-width: 479px) {
   /* Layouts: Logo */
-  .sc_layouts_logo .logo_text {
+  :where(body:not(.trx_addons_customizable_theme)) .sc_layouts_logo .logo_text {
     letter-spacing: 0;
     font-size: 1.5em;
   }
 }
 
-/*# sourceMappingURL=logo.responsive.css.map */
+

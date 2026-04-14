@@ -339,6 +339,9 @@ body:not(.single):not(.page):not(.elementor-editor-active) .hide_on_other, body:
 .sc_layouts_login_menu .trx_addons_login_link.trx_addons_login_link_with_custom_icon:after {
   display: none !important;
 }
+.sc_layouts_login_menu .trx_addons_login_link + ul > li.menu-item .menu-item-icon {
+  position: relative;
+}
 
 /* Button */
 .sc_layouts_row .sc_button {
@@ -579,6 +582,15 @@ body:not(.single):not(.page):not(.elementor-editor-active) .hide_on_other, body:
 .sc_layouts_row_fixed_on_pre.sc_layouts_row_on_top,
 .sc_layouts_row_fixed_on.sc_layouts_row_on_top {
   z-index: 999999;
+}
+.sc_layouts_row_fixed_on_pre[data-vc-full-width=true],
+.sc_layouts_row_fixed_on[data-vc-full-width=true] {
+  left: 0 !important;
+}
+
+.vc_row.sc_layouts_row_fixed:not(.sc_layouts_row_fixed_on) + .vc_row-full-width.sc_layouts_row_fixed_placeholder {
+  display: block;
+  height: 0 !important;
 }
 
 .sc_layouts_row_fixed.sc_layouts_row_delay_fixed {
@@ -1092,4 +1104,4 @@ body[class*="cpt_layouts-template"] .trx-addons-layout--single-preview .trx-addo
   }
 }
 
-/*# sourceMappingURL=layouts.css.map */
+
