@@ -235,7 +235,7 @@ jQuery( document ).on( 'action.ready_elementra', function() {
 				var products = more.parent().prev( '.products' );
 
 				jQuery.get(	link ).done(
-					function(response) {
+					function( response ) {
 						// Get inline styles and add to the page styles
 						elementra_import_inline_styles( response );
 						// Get tags 'link' from response and add its to the 'head'
