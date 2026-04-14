@@ -1,6 +1,7 @@
 /* Hotspot */
 .sc_hotspot_content {
   position: relative;
+  max-width: fit-content;
 }
 
 .sc_hotspot_image_link {
@@ -28,9 +29,9 @@
   -webkit-box-sizing: border-box;
   -ms-box-sizing: border-box;
   box-sizing: border-box;
-  -webkit-border-radius: var(--sc-hotspot-content-item-size);
-  -ms-border-radius: var(--sc-hotspot-content-item-size);
-  border-radius: var(--sc-hotspot-content-item-size);
+  -webkit-border-radius: 50%;
+  -ms-border-radius: 50%;
+  border-radius: 50%;
   -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.15);
   -ms-box-shadow: 0 0 3px rgba(0, 0, 0, 0.15);
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.15);
@@ -56,9 +57,9 @@
   right: -8px;
   bottom: -8px;
   left: -8px;
-  -webkit-border-radius: var(--sc-hotspot-content-item-size);
-  -ms-border-radius: var(--sc-hotspot-content-item-size);
-  border-radius: var(--sc-hotspot-content-item-size);
+  -webkit-border-radius: 50%;
+  -ms-border-radius: 50%;
+  border-radius: 50%;
   -webkit-backface-visibility: hidden;
   -ms-backface-visibility: hidden;
   backface-visibility: hidden;
@@ -452,4 +453,4 @@
   }
 }
 
-/*# sourceMappingURL=hotspot.css.map */
+
