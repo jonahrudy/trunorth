@@ -183,6 +183,12 @@ body.rtl .trx_addons_msgbox .trx_addons_msgbox_header {
   background-color: #0788be;
 }
 
+.trx_addons_msgbox_dialog .trx_addons_msgbox_button.trx_addons_msgbox_button_disabled {
+  opacity: 0.5;
+  cursor: default;
+  pointer-events: none;
+}
+
 .trx_addons_msgbox_dialog input[type="text"],
 .trx_addons_msgbox_dialog input[type="email"],
 .trx_addons_msgbox_dialog textarea {
@@ -244,4 +250,4 @@ body.rtl .trx_addons_msgbox .trx_addons_msgbox_header {
   background-color: #4cb2e1;
 }
 
-/*# sourceMappingURL=msgbox.css.map */
+

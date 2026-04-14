@@ -1822,13 +1822,19 @@
 			// Menu
 			//----------------------------------------------
 			// Prepare menus (if menu cache is used)
-			jQuery('.sc_layouts_menu_nav:not(.inited_cache),.trx-addons-nav-menu:not(.inited_cache)').each(function() {
+			jQuery('.sc_layouts_menu_nav:not(.inited_cache),.trx-addons-nav-menu:not(.inited_cache),.trx-addons-mobile-menu:not(.inited_cache)').each(function() {
 				var $self = jQuery(this).addClass('inited_cache');
 				if ($self.find('.current-menu-item').length == 0 || $body.hasClass('blog_template')) {
 					if (TRX_ADDONS_STORAGE['menu_cache'] === undefined) TRX_ADDONS_STORAGE['menu_cache'] = [];
 					var id = $self.attr('id');
 					if (id === undefined) {
-						id = ( $self.hasClass ( 'sc_layouts_menu_nav' ) ? 'sc_layouts_menu_nav_' : 'trx-addons-nav-menu-item-' ) + trx_addons_get_unique_id();
+						id = ( $self.hasClass ( 'sc_layouts_menu_nav' )
+								? 'sc_layouts_menu_nav_'
+								: ( $self.hasClass ( 'trx-addons-nav-menu' )
+									? 'trx-addons-nav-menu-'
+									: 'trx-addons-mobile-menu-'
+									)
+								) + trx_addons_get_unique_id();
 						$self.attr('id', id);
 					}
 					TRX_ADDONS_STORAGE['menu_cache'].push('#'+id);
@@ -2101,108 +2107,6 @@
 		} // trx_addons_ready_actions
 
 
-		// Init intersection observer
-		//----------------------------------
-		function trx_addons_intersection_observer_init() {
-
-			if ( typeof TRX_ADDONS_STORAGE == 'undefined' ) return;
-
-			if ( typeof IntersectionObserver != 'undefined' ) {
-				// Create observer
-				if ( typeof TRX_ADDONS_STORAGE['intersection_observer'] == 'undefined' ) {
-					TRX_ADDONS_STORAGE['intersection_observer'] = new IntersectionObserver( function(entries) {
-						entries.forEach( function( entry ) {
-							trx_addons_intersection_observer_in_out( jQuery(entry.target), entry.isIntersecting || entry.intersectionRatio > 0 ? 'in' : 'out', entry );
-						});
-					}, {
-						root: null,			// avoiding 'root' or setting it to 'null' sets it to default value: viewport
-						rootMargin: '0px',	// increase (if positive) or decrease (if negative) root area
-						threshold: 0		// 0.0 - 1.0: 0.0 - fired when top of the object enter in the viewport
-											//            0.5 - fired when half of the object enter in the viewport
-											//            1.0 - fired when the whole object enter in the viewport
-					} );
-				}
-			} else {
-				// Emulate IntersectionObserver behaviour
-				$window.on( 'scroll', function() {
-					if ( typeof TRX_ADDONS_STORAGE['intersection_observer_items'] != 'undefined' ) {
-						for ( var i in TRX_ADDONS_STORAGE['intersection_observer_items'] ) {
-							if ( ! TRX_ADDONS_STORAGE['intersection_observer_items'][i] || TRX_ADDONS_STORAGE['intersection_observer_items'][i].length === 0 ) {
-								continue;
-							}
-							var item = TRX_ADDONS_STORAGE['intersection_observer_items'][i],
-								item_top = item.offset().top,
-								item_height = item.height();
-							trx_addons_intersection_observer_in_out( item, item_top + item_height > trx_addons_window_scroll_top() && item_top < trx_addons_window_scroll_top() + trx_addons_window_height() ? 'in' : 'out' );
-						}
-					}
-				} );
-			}
-
-			// Change state of the entry
-			window.trx_addons_intersection_observer_in_out = function( item, state, entry ) {
-				var callback = '';
-				if ( state == 'in' ) {
-					if ( ! item.hasClass( 'trx_addons_in_viewport' ) ) {
-						item.addClass( 'trx_addons_in_viewport' );
-						callback = item.data('trx-addons-intersection-callback');
-						if ( callback ) {
-							callback( item, true, entry );
-						}
-					}
-				} else {
-					if ( item.hasClass( 'trx_addons_in_viewport' ) ) {
-						item.removeClass( 'trx_addons_in_viewport' );
-						callback = item.data('trx-addons-intersection-callback');
-						if ( callback ) {
-							callback( item, false, entry );
-						}
-					}
-				}
-			};
-
-			// Add elements to the observer
-			window.trx_addons_intersection_observer_add = function( items, callback ) {
-				items.each( function() {
-					var $self = jQuery( this ),
-						id = $self.attr( 'id' );
-					if ( ! $self.hasClass( 'trx_addons_intersection_inited' ) ) {
-						if ( ! id ) {
-							id = 'io-' + trx_addons_get_unique_id();
-							$self.attr( 'id', id );
-						}
-						$self.addClass( 'trx_addons_intersection_inited' );
-						if ( callback ) {
-							$self.data( 'trx-addons-intersection-callback', callback );
-						}
-						if ( typeof TRX_ADDONS_STORAGE['intersection_observer_items'] == 'undefined' ) {
-							TRX_ADDONS_STORAGE['intersection_observer_items'] = {};
-						}
-						TRX_ADDONS_STORAGE['intersection_observer_items'][id] = $self;
-						if ( typeof TRX_ADDONS_STORAGE['intersection_observer'] !== 'undefined' ) {
-							TRX_ADDONS_STORAGE['intersection_observer'].observe( $self.get(0) );
-						}
-					}
-				} );
-			};
-
-			// Remove elements from the observer
-			window.trx_addons_intersection_observer_remove = function( items ) {
-				items.each( function() {
-					var $self = jQuery( this ),
-						id = $self.attr( 'id' );
-					if ( $self.hasClass( 'trx_addons_intersection_inited' ) ) {
-						$self.removeClass( 'trx_addons_intersection_inited' );
-						delete TRX_ADDONS_STORAGE['intersection_observer_items'][id];
-						if ( typeof TRX_ADDONS_STORAGE['intersection_observer'] !== 'undefined' ) {
-							TRX_ADDONS_STORAGE['intersection_observer'].unobserve( $self.get(0) );
-						}
-					}
-				} );
-			};
-		}	// trx_addons_intersection_observer_init
-
-		
 		// Scroll actions
 		//==============================================
 
@@ -2500,7 +2404,8 @@
 			if ( $stack_sections.length === 0 ) return;
 
 			var force = e.namespace == 'resize_trx_addons',
-				wso = trx_addons_window_scroll_top() + trx_addons_fixed_rows_height();
+				fixed_rows_height = ! $body.hasClass( 'header_position_over' ) ? trx_addons_fixed_rows_height() : 0,
+				wso = trx_addons_window_scroll_top() + fixed_rows_height;
 
 			$stack_sections.each( function( idx ) {
 
@@ -2542,7 +2447,7 @@
 								row_height = row.outerHeight();
 								if ( ! use_sticky ) {
 									row_holder.height(row_height);
-									row.css( { top: trx_addons_fixed_rows_height() + 'px !important' } );
+									row.css( { top: fixed_rows_height + 'px !important' } );
 								}
 							}
 							if ( row.hasClass( 'sc_stack_section_effect_fade' ) ) {
@@ -2562,7 +2467,7 @@
 								row_height = row.outerHeight();
 								row
 									.data( 'old-top', row.css('top') )
-									.css( { top: trx_addons_fixed_rows_height() + 'px'} );
+									.css( { top: fixed_rows_height + 'px'} );
 							}
 							var gap = row.parent().css( 'gap' );
 							if ( gap && gap != '0px' && gap != '0' ) {
@@ -2788,14 +2693,14 @@
 				$video_tags.each(function() {
 					var $self = jQuery(this),
 						classes = $self.attr( 'class' );
-					// If item now invisible
+					// If item now invisible or has a other resize handler or it's a video in the Revolution Slider
 					if ( ( ! TRX_ADDONS_STORAGE['resize_tag_video'] && $self.parents('.mejs-mediaelement').length === 0 )
-						|| $self.hasClass('trx_addons_noresize')
-						|| classes.indexOf('_resize') > 0
-						|| classes.indexOf('_noresize') > 0
+						|| $self.hasClass( 'trx_addons_noresize' )
+						|| classes.indexOf( '_resize' ) > 0
+						|| classes.indexOf( '_noresize' ) > 0
+						|| $self.hasClass( 'sr7-media' )
 						|| $self.parent().is( 'rs-bgvideo' )
-						|| $self.parents( 'rs-slide' ).length > 0
-						|| $self.parents('div:hidden,section:hidden,article:hidden').length > 0
+						|| $self.parents( 'rs-slide,div:hidden,section:hidden,article:hidden' ).length > 0
 					) {
 						return;
 					}

@@ -67,6 +67,7 @@
 			'color',					// 7
 			'opacity',					// 8
 			'Close',					// 9
+			'Clear',					// 10
 		],
 	};
 
@@ -84,7 +85,7 @@
 		} );
 	};
 
-	/*** hide picker cicking outside ***/
+	/*** hide picker by clicking outside ***/
 	document.addEventListener('click', function(e) {
 		var picker = document.querySelector("#lc-color-picker.lccp-shown");
 		if ( ! picker || e.target.classList.contains('lccp-preview') ) {
@@ -104,10 +105,12 @@
 		}
 
 		// close if clicked element is not in the picker or its a button 'Close'
-		if ( ( ! picker.contains( e.target ) && ! e.target.classList.contains( 'lccp-shown' ) ) || e.target.id == 'lccp_close' ) {
+		if ( ( ! picker.contains( e.target ) && ! e.target.classList.contains( 'lccp-shown' ) ) || e.target.id == 'lccp_close' || e.target.id == 'lccp_clear' ) {
 			var picker_id = picker.getAttribute('data-trigger-id'),
 			$input = document.getElementById( picker_id ).parentNode.querySelector( right_input_selector );
-			
+			if ( e.target.id == 'lccp_clear' ) {
+				$input.value = '';
+			}
 			$input.dispatchEvent( lccp_ivc_event( picker_id, true ) );
 		}
 		return true;
@@ -709,6 +712,9 @@
 			} else {
 				picker = '<div id="lc-color-picker" class="'+ theme_class +'" data-mode="'+ active_mode +'" data-trigger-id="'+ cp_uniqid +'">';
 			}
+
+			// Button 'Clear'
+			picker += '<i id="lccp_clear" class="eicon-undo" title="' + options.labels[10] + '"></i>';
 
 			// Button 'Close'
 			picker += '<i id="lccp_close" class="eicon-editor-close" title="' + options.labels[9] + '"></i>';
@@ -1324,6 +1330,7 @@
 
 }
 
+#lccp_clear,
 #lccp_close {
 	position: absolute;
 	top: 3px;
@@ -1335,6 +1342,11 @@
 	border: 1px solid #ccc;
 	text-align: center;
 	cursor: pointer;
+}
+
+#lccp_clear {
+	right: 22px;
+	font-size: 10px;
 }
 
 #lccp_modes_wrap {

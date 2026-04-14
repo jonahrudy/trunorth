@@ -1371,6 +1371,17 @@
 		return Math.floor( Math.random() * ( b - a ) ) + a;
 	};
 
+	// Format a file size in human readable form
+	window.trx_addons_size2kilo = function( size ) {
+		var units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB'],
+			i = 0;
+		while ( size >= 1024 && i < units.length - 1 ) {
+			size /= 1024;
+			i++;
+		}
+		return trx_addons_round_number( size, 2 ) + ' ' + units[i];
+	};
+
 	
 	/* Strings
 	---------------------------------------------------------------- */
@@ -1814,6 +1825,11 @@
 						token += str[pos++];
 					}
 				}
+			} else if ( str[pos] == '&' ) {
+				while ( pos < str.length && str[pos] != ' ' ) {
+					token += str[pos];
+					if ( str[pos++] == ';' ) break;
+				}
 			} else {
 				token = str[pos++];
 			}
@@ -1922,6 +1938,22 @@
 	// Return an unique ID
 	window.trx_addons_get_unique_id = function() {
 		return Math.random().toString(16).slice(2, 9);
+	};
+
+	// Return a string with a link attributes from the shortcode (widget) parameters
+	window.trx_addons_get_link_attributes = function( link_atts ) {
+		var rez = ( link_atts.is_external ? ' target="_blank"' : '' )
+				+ ( link_atts.nofollow ? ' rel="nofollow"' : '' );
+		if ( link_atts.custom_attributes && link_atts.custom_attributes.indexOf( '|' ) > 0 ) {
+			var pairs = link_atts.custom_attributes.split( ',' );
+			for ( var i in pairs ) {
+				var pair = pairs[i].split('|');
+				if ( pair.length == 2 ) {
+					rez += ' ' + pair[0] + '="' + trx_addons_esc_attr( pair[1] ) + '"';
+				}
+			}
+		}
+		return rez;
 	};
 
 
@@ -2234,8 +2266,119 @@
 		jQuery('#'+id+'_colorPreview input,#'+id+'_colorOriginal input').val(def);
 		jQuery('#'+id+'_colorPreview,#'+id+'_colorOriginal').css('background',def);
 	};
-	
-	
+
+
+	/* Audio & Video functions
+	---------------------------------------------------------------- */
+
+	// Get audio from the microphone and/or video from the camera
+	window.trx_addons_media_recorder = function( options ) {
+
+		var defaults = {
+			type: 'audio',	// audio | video | both
+			startButtonId: 'startRecordButton',
+			stopButtonId: 'stopRecordButton',
+			activeClass: 'media-recorder-active',
+			disabledClass: 'media-recorder-disabled',
+			onReady: null,
+			onError: null,
+			onStart: null,
+			onProcess: null,
+			onStop: null
+		};
+		options = jQuery.extend( defaults, options );
+
+		var mediaRecorder,
+			chunks = [],
+			stream;
+
+		var startButton = document.getElementById( options.startButtonId );
+		var stopButton = options.stopButtonId && options.startButtonId !== options.stopButtonId ? document.getElementById( options.stopButtonId ) : null;
+
+		startButton.addEventListener( 'click', async ( e ) => {
+			e.preventDefault();
+			try {
+				if ( ! navigator.mediaDevices || ! navigator.mediaDevices.getUserMedia ) {
+					throw new Error( 'MediaDevices API or getUserMedia method is not supported in this browser.' );
+				}
+
+				// Already recording - stop it
+				if ( ! stopButton && startButton.classList.contains( options.activeClass ) ) {
+					mediaRecorder.stop();
+					return;
+				}
+
+				// Request access to the media device
+				stream = await navigator.mediaDevices.getUserMedia( {
+									audio: [ 'audio', 'both' ].indexOf( options.type ) >= 0,
+									video: [ 'video', 'both' ].indexOf( options.type ) >= 0
+				} );
+				mediaRecorder = new MediaRecorder( stream );
+				chunks = [];
+
+				mediaRecorder.ondataavailable = event => {
+					chunks.push( event.data );
+					if ( options.onProcess ) {
+						options.onProcess( event.data );
+					}
+				};
+
+				mediaRecorder.onstart = () => {
+					if ( stopButton ) {
+						startButton.disabled = true;
+						startButton.classList.add( options.disabledClass );
+						stopButton.disabled  = false;
+						stopButton.classList.remove( options.disabledClass );
+					} else {
+						startButton.classList.add( options.activeClass );
+					}
+					if ( options.onStart ) {
+						options.onStart();
+					}
+				};
+
+				mediaRecorder.onstop = () => {
+					const mediaBlob = new Blob( chunks, { type: [ 'video', 'both' ].indexOf( options.type ) >= 0 ? 'video/webm' : 'audio/wav' } );
+					const mediaUrl  = URL.createObjectURL( mediaBlob );
+					// Release the microphone (stop all tracks)
+					stream.getTracks().forEach( track => track.stop() );
+					// Clear chunks for the next recording
+					chunks = [];
+					if ( stopButton ) {
+						startButton.disabled = false;
+						startButton.classList.remove( options.disabledClass );
+						stopButton.disabled  = true;
+						stopButton.classList.add( options.disabledClass );
+					} else {
+						startButton.classList.remove( options.activeClass );
+					}
+					if ( options.onStop ) {
+						options.onStop( mediaBlob, mediaUrl );
+					}
+				};
+
+				mediaRecorder.start();
+			} catch ( error ) {
+				console.error( 'MediaRecorder error: ', error );
+				if ( options.onError ) {
+					options.onError( error );
+				} else {
+					alert( 'Error accessing media devices: ' + error.message );
+				}
+			}
+			return false;
+		} );
+
+		if ( stopButton ) {
+			stopButton.addEventListener('click', async ( e ) => {
+				e.preventDefault();
+				mediaRecorder.stop();
+				return false;
+			} );
+		}
+	};
+
+
 	/* Utils
 	---------------------------------------------------------------- */
 
@@ -2777,6 +2920,7 @@
 
 	} )( jQuery );
 
+
 	// CSS transitions and animations listener
 	//--------------------------------------------------
 
@@ -2984,6 +3128,107 @@
 			return true;
 		}
 		return false;
+	};
+
+	/* Intersection observer
+	---------------------------------------------------------------- */
+	window.trx_addons_intersection_observer_init = function() {
+
+		if ( typeof TRX_ADDONS_STORAGE == 'undefined' ) return;
+
+		if ( typeof IntersectionObserver != 'undefined' ) {
+			// Create observer
+			if ( typeof TRX_ADDONS_STORAGE['intersection_observer'] == 'undefined' ) {
+				TRX_ADDONS_STORAGE['intersection_observer'] = new IntersectionObserver( function(entries) {
+					entries.forEach( function( entry ) {
+						trx_addons_intersection_observer_in_out( jQuery(entry.target), entry.isIntersecting || entry.intersectionRatio > 0 ? 'in' : 'out', entry );
+					});
+				}, {
+					root: null,			// avoiding 'root' or setting it to 'null' sets it to default value: viewport
+					rootMargin: '0px',	// increase (if positive) or decrease (if negative) root area
+					threshold: 0		// 0.0 - 1.0: 0.0 - fired when top of the object enter in the viewport
+										//            0.5 - fired when half of the object enter in the viewport
+										//            1.0 - fired when the whole object enter in the viewport
+				} );
+			}
+		} else {
+			// Emulate IntersectionObserver behaviour
+			$window.on( 'scroll', function() {
+				if ( typeof TRX_ADDONS_STORAGE['intersection_observer_items'] != 'undefined' ) {
+					for ( var i in TRX_ADDONS_STORAGE['intersection_observer_items'] ) {
+						if ( ! TRX_ADDONS_STORAGE['intersection_observer_items'][i] || TRX_ADDONS_STORAGE['intersection_observer_items'][i].length === 0 ) {
+							continue;
+						}
+						var item = TRX_ADDONS_STORAGE['intersection_observer_items'][i],
+							item_top = item.offset().top,
+							item_height = item.height();
+						trx_addons_intersection_observer_in_out( item, item_top + item_height > trx_addons_window_scroll_top() && item_top < trx_addons_window_scroll_top() + trx_addons_window_height() ? 'in' : 'out' );
+					}
+				}
+			} );
+		}
+	};
+
+	// Change state of the entry
+	window.trx_addons_intersection_observer_in_out = function( item, state, entry ) {
+		var callback = '';
+		if ( state == 'in' ) {
+			if ( ! item.hasClass( 'trx_addons_in_viewport' ) ) {
+				item.addClass( 'trx_addons_in_viewport' );
+				callback = item.data('trx-addons-intersection-callback');
+				if ( callback ) {
+					callback( item, true, entry );
+				}
+			}
+		} else {
+			if ( item.hasClass( 'trx_addons_in_viewport' ) ) {
+				item.removeClass( 'trx_addons_in_viewport' );
+				callback = item.data('trx-addons-intersection-callback');
+				if ( callback ) {
+					callback( item, false, entry );
+				}
+			}
+		}
+	};
+
+	// Add elements to the observer
+	window.trx_addons_intersection_observer_add = function( items, callback ) {
+		items.each( function() {
+			var $self = jQuery( this ),
+				id = $self.attr( 'id' );
+			if ( ! $self.hasClass( 'trx_addons_intersection_inited' ) ) {
+				if ( ! id ) {
+					id = 'io-' + trx_addons_get_unique_id();
+					$self.attr( 'id', id );
+				}
+				$self.addClass( 'trx_addons_intersection_inited' );
+				if ( callback ) {
+					$self.data( 'trx-addons-intersection-callback', callback );
+				}
+				if ( typeof TRX_ADDONS_STORAGE['intersection_observer_items'] == 'undefined' ) {
+					TRX_ADDONS_STORAGE['intersection_observer_items'] = {};
+				}
+				TRX_ADDONS_STORAGE['intersection_observer_items'][id] = $self;
+				if ( typeof TRX_ADDONS_STORAGE['intersection_observer'] !== 'undefined' ) {
+					TRX_ADDONS_STORAGE['intersection_observer'].observe( $self.get(0) );
+				}
+			}
+		} );
+	};
+
+	// Remove elements from the observer
+	window.trx_addons_intersection_observer_remove = function( items ) {
+		items.each( function() {
+			var $self = jQuery( this ),
+				id = $self.attr( 'id' );
+			if ( $self.hasClass( 'trx_addons_intersection_inited' ) ) {
+				$self.removeClass( 'trx_addons_intersection_inited' );
+				delete TRX_ADDONS_STORAGE['intersection_observer_items'][id];
+				if ( typeof TRX_ADDONS_STORAGE['intersection_observer'] !== 'undefined' ) {
+					TRX_ADDONS_STORAGE['intersection_observer'].unobserve( $self.get(0) );
+				}
+			}
+		} );
 	};
 
 
