@@ -136,6 +136,8 @@
   display: inline-block;
   vertical-align: top;
   margin-left: 0.3em;
+  font-family: var(--e-global-typography-theme_font_p-font-family, "inherit");
+  font-weight: var(--e-global-typography-theme_font_p-font-weight, 400);
   font-size: 0.5em;
   -webkit-border-radius: 50%;
   -ms-border-radius: 50%;
@@ -717,4 +719,4 @@ body.trx_addons_customizable_theme .trx_addons_sc_layouts_cart_mini_cart_item_co
   flex-grow: 1;
 }
 
-/*# sourceMappingURL=cart.css.map */
+
