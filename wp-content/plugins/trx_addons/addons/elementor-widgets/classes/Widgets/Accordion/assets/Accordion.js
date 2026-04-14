@@ -18,7 +18,7 @@
 		} );
 
 		// Remove multiple click event for nested accordion
-		accordionTitle.unbind( 'click' );
+		accordionTitle.off( 'click' );	// was .unbind( 'click' );
 
 		accordionTitle.on( 'click keypress', function( e ) {
 			e.preventDefault();

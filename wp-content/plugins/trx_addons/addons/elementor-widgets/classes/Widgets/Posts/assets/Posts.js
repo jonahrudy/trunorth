@@ -42,6 +42,15 @@
 
 		carouselWrap.addClass( 'trx-addons-slider-inited' );
 
+
+		// Fix for compatibility with Elementor Pro Nexted Carousel
+		if ( carouselWrap.hasClass( 'swiper' ) && ! carouselWrap.hasClass( 'swiper-initialized' ) ) {
+			carouselWrap.addClass( 'swiper-initialized' );
+		}
+		if ( carousel.hasClass( 'swiper-container' ) && ! carousel.hasClass( 'swiper-container-initialized' ) ) {
+			carousel.addClass( 'swiper-container-initialized' );
+		}
+
 		equalHeight( $scope, mySwiper );
 
 		var busy = false,
