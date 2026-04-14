@@ -620,7 +620,6 @@
 				res += '0';
 			}
 		}
-		//if (isNaN(res)) res = clearNumber(defa, precision, defa);
 		return res;
 	};
 
@@ -1733,7 +1732,6 @@
 			_document_height = $document.height();
 		}
 	};
-	$document.ready( _update_document_height );
 	$document.on( 'action.init_hidden_elements action.got_ajax_response',    // Maybe need for ' action.sc_layouts_row_fixed_on action.sc_layouts_row_fixed_off'
 				_update_document_height
 				);
@@ -1750,7 +1748,6 @@
 			document.querySelector('html').style.setProperty( '--fixed-rows-height', _adminbar_height + 'px' );
 		}
 	};
-	$document.ready( _update_adminbar_height );
 	$window.on( 'resize', _update_adminbar_height );
 	window.elementra_adminbar_height_calc = function() {
 		return elementra_apply_filters( 'elementra_filter_adminbar_height',
@@ -1765,6 +1762,12 @@
 		return typeof window.trx_addons_adminbar_height != 'undefined' ? trx_addons_adminbar_height() : _adminbar_height;
 	};
 
+	// First run - set initial values of document and adminbar height
+	$document.ready( function() {
+		_update_document_height();
+		_update_adminbar_height();
+ 	} );
+	
 	// Detect fixed rows height
 	window.elementra_fixed_rows_height = function() {
 		var with_admin_bar  = arguments.length > 0 ? arguments[0] : true,
@@ -1838,6 +1841,24 @@
 	// Check if the specified path is url
 	window.elementra_is_url = function( url ) {
 		return url.indexOf( '//' ) === 0 || url.indexOf( '://' ) > 0;
+	};
+
+	// Parse the string with AJAX response from the server and return it as an object
+	window.elementra_parse_ajax_response = function( response, error_msg = '' ) {
+		var rez = {};
+		if ( response == '' || response == 0 ) {
+			rez = { error: error_msg || ELEMENTRA_STORAGE['msg_ajax_error'] };
+		} else if ( typeof response == 'string' ) {
+			try {
+				rez = JSON.parse( response );
+			} catch (e) {
+				rez = { error: error_msg || ELEMENTRA_STORAGE['msg_ajax_error'] };
+				console.log( response );
+			}
+		} else {
+			rez = response;
+		}
+		return rez;
 	};
 
 

@@ -9,7 +9,7 @@ jQuery( document ).ready(
 					url      = bt.attr( 'href' );
 					//Request plugin activation
 					jQuery.get( url ).done(
-						function(response) {
+						function( response ) {
 							location.reload();
 						}
 					);
