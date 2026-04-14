@@ -106,9 +106,20 @@
   -ms-flex-pack: center;
   justify-content: center;
 }
+@media (max-width: 1679px) {
+  .dialog-trx_addons_ai_elementor_generate_text-message {
+    -webkit-align-items: flex-start;
+    -ms-flex-align: start;
+    align-items: flex-start;
+    max-height: 82vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+}
 
 .trx_addons_ai_elm_gen_text_msg_inner {
   width: 75%;
+  padding: 2em 0;
 }
 
 /* Add the image instead the icon to the context menu item "Generate Text with AI" */
@@ -123,4 +134,4 @@
   background-size: 120%;
 }
 
-/*# sourceMappingURL=index.css.map */
+

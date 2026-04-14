@@ -86,6 +86,9 @@
   padding-right: 9em;
   text-overflow: ellipsis;
 }
+.trx_addons_ai_helper_stt_button_present .sc_tgenerator_form_field_prompt input[type="text"] {
+  padding-left: calc( var(--trx-addons-ai-helper-stt-button-width) + 0.6em );
+}
 .sc_tgenerator_form_field_prompt .sc_tgenerator_form_field_prompt_button {
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -435,4 +438,4 @@
   border: 1px solid #e0e2e5;
 }
 
-/*# sourceMappingURL=tgenerator.css.map */
+
