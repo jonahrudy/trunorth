@@ -101,14 +101,14 @@
                     "slug": "p-font"
                 },
                 {
-                    "fontFamily": "\"Playfair Display\",serif",
-                    "name": "\"Playfair Display\",serif",
+                    "fontFamily": "PlayfairDisplay,serif",
+                    "name": "PlayfairDisplay,serif",
                     "slug": "h1-font"
                 },
                 {
                     "fontFamily": "inherit",
                     "name": "inherit",
-                    "slug": "input-font"
+                    "slug": "h4-font"
                 }
             ]
         },
