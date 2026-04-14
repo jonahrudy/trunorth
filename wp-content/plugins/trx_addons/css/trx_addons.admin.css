@@ -326,9 +326,8 @@ form input[type="submit"].trx_addons_button:focus {
 .trx_addons_button[disabled],
 form input[type="button"].trx_addons_button[disabled],
 form input[type="submit"].trx_addons_button[disabled] {
-  background-color: #eeeeee !important;
-  color: #aaaaaa !important;
-  border-color: #e8e8e8 !important;
+  opacity: 0.5 !important;
+  pointer-events: none !important;
 }
 
 .trx_addons_button:before,
@@ -627,7 +626,8 @@ form input[type="submit"].trx_addons_button_warning:hover {
   margin-left: 0.5em;
 }
 
-.trx_addons_loading:before {
+.trx_addons_loading:before,
+.trx_addons_loading_icon:before {
   content: '\e800' !important;
   font-family: "trx_addons_icons";
   font-size: 1em;
@@ -3127,10 +3127,10 @@ div.select2-drop {
   margin: 0 0.3em;
 }
 
-.post-type-cpt_competitions .subsubsub,
-.post-type-cpt_rounds .subsubsub,
-.post-type-cpt_matches .subsubsub,
-.post-type-cpt_players .subsubsub {
+.post-type-cpt_competitions .subsubsub .count,
+.post-type-cpt_rounds .subsubsub .count,
+.post-type-cpt_matches .subsubsub .count,
+.post-type-cpt_players .subsubsub .count {
   display: none;
 }
 
@@ -3253,4 +3253,4 @@ div.select2-drop {
   justify-content: flex-start;
 }
 
-/*# sourceMappingURL=trx_addons.admin.css.map */
+
