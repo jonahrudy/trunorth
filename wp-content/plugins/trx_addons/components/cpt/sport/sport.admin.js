@@ -3,34 +3,50 @@
 jQuery(document).ready(function() {
 	"use strict";
 	
+	var selectors = [
+			'a.page-title-action',
+			'.subsubsub a'
+		];
 	// Add 'sport' to the 'Add New' link's URL in the competitions
-	if (jQuery('body').hasClass('post-type-cpt_competitions')) {
+	if ( jQuery('body').hasClass('post-type-cpt_competitions') ) {
 		var sport = jQuery('select#cpt_competitions_sports').length == 1 ? jQuery('select#cpt_competitions_sports > option:selected').val() : jQuery('input#cpt_competitions_sports').val();
-		var add_new = jQuery('a.page-title-action');
-		if (add_new.length > 0) {
-			var href = jQuery('a.page-title-action').attr('href');
-			jQuery('a.page-title-action').attr('href', trx_addons_add_to_url(href, {'cpt_competitions_sports': sport}));
-		}
+		selectors.forEach( function( selector ) {
+			jQuery( selector ).each( function() {
+				var link = jQuery( this );
+				if ( link.length > 0 ) {
+					var href = link.attr( 'href' );
+					link.attr( 'href', trx_addons_add_to_url( href, { 'cpt_competitions_sports': sport } ) );
+				}
+			} );
+		} );
 
 	// Add 'competition' to the 'Add New' link's URL  in the rounds and players
 	} else if (jQuery('body').hasClass('post-type-cpt_rounds') || jQuery('body').hasClass('post-type-cpt_players')) {
 		var competition = jQuery('select#competition').length == 1 ? jQuery('select#competition > option:selected').val() : jQuery('input#competition').val();
-		var add_new = jQuery('a.page-title-action');
-		if (add_new.length > 0) {
-			var href = jQuery('a.page-title-action').attr('href');
-			jQuery('a.page-title-action').attr('href', trx_addons_add_to_url(href, {'competition': competition}));
-		}
+		selectors.forEach( function( selector ) {
+			jQuery( selector ).each( function() {
+				var link = jQuery( this );
+				if ( link.length > 0 ) {
+					var href = link.attr( 'href' );
+					link.attr( 'href', trx_addons_add_to_url( href, { 'competition': competition } ) );
+				}
+			} );
+		} );
 
 	// Add 'competition' and 'round' to the 'Add New' link's URL in the matches
 	} else if (jQuery('body').hasClass('post-type-cpt_matches')) {
 		var competition = jQuery('select#competition').length == 1 ? jQuery('select#competition > option:selected').val() : jQuery('input#competition').val();
 		var cur_round = jQuery('select#round').length == 1 ? jQuery('select#round > option:selected').val() : jQuery('input#round').val();
-		var add_new = jQuery('a.page-title-action');
-		if (add_new.length > 0) {
-			var href = jQuery('a.page-title-action').attr('href');
-			jQuery('a.page-title-action').attr('href', trx_addons_add_to_url(href, {'competition': competition, 'round': cur_round}));
-		}
-		
+		selectors.forEach( function( selector ) {
+			jQuery( selector ).each( function() {
+				var link = jQuery( this );
+				if ( link.length > 0 ) {
+					var href = link.attr( 'href' );
+					link.attr( 'href', trx_addons_add_to_url( href, { 'competition': competition, 'round': cur_round } ) );
+				}
+			} );
+		} );
+
 	}
 	
 	// Field "Sport" is changed - refresh competitions
