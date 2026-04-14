@@ -38,7 +38,9 @@
 			var ww = trx_addons_window_width();
 			for ( var max in bp ) {
 				if ( ww <= max ) {
-					value = parseInt( bp[ max ], 10 );
+					if ( bp[ max ] != '' ) {
+						value = parseInt( bp[ max ], 10 );
+					}
 					break;
 				}
 			}
@@ -420,7 +422,7 @@
 				if (direction != 'vertical') direction = 'horizontal';
 
 				// Min width of the slides in swiper (used for validate slides_per_view on small screen)
-				var smw = slider.data('slides-min-width');
+				var smw = trx_addons_get_slides_breakpoint_value( slider, 'slides-min-width', 150 );
 				if ( smw === undefined ) {
 					smw = 150;
 					slider.attr('data-slides-min-width', smw);
@@ -683,6 +685,13 @@
 				slider.trigger('slider_init', [slider]);
 				$document.trigger('action.slider_init', [slider, id]);
 
+				// Fix to compatibility with Elementor Pro's widget "Nested Carousel"
+				if ( slider.hasClass( 'swiper-container' ) ) {
+					slider.addClass( 'swiper-container-initialized' );
+				} else {
+					cont.find( '.swiper-container' ).addClass( 'swiper-container-initialized' );
+				}
+
 				// Custom pagination
 				cont.find('.swiper-pagination-custom').on('click', '>span', function(e) {
 					jQuery(this).siblings().removeClass('swiper-pagination-button-active');
@@ -857,7 +866,7 @@
 				) {
 					if ( typeof TRX_ADDONS_STORAGE['swipers'][id].params.slidesPerView != 'undefined' && TRX_ADDONS_STORAGE['swipers'][id].params.slidesPerView != 'auto' ) {
 						if ( direction == 'horizontal' ) {
-							var smw = slider.data('slides-min-width');
+							var smw = trx_addons_get_slides_breakpoint_value( slider, 'slides-min-width', 150 );
 							if (slider_width / spv < smw) {
 								spv = Math.max(1, Math.floor(slider_width / smw));
 							}
