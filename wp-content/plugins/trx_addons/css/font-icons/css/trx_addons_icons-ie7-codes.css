@@ -300,6 +300,7 @@
 .trx_addons_icon-engineering { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = ' '); }
 .trx_addons_icon-threads { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = ' '); }
 .trx_addons_icon-paper-plane { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = ' '); }
+.trx_addons_icon-image-tick { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = ' '); }
 .trx_addons_icon-download-1 { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = ' '); }
 .trx_addons_icon-upload { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = ' '); }
 .trx_addons_icon-move { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = ' '); }
