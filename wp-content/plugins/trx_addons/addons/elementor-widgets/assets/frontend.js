@@ -13,15 +13,24 @@
 
 			new asyncSwiper( carousel, sliderOptions ).then( function( newSwiperInstance ) {
 				var mySwiper = newSwiperInstance;
-				swiperSliderAfterInit( carousel, elementSettings, mySwiper );
+				swiperSliderAfterInit( carousel, carousel.parent(), elementSettings, mySwiper );
 			} );
 		// } else {
 		// 	var mySwiper = new Swiper( carousel, sliderOptions );
-		// 	swiperSliderAfterInit( carousel, elementSettings, mySwiper );
+		// 	swiperSliderAfterInit( carousel, carousel.parent(), elementSettings, mySwiper );
 		// }
 	};
 
 	var swiperSliderAfterInit = function( carousel, carouselWrap, elementSettings, mySwiper ) {
+
+		// Fix for compatibility with Elementor Pro Nexted Carousel
+		if ( carouselWrap.hasClass( 'swiper' ) && ! carouselWrap.hasClass( 'swiper-initialized' ) ) {
+			carouselWrap.addClass( 'swiper-initialized' );
+		}
+		if ( carousel.hasClass( 'swiper-container' ) && ! carousel.hasClass( 'swiper-container-initialized' ) ) {
+			carousel.addClass( 'swiper-container-initialized' );
+		}
+
 		if ( 'yes' === elementSettings.pause_on_hover ) {
 			carousel.on( 'mouseover', function() {
 				mySwiper.autoplay.stop();

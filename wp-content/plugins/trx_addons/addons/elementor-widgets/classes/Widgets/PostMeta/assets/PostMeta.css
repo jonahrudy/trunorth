@@ -18,6 +18,9 @@
   -ms-flex-align: center;
   align-items: center;
 }
+.trx-addons-post-meta-item h1, .trx-addons-post-meta-item h2, .trx-addons-post-meta-item h3, .trx-addons-post-meta-item h4, .trx-addons-post-meta-item h5, .trx-addons-post-meta-item h6, .trx-addons-post-meta-item p, .trx-addons-post-meta-item ul, .trx-addons-post-meta-item ol, .trx-addons-post-meta-item dl {
+  margin: 0;
+}
 .trx-addons-post-meta-item a {
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
@@ -68,4 +71,4 @@
   content: '\2022';
 }
 
-/*# sourceMappingURL=PostMeta.css.map */
+
