@@ -608,15 +608,15 @@ jQuery( document ).ready(function() {
 			var ot = obj.offset().top,
 				oh = obj.height();
 			if ( wt <= ot + oh && wt + wh >= ot + oh ) {
-				obj.addClass('sc_typed_inited').typed({
-					contentType: "text",	// or 'html', but html is default and in this case typing is stopped on the letter '&' (ampersand)
+				obj.addClass('sc_typed_inited').typed( trx_addons_apply_filters( 'trx_addons_filter_typed_options', {
+					contentType: "html",	// 'text' or 'html' (default), but 'html' is default and in this case typing is stopped on the letter '&' (ampersand) - fixed
 					strings: obj.data('strings'),
 					loop: obj.data('loop') == 1,
 					showCursor: obj.data('cursor') == 1,
 					cursorChar: obj.data('cursor-char') != undefined ? obj.data('cursor-char') : '|',
 					typeSpeed: obj.data('speed') > 0 ? (11 - Math.max(1, Math.min(10, obj.data('speed')))) * 10 : 50,
 					backDelay: obj.data('delay') > 0 ? Math.max(0, Math.min(10, obj.data('delay'))) * 1000 : 1000
-				});
+				} ) );
 			}
 		});
 	});
