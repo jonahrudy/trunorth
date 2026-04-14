@@ -317,7 +317,7 @@
   line-height: 1.1875rem;
   font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.03rem;
+  letter-spacing: 0.06rem;
   display: block;
   color: var(--theme-color-title);
 }
@@ -461,7 +461,7 @@
   line-height: 1.1875rem;
   font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.03rem;
+  letter-spacing: 0.06rem;
   color: var(--theme-color-meta);
 }
 .author_info .author_title {
@@ -526,7 +526,7 @@
   line-height: 1.1875rem;
   font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.03rem;
+  letter-spacing: 0.06rem;
   color: var(--theme-color-title);
 }
 .related_wrap .post_meta_info {
@@ -829,4 +829,4 @@ body.narrow_content .comments_list_wrap ul ul ul ul {
   right: 0;
 }
 
-/*# sourceMappingURL=single.css.map */
+

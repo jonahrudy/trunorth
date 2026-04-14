@@ -1,22 +1,19 @@
 {
     "default": {
         "title": "Default",
-        "version": "1.8",
+        "description": "",
+        "version": "2.0",
         "category": "business",
-        "demo_url": "//elementra.themerex.net/",
-        "uploaded": "2025-02-05",
-        "updated": "2025-09-10",
-        "checked": "2025-10-08 20:04:18",
-        "keywords": "seo, digital agency, marketing agency, search engine optimization, content marketing, ppc, social media marketing"
+        "demo_url": "//elementra.themerex.net/"
     },
     "logistics": {
         "title": "Logistics",
-        "version": "1.2",
+        "version": "1.4",
         "category": "business",
         "demo_url": "//logistics.elementra.themerex.net/",
         "uploaded": "2025-04-21",
-        "updated": "2025-08-20",
-        "checked": "2025-10-08 21:29:57",
+        "updated": "2026-03-12",
+        "checked": "2026-04-10 19:00:50",
         "keywords": "logistics, delivery company, shipping service, transportation, courier, warehouse, freight forwarding"
     }
 }

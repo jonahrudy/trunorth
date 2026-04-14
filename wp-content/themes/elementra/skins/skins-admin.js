@@ -165,28 +165,18 @@ jQuery( document ).ready( function() {
 				'nonce': ELEMENTRA_STORAGE['ajax_nonce'],
 				is_admin_request: 1
 			},
-			function(response){
-				var rez = {};
+			function( response ) {
 				if ( button ) {
 					button.removeClass( 'trx_addons_loading' );
 				}
-				if (response === '' || response === 0) {
-					rez = { error: ELEMENTRA_STORAGE['msg_ajax_error'] };
-				} else {
-					try {
-						rez = JSON.parse( response );
-					} catch (e) {
-						rez = { error: ELEMENTRA_STORAGE['msg_ajax_error'] };
-						console.log( response );
-					}
-				}
+				var rez = elementra_parse_ajax_response( response );
 				if ( callback !== undefined ) {
-					callback(skin, action, rez);
+					callback( skin, action, rez );
 				}
 				// Show result
 				if ( jQuery('.trx_addons_theme_panel').length > 0 ) {
 					if ( rez.error ) {
-						trx_addons_msgbox_warning( rez.error, ELEMENTRA_STORAGE['msg_'+action+'_skin_error_caption'] );
+						trx_addons_msgbox_attention( rez.error, ELEMENTRA_STORAGE['msg_'+action+'_skin_error_caption'] );
 					} else {
 						trx_addons_msgbox_success( typeof rez.success != 'undefined' && rez.success ? rez.success : ELEMENTRA_STORAGE['msg_'+action+'_skin_success'], ELEMENTRA_STORAGE['msg_'+action+'_skin_success_caption'] );
 					}
