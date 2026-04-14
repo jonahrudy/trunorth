@@ -1,4 +1,3 @@
-@charset "UTF-8";
 /* TABLE OF CONTENTS
 
 1. Theme-specific variables and classes
@@ -53,14 +52,6 @@
   --theme-var-padding_narrow: calc( var(--theme-var-content) * ( 1 - var(--theme-var-koef_narrow) ) );
 }
 
-/* 
-To ensure that in the “fullwide” mode, the custom (layouts) footer does not stretch like content, but remains in the regular grid. If necessary, the footer can be configured in the builder.
-This does not apply to the default footer, it will stretch.
-.body_style_fullwide {
-	--theme-var-page: calc( 100vw - var(--theme-var-page_fullwide_extra) * 2 );	// Page width
-	@ -del-space- include page_dimensions;
-}
-*/
 /* 2. Default tag's settings
 -------------------------------------------------------------- */
 html {
@@ -519,7 +510,6 @@ img {
 }
 
 /* Fix for WordPress 5.9+ */
-/*.wp-block-gallery.has-nested-images,*/
 figure.wp-block-gallery {
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -729,10 +719,6 @@ figure figcaption a:hover,
 
 .wp-block-freeform.block-library-rich-text__tinymce dd.wp-caption-dd a {
   display: inline;
-}
-
-svg:not(:root) {
-  overflow: hidden;
 }
 
 /* Gallery (old) */
@@ -1705,7 +1691,7 @@ label.required:after {
   height: auto;
   font-size: 0.8em;
   line-height: normal;
-  padding: 1em 1.5em;
+  padding: 1em 1.5em !important;
   color: #21759b;
   background-color: #f1f1f1;
   clip: auto !important;
@@ -3325,11 +3311,6 @@ body.body_style_fullscreen.sidebar_left [class*="content_wrap"] > .sidebar {
 }
 
 /* Position */
-/* This style is used in the plugin
-body.body_style_fullscreen .content_wrap_fullscreen {
-	overflow: clip;
-}
-*/
 body.body_style_fullscreen .page_content_wrap {
   position: relative;
 }
@@ -5463,4 +5444,4 @@ iframe[name="google_conversion_frame"] {
   white-space: nowrap;
 }
 
-/*# sourceMappingURL=style.css.map */
+
