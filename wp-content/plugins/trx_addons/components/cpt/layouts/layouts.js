@@ -37,8 +37,16 @@ jQuery(document).on('action.ready_trx_addons', function() {
 									+ '</div>');
 					}
 				}
-				if ( ! row.next().hasClass('sc_layouts_row_fixed_placeholder') ) {
-					row.after('<div class="sc_layouts_row_fixed_placeholder" style="background-color:'+row.css('background-color')+';"><div class="sc_layouts_row_fixed_marker_off"></div></div>');
+				var row_next = row.next();
+				if ( ! row_next.hasClass( 'sc_layouts_row_fixed_placeholder' ) ) {
+					if ( row_next.hasClass( 'vc_row-full-width' ) ) {	// If the row is fullwide in VC - add the placeholder to the next element to keep the VC fullwide behavior
+						row_next
+							.addClass( 'sc_layouts_row_fixed_placeholder' )
+							.css( 'background-color', row.css( 'background-color' ) )
+							.append( '<div class="sc_layouts_row_fixed_marker_off"></div>' );
+					} else {	// Normal case
+						row.after( '<div class="sc_layouts_row_fixed_placeholder" style="background-color:' + row.css('background-color') + ';"><div class="sc_layouts_row_fixed_marker_off"></div></div>' );
+					}
 					if ( USE_OBSERVERS && ! row.hasClass('sc_layouts_row_hide_unfixed' ) ) {
 						row.append('<div class="sc_layouts_row_fixed_marker_on"></div>');
 					}
@@ -125,6 +133,8 @@ jQuery(document).on('action.ready_trx_addons', function() {
 									// marker_off is come in to the viewport
 									if ( row.hasClass( 'sc_layouts_row_fixed_on' ) && entry.isIntersecting ) {
 										if ( time - last_fixed_time > animation_off_timeout
+											&& entry.boundingClientRect
+											&& entry.rootBounds
 											&& entry.boundingClientRect.top >= entry.rootBounds.top
 										) {
 											if ( ! row.hasClass( 'sc_layouts_row_fixed_animation_off' ) ) {
@@ -140,6 +150,8 @@ jQuery(document).on('action.ready_trx_addons', function() {
 									// marker_on is go out from the viewport
 									} else if ( ! row.hasClass( 'sc_layouts_row_fixed_on' ) && ! entry.isIntersecting ) {
 										if ( time - last_fixed_time > animation_off_timeout
+											&& entry.boundingClientRect
+											&& entry.rootBounds
 											&& entry.boundingClientRect.bottom < entry.rootBounds.top
 										) {
 											trx_addons_cpt_layouts_fix_rows( {
