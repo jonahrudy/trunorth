@@ -210,6 +210,17 @@
 		var buttons = opt.buttons != undefined ? opt.buttons : [];
 		var init = opt.init != undefined ? opt.init : null;
 		var callback = opt.callback != undefined ? opt.callback : null;
+		if ( msg.indexOf ( "\n" ) >= 0
+			&& msg.indexOf ( '<br' ) < 0
+			&& msg.indexOf ( '<div' ) < 0
+			&& msg.indexOf ( '<p' ) < 0
+			&& msg.indexOf ( '<h' ) < 0
+			&& msg.indexOf ( '<form' ) < 0
+			&& msg.indexOf ( '<input' ) < 0
+			&& msg.indexOf ( '<textarea' ) < 0
+		) {
+			msg = msg.replace ( /\n/g, "\n<br>" );
+		}
 		// Modal bg
 		if (jQuery('#trx_addons_modal_bg').length === 0) {
 			jQuery('body').append('<div id="trx_addons_modal_bg"></div>');

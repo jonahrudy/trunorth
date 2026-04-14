@@ -480,7 +480,7 @@
 
 		// Prevent download and update skins if a theme is not updated to the latest version
 		if ( $body.hasClass( 'trx_addons_legacy_theme_version' ) ) {
-			jQuery( '#trx_addons_theme_panel_section_skins a.trx_addons_image_block_link_download_skin'
+			jQuery(         '#trx_addons_theme_panel_section_skins a.trx_addons_image_block_link_download_skin'
 					+ ',' + '#trx_addons_theme_panel_section_skins a.trx_addons_image_block_link_buy_skin'
 					+ ',' + '#trx_addons_theme_panel_section_skins a.trx_addons_image_block_link_update_skin'
 					+ ',' + '#upgrade-skins[class*="_upgrade_skins_button"]:not([disabled])'
@@ -757,7 +757,6 @@
 			) )
 			.addClass('inited inited_media_selector')
 			.on('click', '.trx_addons_media_selector', function(e) {
-dcl('click');
 				trx_addons_show_media_manager(this);
 				e.preventDefault();
 				return false;
@@ -836,7 +835,6 @@ dcl('click');
 				type: type
 			};
 		}
-dcl(args);
 		TRX_ADDONS_STORAGE['media_frame'][media_id] = wp.media(args);
 	
 		// When an image is selected, run a callback.
