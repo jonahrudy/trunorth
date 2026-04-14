@@ -15,7 +15,10 @@ typeof jQuery != 'undefined' &&	! ( function() {
 			&& ( window.trx_addons_elementor_templates_library.modal
 				|| ( ( window.trx_addons_elementor_templates_library.modal = elementorCommon.dialogsManager.createWidget( "lightbox", {
 						id: "trx_addons_elementor_templates_library_modal",
-						headerMessage: '<span class="trx_addons_elementor_templates_library_logo"></span><span class="trx_addons_elementor_templates_library_title">' + TRX_ADDONS_STORAGE['msg_elementor_templates_library_title'] + '</span>',
+						headerMessage: '<span class="trx_addons_elementor_templates_library_logo"></span>'
+										+ '<span class="trx_addons_elementor_templates_library_title">'
+											+ TRX_ADDONS_STORAGE['msg_elementor_templates_library_title']
+										+ '</span>',
 						message: "",
 						hide: {
 							auto: false,
@@ -56,9 +59,20 @@ typeof jQuery != 'undefined' &&	! ( function() {
 								// Toolbar or Sidebar navigation
 								html += '<div class="trx_addons_elementor_templates_library_' + navi_style + '">'
 								// Search
-								html += '<div class="trx_addons_elementor_templates_library_search">'
-											+ '<span class="trx_addons_elementor_templates_library_search_icon eicon-search"></span>'
-											+ '<input type="text" placeholder="' + TRX_ADDONS_STORAGE['msg_elementor_templates_library_search'] + '">'
+								html += '<div class="trx_addons_elementor_templates_library_search_wrap">'
+											+ '<div class="trx_addons_elementor_templates_library_search">'
+												+ '<span tabindex="0" class="trx_addons_elementor_templates_library_search_icon eicon-search"></span>'
+												+ '<input type="text" placeholder="' + TRX_ADDONS_STORAGE['msg_elementor_templates_library_search'] + '">'
+											+ '</div>'
+											+ ( TRX_ADDONS_STORAGE['elementor_templates_library_ai_allowed'] > 0 && tab == 'block'
+												? '<span tabindex="0" class="trx_addons_elementor_templates_library_image_to_layout_open" title="' + TRX_ADDONS_STORAGE['msg_elementor_templates_library_image_to_layout_description'] + '">'
+														+ '<span class="trx_addons_elementor_templates_library_image_to_layout_open_inner">'
+															+ '<span class="trx_addons_elementor_templates_library_image_to_layout_open_icon trx_addons_icon-image-tick"></span>'
+															+ '<span class="trx_addons_elementor_templates_library_image_to_layout_open_text">' + TRX_ADDONS_STORAGE['msg_elementor_templates_library_image_to_layout'] + '</span>'
+														+ '</span>'
+													+ '</span>'
+												: ''
+											)
 										+ '</div>';
 								// Categories
 								var cats = getCategoriesList( tab );
@@ -68,9 +82,66 @@ typeof jQuery != 'undefined' &&	! ( function() {
 								// Close Toolbar or Sidebar navigation
 								html += '</div>';
 								// Items list
-								html += '<div class="trx_addons_elementor_templates_library_items">';
-								html += '</div>'
-									+ '</div>';
+								html += '<div class="trx_addons_elementor_templates_library_items"></div>';
+								// Filter by Image with Layout
+								if ( TRX_ADDONS_STORAGE['elementor_templates_library_ai_allowed'] > 0 && tab == 'block' ) {
+									html += '<div id="itlPanel" class="trx_addons_elementor_templates_library_image_to_layout">'
+												+ '<div class="trx_addons_elementor_templates_library_image_to_layout_upload_container itl_step1">'
+													// Upload image
+													+ '<h5 class="trx_addons_elementor_templates_library_image_to_layout_title">'
+														+ '<span class="eicon-site-identity"></span>'
+														+ TRX_ADDONS_STORAGE['msg_elementor_templates_library_image_to_layout_step1'].replace( "\n", "<br>")
+													+ '</h5>'
+													+ '<div tabindex="0" class="trx_addons_elementor_templates_library_image_to_layout_upload_area" id="itlUploadArea">'
+														+ '<div class="trx_addons_elementor_templates_library_image_to_layout_upload_controls">'
+															+ '<svg class="trx_addons_elementor_templates_library_image_to_layout_upload_icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">'
+																+ '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />'
+															+ '</svg>'
+															+ '<div class="trx_addons_elementor_templates_library_image_to_layout_upload_text">' + TRX_ADDONS_STORAGE['msg_elementor_templates_library_image_to_layout_drag'] + '</div>'
+															+ '<div class="trx_addons_elementor_templates_library_image_to_layout_upload_hint">' + TRX_ADDONS_STORAGE['msg_elementor_templates_library_image_to_layout_paste'] + '</div>'
+															+ '<button class="trx_addons_elementor_templates_library_image_to_layout_select_btn" id="itlSelectBtn">' + TRX_ADDONS_STORAGE['msg_elementor_templates_library_image_to_layout_select'] + '</button>'
+															+ '<input type="file" id="itlFileInput" accept="image/*" />'
+														+ '</div>'
+														+ '<div class="trx_addons_elementor_templates_library_image_to_layout_preview_area" id="itlPreviewArea">'
+															+ '<div class="trx_addons_elementor_templates_library_image_to_layout_image_preview">'
+																+ '<button class="trx_addons_elementor_templates_library_image_to_layout_close_btn eicon-editor-close" id="itlCloseBtn"></button>'
+																+ '<img id="itlPreviewImg" src="" alt="">'
+																+ '<div class="trx_addons_elementor_templates_library_image_to_layout_image_info">'
+																	+ '<span id="itlFileName">image.png</span>'
+																	+ '<span id="itlFileSize">0 KB</span>'
+																+ '</div>'
+															+ '</div>'
+														+ '</div>'
+													+ '</div>'
+												+ '</div>'
+												// Accuracy slider
+												+ '<div class="trx_addons_elementor_templates_library_image_to_layout_accuracy_wrapper itl_step2">'
+													+ '<h5 class="trx_addons_elementor_templates_library_image_to_layout_title">'
+														+ '<span class="eicon-user-preferences"></span>'
+														+ TRX_ADDONS_STORAGE['msg_elementor_templates_library_image_to_layout_step2'].replace( "\n", "<br>")
+													+ '</h5>'
+													+ '<div class="trx_addons_elementor_templates_library_image_to_layout_accuracy_slider">'
+														+ '<span class="trx_addons_elementor_templates_library_image_to_layout_accuracy_line"></span>'
+														+ '<span tabindex="0" class="trx_addons_elementor_templates_library_image_to_layout_accuracy" data-accuracy="75" title="' + TRX_ADDONS_STORAGE['msg_elementor_templates_library_image_to_layout_accuracy'].replace( '%d', 75 ) + '">'
+															+ '<span class="trx_addons_elementor_templates_library_image_to_layout_accuracy_handler"></span>'
+															+ '<span class="trx_addons_elementor_templates_library_image_to_layout_accuracy_value">75%</span>'
+														+ '</span>'
+													+ '</div>'
+												+ '</div>'
+												// Filter templates by
+												+ '<div class="trx_addons_elementor_templates_library_image_to_layout_filter itl_step3">'
+													+ '<h5 class="trx_addons_elementor_templates_library_image_to_layout_title">'
+														+ '<span class="eicon-accordion"></span>'
+														+ TRX_ADDONS_STORAGE['msg_elementor_templates_library_image_to_layout_step3'].replace( "\n", "<br>")
+													+ '</h5>'
+													+ '<div class="trx_addons_elementor_templates_library_image_to_layout_sections_list">'
+													+ '</div>'
+												+ '</div>'
+												// Hidden input to catch paste event
+												+ '<input type="text" class="trx_addons_elementor_templates_library_image_to_layout_paste_handler" />'
+											+ '</div>';
+								}
+								html += '</div>';
 							}
 							html += '</div></div>';
 							content.append( html );
@@ -277,11 +348,257 @@ typeof jQuery != 'undefined' &&	! ( function() {
 											} else {
 												regenerateIds( rez.data.content );
 												insertContent( rez.data.content, tab );
-												window.trx_addons_elementor_templates_library.modal.hide();
+												if ( ! jQuery( '#trx_addons_elementor_templates_library_modal' ).hasClass( 'image_to_layout_opened' ) 
+													|| jQuery( '.trx_addons_elementor_templates_library_image_to_layout_sections_list input[type="radio"]').length == 1
+													|| jQuery( '#itl_section_whole').is(':checked')
+												) {
+													window.trx_addons_elementor_templates_library.modal.hide();
+												}
 											}
 										} );
 									return false;
 								} );
+
+							// Filter by Image with Layout handlers
+							//-----------------------------------------------------
+
+							// Open/Close Filter by Image with Layout panel
+							$library
+								.on( 'click', '.trx_addons_elementor_templates_library_image_to_layout_open', function( e ) {
+									e.preventDefault();
+									jQuery( '#trx_addons_elementor_templates_library_modal' ).toggleClass( 'image_to_layout_opened' );
+									// Put focus to the paste handler to enable paste from clipboard
+									jQuery( '.trx_addons_elementor_templates_library_image_to_layout_paste_handler').focus();
+									return false;
+								} )
+								.on( 'click', '.trx_addons_elementor_templates_library_image_to_layout', function( e ) {
+									// Put focus to the paste handler to enable paste from clipboard
+									jQuery( '.trx_addons_elementor_templates_library_image_to_layout_paste_handler').focus();
+								} );
+
+							$library.on( 'focus', '.trx_addons_elementor_templates_library_image_to_layout_paste_handler', function() {
+								// Clear the field value to allow paste the same image again
+								jQuery( this ).val( '' );
+							} );
+
+							// Select Image: Open file selector on click the button
+							$library
+								.on( 'click', '#itlSelectBtn', function( e ) {
+									e.preventDefault();
+									e.stopPropagation();
+									jQuery( '#itlFileInput' ).eq(0).trigger( 'click' );
+								} )
+								// Select Image: Open file selector on click the upload area
+								.on( 'click', '#itlUploadArea', function( e ) {
+									// Avoid recursion triggering
+									if ( jQuery( e.target ).is( '#itlFileInput') || jQuery( e.target ).is( '#itlSelectBtn') || jQuery( e.target ).closest( '#itlSelectBtn' ).length ) {
+										return;
+									}
+									jQuery( '#itlFileInput' ).eq(0).trigger( 'click' );
+								} )
+								// Select Image: Selected file processing
+								.on( 'change', '#itlFileInput', function( e ) {
+									const file = e.target.files[0];
+									if ( file && file.type.startsWith( 'image/' ) ) {
+										handleImage( file );
+									} else {
+										showMessage( TRX_ADDONS_STORAGE['msg_elementor_templates_library_unsupported_image_type'] );
+									}
+								} );
+
+							// Drag & Drop
+							$library
+								.on( 'dragover', '#itlUploadArea', function( e ) {
+									e.preventDefault();
+									jQuery( this ).addClass( 'dragover' );
+								} )
+								.on( 'dragleave', '#itlUploadArea', function() {
+									jQuery( this ).removeClass( 'dragover' );
+								} )
+								.on( 'drop', '#itlUploadArea', function( e ) {
+									e.preventDefault();
+									jQuery( this ).removeClass('dragover');
+									const file = e.originalEvent.dataTransfer.files[0];
+									if ( file && file.type.startsWith( 'image/' ) ) {
+										handleImage( file );
+									} else {
+										showMessage( TRX_ADDONS_STORAGE['msg_elementor_templates_library_unsupported_image_type'] );
+									}
+								} );
+
+							// Paste from clipboard
+							jQuery( document ).on( 'paste', function( e ) {
+								if ( ! jQuery( '#trx_addons_elementor_templates_library_modal' ).hasClass( 'image_to_layout_opened' ) ) {
+									return;
+								}
+								e.stopPropagation();
+								e.stopImmediatePropagation();
+								e.preventDefault();
+								const items = e.originalEvent.clipboardData.items;
+								for ( let i = 0; i < items.length; i++ ) {
+									if ( items[ i ].type.startsWith( 'image/' ) ) {
+										const file = items[ i ].getAsFile();
+										handleImage( file );
+										break;
+									}
+								}
+							} );
+
+							// Selected image processing
+							function handleImage( file ) {
+								const reader = new FileReader();
+								reader.onload = function(e) {
+									jQuery( '#itlPreviewImg' ).attr( 'src', e.target.result );
+									jQuery( '#itlFileName' ).text( file.name );
+									jQuery( '#itlFileSize').text( trx_addons_size2kilo( file.size ) );
+									jQuery( '#itlPanel').addClass( 'trx_addons_elementor_templates_library_image_to_layout_selected' );
+									uploadToServer( file );
+								};
+								reader.readAsDataURL( file );
+							}
+
+							// Upload image to server and filter a list of templates by the layout of the image
+							function uploadToServer( file ) {
+								var $preview = jQuery( '#itlPreviewArea' ),
+									$field = jQuery( '#itlFileInput' );
+
+								$preview.addClass( 'trx_addons_loading' );
+								$field.data( 'layout', '' );
+
+								// Send request via AJAX
+								var formData = new FormData();
+								formData.append( 'nonce', TRX_ADDONS_STORAGE['ajax_nonce'] );
+								formData.append( 'action', 'trx_addons_elementor_templates_library_image_to_layout' );
+								formData.append( 'upload_image', file, file.name );
+
+								jQuery.ajax( {
+									url: TRX_ADDONS_STORAGE['ajax_url'],
+									type: "POST",
+									data: formData,
+									processData: false,		// Don't process fields to the string
+									contentType: false,		// Prevent content type header
+									success: function( response ) {
+										// Prepare response
+										var rez = trx_addons_parse_ajax_response( response );
+										if ( rez.error ) {
+											showMessage( rez.error );
+										} else if ( rez.data ) {
+											$field.data( 'layout', rez.data );
+											if ( rez.data ) {
+												fillSectionsList( rez.data );
+											}
+											updateItems( $field.parents('.trx_addons_elementor_templates_library_tab_content').data('tab') );
+										}
+									},
+									error: function( jqXHR, textStatus, errorThrown ) {
+										showMessage( TRX_ADDONS_STORAGE['msg_ajax_error'] );
+									},
+									complete: function() {
+										$preview.removeClass( 'trx_addons_loading' );
+									}
+								} );
+							}
+
+							// Clear selected image
+							$library.on( 'click', '#itlCloseBtn', function(e) {
+								e.stopPropagation();
+								jQuery( '#itlPreviewImg' ).attr( 'src', '' );
+								jQuery( '#itlFileInput' ).val( '' ).data( 'layout', '' );
+								jQuery( '#itlPanel').removeClass( 'trx_addons_elementor_templates_library_image_to_layout_selected' );
+								fillSectionsList( '' );
+								updateItems( jQuery(this).parents('.trx_addons_elementor_templates_library_tab_content').data('tab') );
+								// Put focus to the paste handler to enable paste from clipboard
+								jQuery( '.trx_addons_elementor_templates_library_image_to_layout_paste_handler').focus();
+							} );
+
+							// Init accuracy slider to filter by image with layout
+							if ( jQuery.ui && jQuery.ui.slider ) {
+								$library.find('.trx_addons_elementor_templates_library_image_to_layout_accuracy:not(.inited)').each( function () {
+									var $self = jQuery(this);
+									$self.addClass('inited').draggable( {
+										axis: 'x',
+										containment: 'parent',
+										drag: function( event, ui ) {
+											var hw  = $self.outerWidth(),
+												pw  = $self.parent().width() - hw,
+												prc = Math.max( 0, Math.min( 100, Math.round( ui.position.left / pw * 100 ) ) );
+											$self
+												.data( 'accuracy', prc )
+												.attr( 'title', TRX_ADDONS_STORAGE['msg_elementor_templates_library_image_to_layout_accuracy'].replace( '%d', prc ) )
+												.find( '.trx_addons_elementor_templates_library_image_to_layout_accuracy_value' )
+													.text( prc + '%' );
+											updateItems( $self.parents('.trx_addons_elementor_templates_library_tab_content').data('tab') );
+										}
+									} );
+								} );
+							}
+
+							// Filter by sections
+							$library.on( 'change', '.trx_addons_elementor_templates_library_image_to_layout_sections_list input[name="itl_section"]', function() {
+								var $self = jQuery(this);
+								$self.closest( '.trx_addons_elementor_templates_library_image_to_layout_sections_list' )
+									.find( '.trx_addons_elementor_templates_library_image_to_layout_section_option' )
+										.removeClass( 'itl_active' );
+								$self.parent().addClass( 'itl_active' );
+								jQuery( '#itlFileInput' ).data( 'layout', $self.val() );
+								updateItems( $self.parents('.trx_addons_elementor_templates_library_tab_content').data('tab') );
+							} );
+
+							// Fill the sections list (radio buttons) by layout string.
+							// Add "Whole Image" option always first. Add other sections if layout contain more than one section.
+							// If layout is empty - clear the sections list.
+							function fillSectionsList( layout ) {
+								var $list = jQuery( '.trx_addons_elementor_templates_library_image_to_layout_sections_list' );
+								$list.empty();
+								jQuery( '#itlPanel').removeClass( 'trx_addons_elementor_templates_library_image_to_layout_multisections' );
+								if ( layout ) {
+									// Mark panel to show that layout contain more than one section
+									jQuery( '#itlPanel').addClass( 'trx_addons_elementor_templates_library_image_to_layout_multisections' );
+									var sections = parseLayout( layout );
+									// Add 'Whole Layout' option if there are more than one section
+									if ( sections.length > 1 ) {
+										$list.append(
+											'<div class="trx_addons_elementor_templates_library_image_to_layout_section_option itl_active">'
+												+ '<input type="radio" id="itl_section_whole" name="itl_section" value="' + layout + '" checked="checked">'
+												+ '<label for="itl_section_whole">'
+													+ '<img src="' + jQuery( '#itlPreviewImg' ).attr( 'src' ) + '" alt="' + TRX_ADDONS_STORAGE['msg_elementor_templates_library_image_to_layout_whole_image'] + '" />'
+													+ TRX_ADDONS_STORAGE['msg_elementor_templates_library_image_to_layout_whole_image']
+												+ '</label>'
+											+ '</div>'
+										);
+									}
+									sections.forEach( function( section, index ) {
+										$list.append(
+											'<div class="trx_addons_elementor_templates_library_image_to_layout_section_option' + ( index == 0 &&  sections.length == 1 ? ' itl_active' : '' ) + '">'
+												+ '<input type="radio" id="itl_section_' + index + '" name="itl_section" value="' + section.original + '"' + ( index == 0 &&  sections.length == 1 ? ' checked="checked"' : '' ) + '>'
+												+ '<label for="itl_section_' + index + '">'
+													+ getSectionLayout( section )
+													// + TRX_ADDONS_STORAGE['msg_elementor_templates_library_image_to_layout_section'] + ' ' + ( index + 1 )
+													+ '</label>'
+												+ '</div>'
+										);
+									} );
+								}
+							}
+
+							// Return a layout of the section:
+							// - each column must be wrapped to <span class="itl-column">...</span>
+							// - each widget inside column must be wrapped to <span class="itl-widget">widget-slug</span>
+							function getSectionLayout( section ) {
+								var layout = '';
+								section.columns.forEach( function( column ) {
+									var col_content = '';
+									column.forEach( function( widget ) {
+										col_content += '<span class="itl-widget itl-widget-type-' + widget + '">'
+															// + widget
+															+ '<img src="' + TRX_ADDONS_STORAGE['elementor_templates_library_images_url'] + '/layout/' + widget + '.png" alt="' + widget + '"/>'
+														+ '</span>';
+									} );
+									layout += '<span class="itl-column">' + col_content + '</span>';
+								} );
+								return layout;
+							}
+
 						},
 						onHide: function() {}
 					} ) ),
@@ -363,7 +680,10 @@ typeof jQuery != 'undefined' &&	! ( function() {
 				|| ( ( window.trx_addons_elementor_templates_library.preview = elementorCommon.dialogsManager.createWidget( "lightbox", {
 						id: "trx_addons_elementor_templates_library_preview",
 						headerMessage: '<span class="trx_addons_elementor_templates_library_title">'
-											// + TRX_ADDONS_STORAGE['elementor_templates_library'][ template ].title
+											+ '<span class="trx_addons_elementor_templates_library_item_back">'
+												+ '<span class="trx_addons_elementor_templates_library_item_back_icon eicon-chevron-left"></span>'
+												+ '<span class="trx_addons_elementor_templates_library_item_back_text">' + TRX_ADDONS_STORAGE['msg_elementor_templates_library_preview_back'] + '</span>'
+											+ '</span>'
 											+ '<a href="#" class="trx_addons_elementor_templates_library_item_import trx_addons_icon-download elementor-button" data-template="' + template + '">'
 												+ TRX_ADDONS_STORAGE['msg_elementor_templates_library_import_template']
 											+ '</a>'
@@ -398,9 +718,17 @@ typeof jQuery != 'undefined' &&	! ( function() {
 							var tpl_title   = TRX_ADDONS_STORAGE['elementor_templates_library'][ template ].title;
 							var tpl_content = TRX_ADDONS_STORAGE['elementor_templates_library'][ template ].content;
 							var tpl_category = TRX_ADDONS_STORAGE['elementor_templates_library_tabs'][tab]['category'][TRX_ADDONS_STORAGE['elementor_templates_library'][ template ].category]['title'];
-							var tpl_image   = '<img src="' + TRX_ADDONS_STORAGE['elementor_templates_library_url'] + '/' + template + '/' + template + '.jpg" alt="' + tpl_title + '">';
+							var tpl_image   = TRX_ADDONS_STORAGE['elementor_templates_library'][ template ].demo_url
+												? '<iframe src="' + trx_addons_add_to_url( TRX_ADDONS_STORAGE['elementor_templates_library'][ template ].demo_url, { 'utm-source': 'elementor-templates-library-preview', 'utm-source-type': TRX_ADDONS_STORAGE['elementor_templates_library'][ template ].category } ) + '" frameborder="0" allowfullscreen></iframe>'
+												: '<img src="' + TRX_ADDONS_STORAGE['elementor_templates_library_url'] + '/' + template + '/' + template + ( TRX_ADDONS_STORAGE['elementor_templates_library'][ template ].animated ? '.gif' : '.jpg' ) + '" alt="' + tpl_title + '">';
 							var content = window.trx_addons_elementor_templates_library.preview.getElements( 'content' );
 							var title_area = jQuery( '#trx_addons_elementor_templates_library_preview .trx_addons_elementor_templates_library_title' );
+							var widget_content = jQuery( '#trx_addons_elementor_templates_library_preview .dialog-widget-content' );
+							if ( TRX_ADDONS_STORAGE['elementor_templates_library'][ template ].demo_url ) {
+								widget_content.addClass( 'with_demo_url' );
+							} else {
+								widget_content.removeClass( 'with_demo_url' );
+							}
 							if ( content.find( '#trx_addons_elementor_templates_library_preview_wrap' ).length > 0 ) {
 								// Dialog already exists - replace the content and header title
 								content.find( '.trx_addons_elementor_templates_library_preview_content' ).html( tpl_image );
@@ -422,16 +750,14 @@ typeof jQuery != 'undefined' &&	! ( function() {
 											+ '</div>';
 								content.append( html );
 
-								jQuery( '#trx_addons_elementor_templates_library_preview_wrap' )
-									// Close the preview window
-									.on( 'click', '.trx_addons_elementor_templates_library_close', function( e ) {
+								jQuery( '#trx_addons_elementor_templates_library_preview' )
+									// Close the preview window on click of the close button or back button
+									.on( 'click', '.trx_addons_elementor_templates_library_close,.trx_addons_elementor_templates_library_item_back', function( e ) {
 										// document.dispatchEvent( event );
 										e.preventDefault();
 										window.trx_addons_elementor_templates_library.preview.hide();
 										return false;
-									} );
-
-								jQuery( '#trx_addons_elementor_templates_library_preview' )
+									} )
 									// Import template
 									.on( 'click', '.trx_addons_elementor_templates_library_item_import', function( e ) {
 										e.preventDefault();
@@ -481,6 +807,9 @@ typeof jQuery != 'undefined' &&	! ( function() {
 								.find('.trx_addons_elementor_templates_library_categories')
 								.html( cats );
 						}
+						// Clear data-attributes for layout filtering to force re-calculate similarity
+						jQuery( '#trx_addons_elementor_templates_library .trx_addons_elementor_templates_library_tab_content' )
+							.data( 'layout', '' );
 						// Update the items in the current tab
 						updateItems( tab );
 					} else {
@@ -502,6 +831,12 @@ typeof jQuery != 'undefined' &&	! ( function() {
 			var templates_url = TRX_ADDONS_STORAGE['elementor_templates_library_url'];
 			var $tab_content = jQuery( '#trx_addons_elementor_templates_library .trx_addons_elementor_templates_library_tab_content[data-tab="' + tab + '"]' );
 			var search = $tab_content.find('.trx_addons_elementor_templates_library_search input').val().toLowerCase();
+			var layout = $tab_content.find('#itlFileInput').data( 'layout' ) || '';
+			var accuracy = $tab_content.find('.trx_addons_elementor_templates_library_image_to_layout_accuracy').data( 'accuracy' );
+			if ( accuracy === undefined ) {
+				accuracy = 75;
+			}
+			var similarity;
 			var cat = navi_style == 'sidebar'
 						? $tab_content.find('.trx_addons_elementor_templates_library_category_active').data('category').toLowerCase()
 						: $tab_content.find('.trx_addons_elementor_templates_library_categories_list').val().toLowerCase();
@@ -511,14 +846,56 @@ typeof jQuery != 'undefined' &&	! ( function() {
 			var new_pagination = false;
 			var idx = 0;
 			var tpl;
+			var tpl_keys = Object.keys( TRX_ADDONS_STORAGE['elementor_templates_library'] );
 			var i, j;
 			var time_new = trx_addons_get_sql_date( new Date().getTime() - 2 * 7 * 24 * 60 * 60 * 1000 ); // Two weeks before the current time
+
+			// Prepare a similarity for all templates if layout is selected
+			// and push a new templates to top the list
+			if ( layout != '' && accuracy > 0 && ( $tab_content.data( 'layout' ) != layout || $tab_content.data( 'accuracy' ) != accuracy ) ) {
+				for ( tpl in TRX_ADDONS_STORAGE['elementor_templates_library'] ) {
+					similarity = getLayoutsSimilarity( TRX_ADDONS_STORAGE['elementor_templates_library'][tpl].layout, layout, accuracy );
+					TRX_ADDONS_STORAGE['elementor_templates_library'][tpl].similar = similarity.similar;
+					TRX_ADDONS_STORAGE['elementor_templates_library'][tpl].similarity = similarity.similarity;
+				}
+			}
+			// Sort templates by similarity
+			if ( layout != '' && accuracy > 0 ) {
+				tpl_keys = tpl_keys.sort( function( a, b ) {
+					return TRX_ADDONS_STORAGE['elementor_templates_library'][a].similar && TRX_ADDONS_STORAGE['elementor_templates_library'][b].similar
+							? TRX_ADDONS_STORAGE['elementor_templates_library'][b].similarity - TRX_ADDONS_STORAGE['elementor_templates_library'][a].similarity
+							: ( TRX_ADDONS_STORAGE['elementor_templates_library'][a].similar ? -1 : ( TRX_ADDONS_STORAGE['elementor_templates_library'][b].similar ? 1 : 0 ) );
+				} );
+
+			// Push new templates to top the list
+			} else {
+				tpl_keys = tpl_keys.sort( function( a, b ) {
+					return TRX_ADDONS_STORAGE['elementor_templates_library'][a].uploaded && TRX_ADDONS_STORAGE['elementor_templates_library'][a].uploaded > time_new
+							&& TRX_ADDONS_STORAGE['elementor_templates_library'][b].uploaded && TRX_ADDONS_STORAGE['elementor_templates_library'][b].uploaded > time_new
+							? 0
+							: ( TRX_ADDONS_STORAGE['elementor_templates_library'][a].uploaded && TRX_ADDONS_STORAGE['elementor_templates_library'][a].uploaded > time_new
+								? -1
+								: ( TRX_ADDONS_STORAGE['elementor_templates_library'][b].uploaded && TRX_ADDONS_STORAGE['elementor_templates_library'][b].uploaded > time_new
+									? 1
+									: 0
+								)
+							);
+				} );
+			}
+
 			// Check if we need a new pagination (if a new search or category selected)
-			if ( $tab_content.data( 'search' ) != search || $tab_content.data( 'cat' ) != cat || $tab_content.data( 'favorites' ) != ( is_favorites ? 1 : 0 ) ) {
+			if ( $tab_content.data( 'search' ) != search
+				|| $tab_content.data( 'layout' ) != layout
+				|| $tab_content.data( 'accuracy' ) != accuracy
+				|| $tab_content.data( 'cat' ) != cat
+				|| $tab_content.data( 'favorites' ) != ( is_favorites ? 1 : 0 )
+			) {
 				$tab_content.data( 'search', search );
+				$tab_content.data( 'layout', layout );
+				$tab_content.data( 'accuracy', accuracy );
 				$tab_content.data( 'cat', cat );
-				$tab_content.data( 'page', 1 );
 				$tab_content.data( 'favorites', is_favorites ? 1 : 0 );
+				$tab_content.data( 'page', 1 );
 				page = 1;
 				new_pagination = true;
 			}
@@ -544,64 +921,60 @@ typeof jQuery != 'undefined' &&	! ( function() {
 				items.push( '' );
 			}
 			// Fill items array by columns
-			for ( j = 0; j < 2; j++ ) {
-				for ( tpl in TRX_ADDONS_STORAGE['elementor_templates_library'] ) {
-					var template = TRX_ADDONS_STORAGE['elementor_templates_library'][tpl];
-					if ( template.type != tab
-						|| ( is_favorites && ! TRX_ADDONS_STORAGE['elementor_templates_library_favorites'][ tpl ] )
-						|| ( cat != 'all' && cat != 'favorites' && ( ',' + template.category + ',').indexOf( ',' + cat + ',' ) < 0 )
-						|| ( search != '' && template.keywords.indexOf( search ) < 0 && template.title.indexOf( search ) < 0 )
-					) {
-						continue;
-					}
-					if ( template.uploaded
-						&& (   j == 0 && template.uploaded <= time_new	// Skip old templates at the first iteration
-							|| j == 1 && template.uploaded > time_new	// Skip new templates at the second iteration
-							)
-					) {
-						continue;
-					}
-					idx++;
-					if ( idx < items_in_page * ( page - 1 ) + 1 || idx > items_in_page * page ) {
-						continue;
-					}
-					items[ column++ % columns ] += '<div class="trx_addons_elementor_templates_library_item"'
-								+ ' data-template-name="' + tpl + '"'
-								+ ' data-template-category="' + template.category + '"'
-								+ ' data-template-keywords="' + template.keywords + '"'
-								+ ' data-template-favorite="' + ( TRX_ADDONS_STORAGE['elementor_templates_library_favorites'][ tpl ] ? 1 : 0 ) + '"'
-							+ '>'
-								+ ( template.uploaded && template.uploaded > time_new
-									? '<span class="trx_addons_elementor_templates_library_item_new">' + TRX_ADDONS_STORAGE['msg_elementor_templates_library_item_new'] + '</span>'
-									: '' )
-								+ '<div class="trx_addons_elementor_templates_library_item_body">'
-									+ '<img src="' + templates_url + '/' + tpl + '/' + tpl + '-small.jpg" alt="' + template.title + '">'
-									+ '<div class="trx_addons_elementor_templates_library_item_preview">'
-										// Icon "Zoom" at the center of overlay
-										+ '<span class="eicon-zoom-in-bold" aria-hidden="true"></span>'
-									+ '</div>'
-								+ '</div>'
-								+ '<div class="trx_addons_elementor_templates_library_item_footer">'
-									+ '<a href="#" class="trx_addons_elementor_templates_library_item_import trx_addons_icon-download elementor-button" data-template="' + tpl + '">' + TRX_ADDONS_STORAGE['msg_elementor_templates_library_import_template'] + '</a>'
-									+ '<span class="trx_addons_elementor_templates_library_item_title">'
-										+ template.title
-										+ ( cat == 'all'
-											? ' / ' + '<a href="#" class="trx_addons_elementor_templates_library_item_category" title="' + TRX_ADDONS_STORAGE['msg_elementor_templates_library_filter_by_category'] + '">'
-												+ TRX_ADDONS_STORAGE['elementor_templates_library_tabs'][tab]['category'][template.category]['title']
-												+ '</a>'
-											: ''
-											)
-									+ '</span>'
-									+ '<span class="trx_addons_elementor_templates_library_item_favorite'
-											+ ( TRX_ADDONS_STORAGE['elementor_templates_library_favorites'][ tpl ] ? ' trx_addons_elementor_templates_library_item_favorite_on' : '' )
-										+ '" data-template="' + tpl + '"'
-									+'>'
-										+ '<span class="trx_addons_elementor_templates_library_item_favorite_icon eicon-heart-o"></span>'
-									+ '</span>'
-								+ '</div>'
-							+ '</div>';
+			for ( j = 0; j < tpl_keys.length; j++ ) {
+				tpl = tpl_keys[ j ];
+				var template = TRX_ADDONS_STORAGE['elementor_templates_library'][tpl];
+				if ( template.type != tab
+					|| ( is_favorites && ! TRX_ADDONS_STORAGE['elementor_templates_library_favorites'][ tpl ] )
+					|| ( cat != 'all' && cat != 'favorites' && ( ',' + template.category + ',').indexOf( ',' + cat + ',' ) < 0 )
+					|| ( search != '' && template.keywords.indexOf( search ) < 0 && template.title.indexOf( search ) < 0 && template.category.indexOf( search ) < 0 )
+					|| ( layout != '' && accuracy > 0 && ! template.similar )
+				) {
+					continue;
 				}
+				idx++;
+				if ( idx < items_in_page * ( page - 1 ) + 1 || idx > items_in_page * page ) {
+					continue;
+				}
+				items[ column++ % columns ] += '<div class="trx_addons_elementor_templates_library_item"'
+							+ ' data-template-name="' + tpl + '"'
+							+ ' data-template-category="' + template.category + '"'
+							+ ' data-template-keywords="' + template.keywords + '"'
+							+ ' data-template-favorite="' + ( TRX_ADDONS_STORAGE['elementor_templates_library_favorites'][ tpl ] ? 1 : 0 ) + '"'
+						+ '>'
+							+ ( template.uploaded && template.uploaded > time_new
+								? '<span class="trx_addons_elementor_templates_library_item_new">' + TRX_ADDONS_STORAGE['msg_elementor_templates_library_item_new'] + '</span>'
+								: '' )
+							+ '<div class="trx_addons_elementor_templates_library_item_body">'
+								+ '<img src="' + templates_url + '/' + tpl + '/' + tpl + '-small.jpg" alt="' + template.title + '">'
+								+ '<div class="trx_addons_elementor_templates_library_item_preview">'
+									// Icon "Zoom" at the center of overlay
+									+ '<span class="eicon-zoom-in-bold" aria-hidden="true"></span>'
+								+ '</div>'
+							+ '</div>'
+							+ '<div class="trx_addons_elementor_templates_library_item_footer">'
+								+ '<a href="#" class="trx_addons_elementor_templates_library_item_import trx_addons_icon-download elementor-button" data-template="' + tpl + '">' + TRX_ADDONS_STORAGE['msg_elementor_templates_library_import_template'] + '</a>'
+								+ '<span class="trx_addons_elementor_templates_library_item_title">'
+									+ template.title
+									+ ( cat == 'all'
+										? ' / ' + '<a href="#" class="trx_addons_elementor_templates_library_item_category" title="' + TRX_ADDONS_STORAGE['msg_elementor_templates_library_filter_by_category'] + '">'
+											+ TRX_ADDONS_STORAGE['elementor_templates_library_tabs'][tab]['category'][template.category]['title']
+											+ '</a>'
+										: ''
+										)
+									// Show similarity percentage if layout is selected and accuracy > 0
+									// + ( layout != '' && accuracy > 0 ? ' (' + Math.round( template.similarity ) + '%)' : '' )
+								+ '</span>'
+								+ '<span class="trx_addons_elementor_templates_library_item_favorite'
+										+ ( TRX_ADDONS_STORAGE['elementor_templates_library_favorites'][ tpl ] ? ' trx_addons_elementor_templates_library_item_favorite_on' : '' )
+									+ '" data-template="' + tpl + '"'
+								+'>'
+									+ '<span class="trx_addons_elementor_templates_library_item_favorite_icon eicon-heart-o"></span>'
+								+ '</span>'
+							+ '</div>'
+						+ '</div>';
 			}
+
 			if ( ! items[0] ) {
 				html += '<div class="trx_addons_elementor_templates_library_empty">' + TRX_ADDONS_STORAGE['msg_elementor_templates_library_empty'] + '</div>';
 			} else {
@@ -692,7 +1065,186 @@ typeof jQuery != 'undefined' &&	! ( function() {
 				alert( message );
 			}
 		}
-	
+
+		function getLayoutsSimilarity( layout1, layout2, accuracy ) {
+			var result = {
+				similar: false,
+				similarity: 0
+			};
+			// If any layout is empty ot undefined, they are not similar
+			if ( ! layout1 || ! layout2 ) {
+				return result;
+			}
+			// If layouts are identical, they are similar
+			if ( layout1 == layout2 ) {
+				result.similar = true;
+				result.similarity = 100;
+				return result;
+			}
+			// If accuracy is 100%, layouts must be identical (on the previous check)
+			if ( accuracy >= 100 ) {
+				return result;
+			}
+			// If accuracy is 0%, layouts are always similar
+			if ( accuracy <= 0 ) {
+				result.similar = true;
+				return result;
+			}
+
+			// Parse layouts into structured objects
+			const sections1 = parseLayout( layout1 );
+			const sections2 = parseLayout( layout2 );
+			const bigger = sections1.length > sections2.length ? sections1 : sections2;
+			const smaller = sections1.length > sections2.length ? sections2 : sections1;
+			
+			// Check if the number of sections is the same
+			if ( accuracy >= 80 && sections1.length !== sections2.length ) {
+				return result;
+			}
+			
+			// Compare each section
+			let sections_result;
+			for ( let i = 0; i < smaller.length; i++ ) {
+				let found = false;
+				for ( let j = 0; j < bigger.length; j++ ) {
+					sections_result = getSectionsSimilarity( smaller[i], bigger[j], accuracy );
+					if ( sections_result.similar ) {
+						found = true;
+						result.similarity += sections_result.similarity;
+						break;
+					}
+				}
+				if ( ! found ) {
+					return result;
+				}
+			}
+			
+			result.similar = true;
+			result.similarity = result.similarity / bigger.length;
+			return result;
+		}
+
+		function parseLayout( layoutStr ) {
+			// Split layout into sections by '|'
+			const sectionStrings = layoutStr.split('|');
+			
+			return sectionStrings.map( sectionStr => {
+				const section = {
+					layout: '',
+					original: sectionStr,
+					is_repeated: true,
+					columns: []
+				};
+				
+				// Split section into parts by ';col' (was by ';' and then check key starts with 'col', but can be broken by extra ';' in the value)
+				const parts = sectionStr.split(';col');
+				let last_value = '';
+				
+				parts.forEach( part => {
+					let [key, value] = part.split(':');
+					if ( key === 'layout' ) {
+						section.layout = value;
+					} else if ( parseInt( key, 10 ) > 0 && value !== undefined && value !== '' && value !== 'empty' ) {	//key.startsWith('col')
+						value = value.trim().replace( ';', ',' );	// Fix for possible extra ';' in the value
+						if ( last_value && value != last_value ) {
+							section.is_repeated = false;
+						}
+						last_value = value;
+						// Split column blocks by ','
+						const blocks = value.split( ',' )
+											.map( block => block.trim() )
+											.filter( block => block !== '' && ['accordion', 'audio', 'button', 'empty', 'form', 'icon', 'image', 'link', 'logo', 'menu', 'subtitle', 'text', 'title', 'video', 'vmenu'].indexOf( block ) >= 0 );
+						// Add a new column with its blocks or merge with the existing one if a column number is less than current columns count
+						const col_idx = parseInt( key.slice(3) ) - 1;
+						if ( section.columns.length > col_idx ) {
+							section.columns[ col_idx ] = section.columns[ col_idx ].concat( blocks );
+						} else {
+							section.columns.push( blocks );
+						}
+					}
+				} );
+
+				if ( section.columns.length == 1 ) {
+					section.is_repeated = false;
+				}
+				
+				return section;
+			} );
+		}
+
+		function getSectionsSimilarity( section1, section2, accuracy ) {
+			var result = {
+				similar: false,
+				similarity: 0
+			};
+			// Check same layout repeated status
+			if ( section1.is_repeated !== section2.is_repeated ) {
+				return result;
+			}
+
+			// Check same number of columns (allow two columns difference for repeated layouts)
+			if ( Math.abs( section1.columns.length - section2.columns.length ) > ( section1.is_repeated ? 2 : 0 ) ) {
+				return result;
+			}
+
+			// Compare each column
+			let similarity = 0,
+				columns_min = Math.min( section1.columns.length, section2.columns.length ),
+				columns_max = Math.min( section1.columns.length, section2.columns.length ),
+				match = 0;
+			for ( let i = 0; i < columns_min; i++ ) {
+				similarity = getColumnsSimilarity( section1.columns[i], section2.columns[i] );
+				result.similarity += similarity;
+				if ( similarity == 0 ) {
+					return result;
+				} else if ( similarity >= accuracy ) {
+					match++;
+				}
+			}
+			result.similar = match >= columns_min / 2;
+			result.similarity = result.similarity / columns_max;
+			return result;
+		}
+
+		function areColumnsSimilar( col1, col2, accuracy ) {
+			return getColumnsSimilarity( col1, col2 ) >= accuracy;
+		}
+
+		function getColumnsSimilarity( col1, col2 ) {
+			const maxLength = Math.max( col1.length, col2.length );
+			
+			// If both columns are empty, consider them similar
+			if ( maxLength === 0 ) {
+				return true;
+			}
+			
+			let matchCount = 0;
+			
+			// Compare blocks in the columns
+			for ( let i = 0, j = 0; i < col1.length && j < col2.length; i++, j++ ) {
+				if ( col1[i] === col2[j] ) {
+					matchCount++;
+				} else if ( ['logo', 'image', 'icon'].indexOf( col1[i] ) >= 0 && ['logo', 'image', 'icon'].indexOf( col2[j] ) >= 0 ) {				// Treat 'logo', 'image' and 'icon' as similar
+					matchCount++;
+				} else if ( ['subtitle', 'link', 'button'].indexOf( col1[i] ) >= 0 && ['subtitle', 'link', 'button'].indexOf( col2[j] ) >= 0 ) {	// Treat 'subtitle', 'link' and 'button' as similar
+					matchCount++;
+				} else if ( ['subtitle', 'link', 'button'].indexOf( col1[i] ) >= 0 && col2[j] == 'title' && col1.length > i + 1 && col1[i + 1] == col2[j] ) {	// Skip 'subtitle'/'button' block in the first column
+					i++;
+					matchCount++;
+				} else if ( ['subtitle', 'link', 'button'].indexOf( col2[i] ) >= 0 && col1[j] == 'title' && col2.length > j + 1 && col1[i] == col2[j + 1] ) {	// Skip 'subtitle'/'button' block in the second column
+					j++;
+					matchCount++;
+				} else if ( ['subtitle', 'title', 'text'].indexOf( col1[i] ) >= 0 && ['subtitle', 'title', 'text'].indexOf( col2[j] ) >= 0 ) {		// Treat 'subtitle', 'title' and 'text' as similar
+					matchCount++;
+				}
+			}
+			
+			// Calculate similarity percentage
+			const similarityPercent = ( matchCount / maxLength ) * 100;
+
+			return similarityPercent;
+		}
+
 		window.trx_addons_elementor_templates_library.modal = null;
 		window.trx_addons_elementor_templates_library.preview = null;
 

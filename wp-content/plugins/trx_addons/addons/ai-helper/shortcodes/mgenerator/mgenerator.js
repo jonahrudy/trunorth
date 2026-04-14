@@ -101,7 +101,9 @@ jQuery( document ).ready( function() {
 						val = Math.max( min, val - step );
 					}
 					// Round the value to 1 decimal place if the step is less than 1 to avoid endless digitals (7.699999999999999 instead of 7.7)
-					if ( step < 1 ) {
+					if ( step < 0.1 ) {
+						val = Math.round( val * 100 ) / 100;
+					} else if ( step < 1 ) {
 						val = Math.round( val * 10 ) / 10;
 					}
 					$input.val( val ).trigger( 'change' );
@@ -219,19 +221,7 @@ jQuery( document ).ready( function() {
 				// Callback to get music from server
 				function getMusic( response ) {
 					// Prepare response
-					var rez = {};
-					if ( response == '' || response == 0 ) {
-						rez = { error: TRX_ADDONS_STORAGE['msg_ai_helper_error'] };
-					} else if ( typeof response == 'string' ) {
-						try {
-							rez = JSON.parse( response );
-						} catch (e) {
-							rez = { error: TRX_ADDONS_STORAGE['msg_ai_helper_error'] };
-							console.log( response );
-						}
-					} else {
-						rez = response;
-					}
+					var rez = trx_addons_parse_ajax_response( response, TRX_ADDONS_STORAGE['msg_ai_helper_error'] );
 
 					$form.removeClass( 'sc_mgenerator_form_loading' );
 
@@ -271,7 +261,6 @@ jQuery( document ).ready( function() {
 								var timestamp = currentDate.getTime();
 								var icon = $form.data( 'mgenerator-download-icon' ) || 'trx_addons_icon-download';
 								var html = '<div class="sc_mgenerator_music_item_wrap">';
-dcl(rez);
 								for ( var i = 0; i < rez.data.music.length; i++ ) {
 									html += '<div class="sc_mgenerator_music_item'
 												+ ( rez.data.fetch_id ? ' sc_mgenerator_music_fetch' : '' )
