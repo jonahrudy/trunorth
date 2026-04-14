@@ -39,6 +39,10 @@
 						type: 'number',
 						default: 0
 					},
+					slides_min_width: {
+						type: 'number',
+						default: 0
+					},
 					slides_parallax: {
 						type: 'number',
 						default: 0
@@ -325,6 +329,17 @@
 									'dependency': {
 										'engine': ['swiper'],
 										'effect': ['slide', 'coverflow', 'swap', 'cards', 'creative']
+									}
+								},
+								// Min.width of slides
+								{
+									'name': 'slides_min_width',
+									'title': __( 'Min.width of slides in the Swiper', "trx_addons" ),
+									'type': 'number',
+									'min': 0,
+									'max': 500,
+									'dependency': {
+										'engine': ['swiper'],
 									}
 								},
 								// Parallax coefficient to shift images while slides change
