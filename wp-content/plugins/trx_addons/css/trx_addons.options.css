@@ -1065,7 +1065,7 @@
 .trx_addons_range_slider_value {
   display: inline-block;
   vertical-align: top;
-  width: 66px !important;
+  width: 70px !important;
   margin-right: 10px !important;
   text-align: right;
 }
@@ -1404,4 +1404,4 @@ div.trx_addons_range_slider.ui-slider-vertical .ui-slider-range-max {
   overflow-y: auto;
 }
 
-/*# sourceMappingURL=trx_addons.options.css.map */
+
