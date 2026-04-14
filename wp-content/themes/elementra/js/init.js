@@ -376,7 +376,7 @@ jQuery( document ).ready( function() {
 
 							// What to do once video loads (initial frame)
 							onLoad: function () {
-								//document.querySelector('#background_video_cover').style.display = 'none';
+								// For example: document.querySelector('#background_video_cover').style.display = 'none';
 							}
 						}
 					);
@@ -434,9 +434,9 @@ jQuery( document ).ready( function() {
 					function() {
 						var $self = jQuery( this );
 						// If item now invisible or it's a video in the Revolution Slider
-						if (   $self.parents( 'div:hidden,section:hidden,article:hidden' ).length > 0
+						if (   $self.hasClass( 'sr7-media' )
 							|| $self.parent().is( 'rs-bgvideo' )
-							|| $self.parents( 'rs-slide' ).length > 0
+							|| $self.parents( 'rs-slide,div:hidden,section:hidden,article:hidden' ).length > 0
 						) {
 							return;
 						}
@@ -450,16 +450,10 @@ jQuery( document ).ready( function() {
 														+ ',.with_video_autoplay'
 														+ ',.slider-slide'
 														+ ',.sc_layouts_title'
-														// + ',.mfp-content'
-														// Uncomment the next row to 
-														// disable mediaelements init on the Elementor's video shortcode
-														// to support a video ratio, specified in a shortcode parameters
-														// + ',.elementor-fit-aspect-ratio'
 													);
 						if (   ! $self.hasClass( 'no-mejs' )
 							&& ! $self.hasClass( 'no-mediaelement' )
 							&& ! $self.hasClass( 'wp-block-cover__video-background' )
-							// && ! $self.attr( 'autoplay' )
 							&& $self.addClass( 'inited' ).parents( not_init_in_containers ).length === 0
 							&& ( ELEMENTRA_STORAGE['init_all_mediaelements']
 								|| ( ! $self.hasClass( 'wp-audio-shortcode' )
@@ -735,14 +729,8 @@ jQuery( document ).ready( function() {
 			}
 		).done(	function( response ) {
 			panel.removeClass( 'elementra_loading' );
-			var rez = {};
-			try {
-				rez = JSON.parse( response );
-			} catch (e) {
-				rez = { error: ELEMENTRA_STORAGE['msg_ajax_error'] };
-				console.log( response );
-			}
-			if (rez.error !== '') {
+			var rez = elementra_parse_ajax_response( response );
+			if ( rez.error !== '' ) {
 				panel.html( '<div class="elementra_error">' + rez.error + '</div>' );
 			} else {
 				// Get inline styles and add to the page styles
@@ -754,7 +742,10 @@ jQuery( document ).ready( function() {
 					.prepend( rez.data )
 					.fadeIn(
 						function() {
-//							elementra_document_animate_to('#content_skip_link_anchor');
+							// Scroll page to the content started
+							if ( false ) {
+								elementra_document_animate_to('#content_skip_link_anchor');
+							}
 							$document.trigger( 'action.init_hidden_elements', [panel] );
 							$window.trigger( 'scroll' );
 							// Remove old content
@@ -803,7 +794,7 @@ jQuery( document ).ready( function() {
 							paged: page + 1
 						}
 					).done(
-						function(response) {
+						function( response ) {
 							// Get inline styles and add to the page styles
 							elementra_import_inline_styles( response );
 							// Get tags 'link' from response and add its to the 'head'
@@ -847,15 +838,9 @@ jQuery( document ).ready( function() {
 							page: page + 1
 						}
 					).done(
-						function(response) {
-							var rez = {};
-							try {
-								rez = JSON.parse( response );
-							} catch (e) {
-								rez = { error: ELEMENTRA_STORAGE['msg_ajax_error'] };
-								console.log( response );
-							}
-							if (rez.error !== '') {
+						function( response ) {
+							var rez = elementra_parse_ajax_response( response );
+							if ( rez.error !== '' ) {
 								panel.html( '<div class="elementra_error">' + rez.error + '</div>' );
 							} else {
 								// Get inline styles and add to the page styles
@@ -1144,92 +1129,6 @@ jQuery( document ).ready( function() {
 		}
 
 		var $menus = cont.find( '.sc_layouts_menu:not(.inited_kbd)' ).addClass( 'inited_kbd' );
-		// Keyboard navigation in the menus
-		$menus
-			.on( 'keydown', 'li > a', function(e) {
-				var handled = false,
-					link = jQuery( this ),
-					li = link.parent(),
-					ul = li.parent(),
-					li_parent = ul.parent().prop( 'tagName' ) == 'LI' ? ul.parent() : false,
-					item = false;
-				if ( 32 == e.which ) {								// Space
-					link.trigger( 'click' );
-					handled = true;
-				} else if ( 27 == e.which ) {						// Esc
-					if ( li_parent ) {
-						item = li_parent.find( '> a' );
-						if ( item.length > 0 ) {
-							item.get(0).focus();
-						}
-					}
-					handled = true;
-				} else if ( 37 == e.which ) {						// Left
-					if ( li_parent ) {
-						item = li_parent.find( '> a' );
-						if ( item.length > 0 ) {
-							item.get(0).focus();
-						}
-					} else if ( li.index() > 0 ) {
-						item = li.prev().find( '> a' );
-						if ( item.length > 0 ) {
-							item.eq(0).focus();
-						}
-					}
-					handled = true;
-				} else if ( 38 == e.which ) {						// Top
-					if ( li.index() > 0 ) {
-						item = li.prev().find( '> a' );
-						if ( item.length > 0 ) {
-							item.get(0).focus();
-						}
-					} else if ( li_parent ) {
-						item = li_parent.find( '> a' );
-						if ( item.length > 0 ) {
-							item.get(0).focus();
-						}
-					}
-					handled = true;
-				} else if ( 39 == e.which ) {						// Right
-					if ( li_parent ) {
-						if ( li.find( '> ul' ).length == 1 ) {
-							item = li.find( '> ul > li:first-child a' );
-							if ( item.length > 0 ) {
-								item.get(0).focus();
-							}
-						}
-					} else if ( li.next().prop( 'tagName' ) == 'LI' ) {
-						item = li.next().find( '> a' );
-						if ( item.length > 0 ) {
-							item.get(0).focus();
-						}
-					}
-					handled = true;
-				} else if ( 40 == e.which ) {						// Bottom
-					if ( li_parent || li.find( '> ul' ).length === 0 ) {
-						if ( li.next().prop( 'tagName' ) == 'LI' ) {
-							item = li.next().find( '> a' );
-							if ( item.length > 0 ) {
-								item.get(0).focus();
-							}
-						}
-					} else if ( li.find( '> ul' ).length == 1 ) {
-						item = li.find( '> ul > li:first-child a' );
-						if ( item.length > 0 ) {
-							item.get(0).focus();
-						}
-					}
-					handled = true;
-				}
-				if ( handled ) {
-					if ( ! $body.hasClass( 'show_outline' ) ) {
-						$body.addClass( 'show_outline' );
-					}
-					e.preventDefault();
-					return false;
-				}
-				return true;
-			} );
 
 		// Add images to the menu items with classes image-xxx
 		$menus.find( 'li[class*="image-"]' ).each(
@@ -1267,7 +1166,7 @@ jQuery( document ).ready( function() {
 				.append( '<span class="open_child_menu"></span>' ).end()
 			.find ( 'a:not([href="#"])' )
 				.on( 'click', function(e) {
-					if ( ! jQuery( e.target ).hasClass( 'open_child_menu' ) ) {
+					if ( ! jQuery( e.target ).hasClass( 'open_child_menu' ) && ! jQuery(this).is( '[data-tab]' ) ) {
 						elementra_mobile_menu_close();
 					}
 				} );
@@ -2396,7 +2295,6 @@ jQuery( document ).ready( function() {
 				}
 			);
 		}
-		//$menu_side_wrap.find('#toc_menu').height(toc_items_height + toc_items.length - toc_items.eq(0).height());
 	}
 
 	// Scroll sidemenu (if present)
