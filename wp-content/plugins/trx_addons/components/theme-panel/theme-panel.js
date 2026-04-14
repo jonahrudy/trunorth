@@ -9,6 +9,17 @@ jQuery(document).ready( function() {
 	var $theme_panel = jQuery( '#trx_addons_theme_panel' );
 
 	if ( $theme_panel.length ) {
+		// Fix for Elementor to prevent redirecting (after first install) when Theme Panel is opened
+		// setTimeout is used to wait until Elementor's handler is attached (it is attached with timeout 10ms)
+		setTimeout( function() {
+			jQuery( document ).off( 'click', '.elementor-editor-one-pointer-got-it' );
+			jQuery( document ).on( 'click', '.elementor-editor-one-pointer-got-it', function( e ) {
+				e.preventDefault();
+				jQuery( this ).closest( '.wp-pointer' ).fadeOut();
+				return false;
+			} );
+		}, 300 );
+		
 		// Add 'sticky' behaviour to the buttons
 		var $buttons = $theme_panel.find( '.trx_addons_theme_panel_buttons'
 										+ ',.trx_addons_theme_panel_plugins_buttons'
@@ -38,7 +49,28 @@ jQuery(document).ready( function() {
 			.on('click', function(e) {
 				var form = jQuery( this ).parents( 'form' ),
 					regexp = new RegExp(TRX_ADDONS_STORAGE['email_mask']);
-				if (
+				if ( jQuery('[name="trx_addons_user_name"]').val() == '' && jQuery('[name="trx_addons_user_name"]').data( 'required' ) ) {
+					trx_addons_msgbox_warning(
+						TRX_ADDONS_STORAGE[ 'msg_field_name_empty' ],
+						TRX_ADDONS_STORAGE[ 'msg_activate_theme' ]
+					);
+					e.preventDefault();
+					return false;			
+				} else if ( jQuery('[name="trx_addons_user_email"]').val() == '' && jQuery('[name="trx_addons_user_email"]').data( 'required' ) ) {
+					trx_addons_msgbox_warning(
+						TRX_ADDONS_STORAGE[ 'msg_field_email_empty' ],
+						TRX_ADDONS_STORAGE[ 'msg_activate_theme' ]
+					);
+					e.preventDefault();
+					return false;			
+				} else if ( jQuery('[name="trx_addons_user_email"]').val() !== '' && !regexp.test(jQuery('[name="trx_addons_user_email"]').val()) ) {
+					trx_addons_msgbox_warning(
+						TRX_ADDONS_STORAGE[ 'msg_field_email_not_valid' ],
+						TRX_ADDONS_STORAGE[ 'msg_activate_theme' ]
+					);
+					e.preventDefault();
+					return false;			
+				} else if (
 					( jQuery('[name="trx_addons_activate_theme_source"]:checked').val() == 'code' && jQuery('[name="trx_addons_activate_theme_code"]').val() === '' )
 					||
 					( jQuery('[name="trx_addons_activate_theme_source"]:checked').val() == 'token' && jQuery('[name="trx_addons_activate_theme_token"]').val() === '' )
@@ -49,13 +81,6 @@ jQuery(document).ready( function() {
 					);
 					e.preventDefault();
 					return false;
-				} else if ( jQuery('[name="trx_addons_user_email"]').val() !== '' && !regexp.test(jQuery('[name="trx_addons_user_email"]').val()) ) {
-					trx_addons_msgbox_warning(
-						TRX_ADDONS_STORAGE[ 'msg_field_email_not_valid' ],
-						TRX_ADDONS_STORAGE[ 'msg_activate_theme' ]
-					);
-					e.preventDefault();
-					return false;			
 				} else if ( ! jQuery('[name="trx_addons_user_agree"]').get(0).checked && ( jQuery('[name="trx_addons_user_name"]').val() !== '' || jQuery('[name="trx_addons_user_email"]').val() !== '' ) ) {
 					trx_addons_msgbox_confirm(
 						TRX_ADDONS_STORAGE[ 'msg_activate_theme_agree' ],
@@ -102,6 +127,77 @@ jQuery(document).ready( function() {
 					},
 					[ TRX_ADDONS_STORAGE[ 'msg_deactivate_theme_bt_yes' ], TRX_ADDONS_STORAGE[ 'msg_deactivate_theme_bt_no' ] ]
 				);
+				e.preventDefault();
+				return false;
+			} );
+
+		// Extend license
+		$theme_panel.find( '.trx_addons_theme_panel_license_extend' )
+			.on( 'click', function(e) {
+				trx_addons_msgbox_dialog(
+					TRX_ADDONS_STORAGE[ 'msg_extend_license_agree' ],
+					TRX_ADDONS_STORAGE[ 'msg_extend_license' ],
+					function( box ) {
+						var bt = box.find('.trx_addons_msgbox_button').eq(0);
+						bt.addClass('trx_addons_msgbox_button_disabled trx_addons_loading');
+						jQuery.post( TRX_ADDONS_STORAGE['ajax_url'], {
+								'action': 'trx_addons_action_extend_license_url',
+								'nonce': TRX_ADDONS_STORAGE['ajax_nonce'],
+								is_admin_request: 1
+							},
+							function( response ) {
+								var rez = trx_addons_parse_ajax_response( response );
+								if ( rez.error === '' ) {
+									bt.text(TRX_ADDONS_STORAGE[ 'msg_extend_license_bt_yes' ] )
+										.data( 'extend-url', rez.data )
+										.removeClass('trx_addons_msgbox_button_disabled trx_addons_loading');
+								} else {
+									box.find('.trx_addons_msgbox_body').html( '<span class="trx_addons_error">' + rez.error + '</span>' );
+									bt.removeClass('trx_addons_loading');
+								}
+							}
+						);
+					},
+					function( btn ) {
+						if ( btn === 1 ) {
+							var url = jQuery('.trx_addons_msgbox_button').eq(0).data('extend-url');
+							if ( url === undefined ) {
+								return;
+							}
+							window.open( url );
+						}
+					},
+					[ TRX_ADDONS_STORAGE[ 'msg_extend_license_bt_yes2' ], TRX_ADDONS_STORAGE[ 'msg_extend_license_bt_no' ] ]
+				);
+				e.preventDefault();
+				return false;
+			} );
+
+		// Check again license
+		$theme_panel.find( '.trx_addons_theme_panel_license_check' )
+			.on( 'click', function(e) {
+				var $link = jQuery(this);
+				if ( ! $link.hasClass( 'trx_addons_loading' ) ) {
+					$link.addClass( 'trx_addons_loading');
+					jQuery.post( TRX_ADDONS_STORAGE['ajax_url'], {
+							'action': 'trx_addons_action_check_license',
+							'nonce': TRX_ADDONS_STORAGE['ajax_nonce'],
+							is_admin_request: 1
+						},
+						function( response ) {
+							var rez = trx_addons_parse_ajax_response( response );
+							if ( rez.error === '' ) {
+								$link
+									.removeClass( 'trx_addons_loading' )
+									.siblings( '.trx_addons_theme_panel_section_license_info_value' )
+										.text( rez.data );
+							} else {
+								trx_addons_msgbox_warning( rez.error, TRX_ADDONS_STORAGE['msg_check_license'] );
+								$link.removeClass('trx_addons_loading');
+							}
+						}
+					);
+				}
 				e.preventDefault();
 				return false;
 			} );
@@ -264,9 +360,11 @@ jQuery(document).ready( function() {
 			} );
 		} else {
 			// Scroll to the theme panel after page reloaded
-			trx_addons_document_animate_to( jQuery( '#trx_addons_theme_panel_message' ).length ? 'trx_addons_theme_panel_message' : 'trx_addons_theme_panel', function() {
-				buttons_scroll_handler();
-			} );
+			if ( location.hash != '#trx_addons_theme_panel_section_license' ) {
+				trx_addons_document_animate_to( jQuery( '#trx_addons_theme_panel_message' ).length ? 'trx_addons_theme_panel_message' : 'trx_addons_theme_panel', function() {
+					buttons_scroll_handler();
+				} );
+			}
 		}
 
 		// Restore wizard mode after the Theme Options is saved
@@ -335,13 +433,29 @@ jQuery(document).ready( function() {
 					var plugins_total = jQuery( this ).parents( '.trx_addons_theme_panel_plugins_installer' ).find( '.trx_addons_theme_panel_plugins_list_item_checked' ).length;
 					if ( plugins_total > 0 ) {
 						bt
-							.attr( 'disabled', 'disabled' )
-							.data( 'need-reload', '1' );
+							.data( 'need-reload', '1' )
+							.attr( 'disabled', 'disabled' );
 						jQuery('.trx_addons_theme_panel')
 							.addClass( 'trx_addons_theme_panel_busy' )
 							.data( 'plugins-total', plugins_total );
 						trx_addons_plugins_installer();
 					}
+				}
+				e.preventDefault();
+				return false;
+			} );
+
+		//Run theme updater
+		$theme_panel.find( '.trx_addons_theme_panel_update_theme' )
+			.on( 'click', function(e) {
+				var bt = jQuery(this);
+				if ( bt.attr( 'disabled' ) !== 'disabled' ) {
+					bt
+						.data( 'need-reload', '1' )
+						.attr( 'disabled', 'disabled' );
+					jQuery('.trx_addons_theme_panel')
+						.addClass( 'trx_addons_theme_panel_busy' );
+					trx_addons_theme_updater();
 				}
 				e.preventDefault();
 				return false;
@@ -446,10 +560,10 @@ jQuery(document).ready( function() {
 								response = response.substr( pos );
 								rez = JSON.parse( response );
 							} else {
-								rez.error = TRX_ADDONS_STORAGE['msg_get_pro_error'];
+								rez.error = TRX_ADDONS_STORAGE['msg_ajax_error'];
 							}
 						} catch (e) {
-							rez = { error: TRX_ADDONS_STORAGE['msg_get_pro_error'] };
+							rez = { error: TRX_ADDONS_STORAGE['msg_ajax_error'] };
 							console.log( response );
 						}
 					}
@@ -491,6 +605,135 @@ jQuery(document).ready( function() {
 						jQuery('.trx_addons_percent_loader .trx_addons_percent_loader_value').html(prc+'%');
 						// Doing next step
 						trx_addons_plugins_installer();
+					}
+				}
+			);
+		}
+	}
+
+	// Theme Updater
+	var tu_attempts = 0;
+
+	function trx_addons_theme_updater() {
+
+		var $bt = jQuery( '.trx_addons_theme_panel_update_theme' );
+		var state = $bt.data('state');
+
+		if ( state === 'done' || tu_attempts > 3 ) {
+			if ( $bt.data('need-reload') == '1' ) {
+				location.reload( true );
+			}
+			$bt.removeClass('trx_addons_loading');
+			jQuery('.trx_addons_theme_panel').removeClass('trx_addons_theme_panel_busy');
+			return;
+		}
+
+		var url   = trx_addons_add_to_url( $bt.data( state + '-nonce' ), { 'activate-multi': 1 } ),	// Add parameter 'activate-multi' to prevent 'welcome screen' from some plugins
+			text  = $bt.data( state + '-progress' );
+
+		$bt.html( text ).toggleClass( 'trx_addons_loading', true );
+
+		// Request action
+		tu_attempts++;
+
+		// Repeat checking after the plugin activation to avoid breaking install process if server not respond
+		var check_again = false,
+			check_again_timer = state == 'activate'
+								? setTimeout( function() {
+										check_again = true;
+										trx_addons_theme_updater_check_state();
+									}, 30000 )
+								: 0;
+
+		// Do action: install or activate plugin or update theme
+		jQuery.get( url ).done(
+			function( response ) {
+				if ( check_again_timer ) {
+					clearTimeout( check_again_timer );
+					check_again_timer = 0;
+				}
+				// Repeat checking after the plugin activation to prevent breaking install process if server not respond
+				if ( state != 'update' ) {
+					check_again = false;
+					check_again_timer = state == 'activate'
+											? setTimeout( function() {
+													check_again = true;
+													trx_addons_theme_updater_check_state();
+												}, 30000 )
+											: 0;
+					// Check current state of the plugin
+					trx_addons_theme_updater_check_state();
+				} else {
+					$bt
+						.data( 'state', 'done' )
+						.html( $bt.data( 'done-progress' ) );
+					trx_addons_theme_updater();
+				}
+			}
+		);
+
+		// Check state of the plugin
+		function trx_addons_theme_updater_check_state() {
+			jQuery.post(
+				// Add parameter 'activate-multi' to prevent 'welcome screen' from some plugins
+				trx_addons_add_to_url( TRX_ADDONS_STORAGE['ajax_url'], { 'activate-multi': 1 } ), {
+					'action': 'trx_addons_check_plugin_state',
+					'nonce': TRX_ADDONS_STORAGE['ajax_nonce'],
+					'slug': $bt.data('slug'),
+					is_admin_request: 1
+				},
+				function( response ) {
+					if ( check_again && ! check_again_timer ) {
+						return;
+					}
+					if ( check_again_timer ) {
+						clearTimeout(check_again_timer);
+						check_again_timer = 0;
+					}
+					var rez  = { error: '', state: '' },
+						pos  = -1;
+					if ( response !== '' &&  response !== 0 && response.indexOf('{"error":') >= 0 ) {
+						try {
+							if ( (pos = response.indexOf('{"error":')) >= 0 ) {
+								response = response.substr( pos );
+								rez = JSON.parse( response );
+							} else {
+								rez.error = TRX_ADDONS_STORAGE['msg_ajax_error'];
+							}
+						} catch (e) {
+							rez = { error: TRX_ADDONS_STORAGE['msg_ajax_error'] };
+							console.log( response );
+						}
+					}
+					if ( rez.error !== '' ) {
+						trx_addons_msgbox_warning( rez.error + "\n" + TRX_ADDONS_STORAGE['msg_update_theme_try_again'], TRX_ADDONS_STORAGE['msg_update_theme'] );
+						tu_attempts = 0;
+					} else {
+						if ( rez.state == 'activate' ) {
+							if ( state == 'install' ) {
+								state = 'activate';
+								$bt
+									.data( 'state', state )
+									.html( $bt.data( state + '-progress' ) );
+								tu_attempts = 0;
+							} else {
+								tu_attempts++;
+							}
+						} else if ( rez.state == 'deactivate' ) {
+							if ( state == 'install' || state == 'activate' ) {
+								state = 'update';
+								$bt
+									.data( 'state', state )
+									.html( $bt.data( state + '-progress' ) );
+								tu_attempts = 0;
+							} else {
+								tu_attempts++;
+							}
+						} else {
+							tu_attempts++;
+						}
+						// Doing next step
+						trx_addons_theme_updater();
 					}
 				}
 			);

@@ -22,7 +22,7 @@ jQuery(document).ready(function(){
 			posts.removeClass('trx_addons_checkbox_particular');
 		}
 	});
-	jQuery('#trx_importer_form .trx_importer_part_pages input[type="checkbox"]').on('change', function() {
+	jQuery('#trx_importer_form').on('change', '.trx_importer_part_pages input[type="checkbox"]', function() {
 		var all = jQuery(this).parents('.trx_importer_part_pages').find('input[type="checkbox"]').length,
 			checked = jQuery(this).parents('.trx_importer_part_pages').find('input[type="checkbox"]:checked').length,
 			need_posts = jQuery('#trx_importer_form .trx_importer_item[data-need-posts="1"]:checked').length;
@@ -54,8 +54,22 @@ jQuery(document).ready(function(){
 	});
 
 	// Change demo type
-	jQuery('.trx_importer_demo_type input[type="radio"]').on('change', function() {
-		var type = jQuery(this).val();
+	jQuery('.trx_importer_demo_type input[type="radio"],.trx_importer_skins select').on('change', function() {
+		var $field = jQuery(this);
+		var type = $field.val();
+		// Clear all checkboxes if the skin selected
+		if ( $field.closest( '.trx_importer_skins' ).length > 0 ) {
+			var $form = $field.parents('form');
+			$form.find('input[type="checkbox"].trx_importer_item').each( function() {
+				jQuery(this).get(0).checked = false;
+			} );
+			if ( type ) {
+				$form.find('.trx_importer_params,.trx_importer_advanced_settings_plugins' ).hide();
+			} else {
+				$form.find('.trx_importer_params,.trx_importer_advanced_settings_plugins' ).show();
+			}
+		}
+
 		// Refresh list of the pages
 		var data = {
 			ajax_nonce: TRX_ADDONS_STORAGE['ajax_nonce'],
@@ -63,17 +77,18 @@ jQuery(document).ready(function(){
 			demo_type: type,
 			is_admin_request: 1
 		};
+		jQuery('.trx_importer_part_pages').addClass('trx_addons_loading');
 		jQuery.post( TRX_ADDONS_STORAGE['ajax_url'], data, function( response ) {
 			var rez = trx_addons_parse_ajax_response( response );
 			if (rez.error === '') {
 				var html = '';
-				for (var id in rez.data) {
-					html += '<label>'
-							+ '<input class="trx_importer_pages" type="checkbox" value="'+id+'" name="import_pages_'+id+'" id="import_pages_'+id+'" />'
-							+ ' ' + rez.data[id]
+				for (var i in rez.data) {
+					html += '<label class="trx_importer_checkbox_label trx_importer_pages_label">'
+							+ '<input class="trx_importer_pages" type="checkbox" value="' + rez.data[i].id + '" name="import_pages_' + rez.data[i].id + '" id="import_pages_' + rez.data[i].id + '" />'
+							+ ' ' + rez.data[i].title
 							+ '</label>';
 				}
-				if (html !== '') jQuery('.trx_importer_part_pages').html(html);
+				jQuery('.trx_importer_part_pages').html( html ).removeClass('trx_addons_loading');
 			}
 		});
 	});
@@ -109,7 +124,7 @@ jQuery(document).ready(function(){
 		set_controls.find('label').removeClass('trx_importer_demo_set_active');
 		set_radio.parent().addClass('trx_importer_demo_set_active');
 		// Check all components if full installation is checked and uncheck otherwise
-		jQuery('.trx_importer_advanced_settings_block > label > input[type="checkbox"]').each(function() {
+		jQuery('.trx_importer_advanced_settings_block > label > input[type="checkbox"],.trx_importer_advanced_settings_block > .trx_importer_params > label > input[type="checkbox"]').each(function() {
 			this.checked = set == 'full';
 			var chk = jQuery(this);
 			if ( chk.hasClass('trx_importer_item_posts') ) {
@@ -160,8 +175,11 @@ jQuery(document).ready(function(){
 	// Start import
 	jQuery('.trx_importer_section').on('click', '.trx_buttons input[type="button"]', function() {
 		var steps = [];
-		var demo_type = jQuery('#trx_importer_form [name="demo_type"]:checked').val();
 		var demo_set = jQuery('#trx_importer_form [name="demo_set"]:checked').val();
+		var demo_skin = jQuery( '.trx_importer_skins select' ).val();
+		var demo_type = demo_set == 'part' && demo_skin
+						? demo_skin
+						: jQuery('#trx_importer_form [name="demo_type"]:checked').val();
 		var demo_parts = '', demo_pages = '';
 		// Collect parts to be imported
 		jQuery(this).parents('form').find('input[type="checkbox"].trx_importer_item').each(function() {
