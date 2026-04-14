@@ -74,7 +74,9 @@
 								{
 									'name': 'content',
 									'title': __( 'Content', "trx_addons" ),
-									'descr': __( "Content, created with any table-generator, for example: http://www.impressivewebs.com/html-table-code-generator/ or http://html-tables.com/", "trx_addons" ),
+									'descr': __( 'Content, created with any table-generator, for example: %1$s or %2$s', "trx_addons" )
+												.replace( '%1$s', 'http://www.impressivewebs.com/html-table-code-generator/' )
+												.replace( '%2$s', 'http://html-tables.com/' ),
 									'type': 'textarea'
 								}
 							], 'trx-addons/table', props ), props )

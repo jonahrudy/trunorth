@@ -195,6 +195,30 @@
   display: inline-block;
   vertical-align: top;
   padding-left: 2px;
+  padding-right: 20px;
+  position: relative;
+  -webkit-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.trx_importer_part_pages.trx_addons_loading:before {
+  position: absolute;
+  z-index: 10;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+.trx_importer_part_pages.trx_addons_loading:after {
+  content: ' ';
+  position: absolute;
+  z-index: 8;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(204, 204, 204, 0.5);
 }
 
 .trx_importer_item_description {
@@ -204,6 +228,18 @@
 .trx_importer_subtitle {
   font-weight: 600;
   margin: 0 0 1em;
+}
+
+.trx_addons_tabs_theme_panel.trx_addons_panel_wizard .trx_importer_subtitle_skins_wizard {
+  display: block;
+}
+.trx_addons_tabs_theme_panel.trx_addons_panel_wizard .trx_importer_subtitle_skins_no_wizard,
+.trx_addons_tabs_theme_panel.trx_addons_panel_wizard .trx_importer_skins {
+  display: none !important;
+}
+
+.trx_addons_tabs_theme_panel:not(.trx_addons_panel_wizard) .trx_importer_subtitle_skins_wizard {
+  display: none !important;
 }
 
 .trx_importer_advanced_settings {
@@ -355,4 +391,4 @@
   }
 }
 
-/*# sourceMappingURL=importer.css.map */
+

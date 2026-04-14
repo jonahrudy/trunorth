@@ -179,6 +179,12 @@
   background-color: #fafafa;
 }
 
+/* Free theme decoration */
+body.trx_addons_free_theme .trx_addons_theme_panel ul.ui-tabs-nav,
+body.trx_addons_free_theme .trx_addons_theme_panel .trx_addons_theme_panel_section_title_label_inactive {
+  display: none;
+}
+
 /* Theme info */
 .trx_addons_theme_panel_section_title {
   font-size: 1.6875em;
@@ -192,6 +198,7 @@
   font-size: 2.5em;
   line-height: 1.4em;
   font-weight: 300;
+  margin-bottom: 0;
 }
 
 [class*="trx_addons_theme_panel_section_title_label"] {
@@ -219,7 +226,27 @@
   background-color: #00a0d2;
 }
 
+.trx_addons_theme_panel_section_subtitle {
+  margin-top: 0.5em;
+  margin-bottom: 1.5em;
+}
+
+.trx_addons_theme_panel_legacy_notice {
+  color: #d6a441;
+  font-weight: 600;
+}
+
+.trx_addons_theme_panel_uptodate_notice {
+  color: #38bb7a;
+  font-weight: 600;
+}
+
+.trx_addons_theme_panel_update_theme.trx_addons_loading:before {
+  line-height: 1;
+}
+
 .trx_addons_theme_panel_section_description {
+  margin-top: 1.5em;
   margin-bottom: 2em;
 }
 .trx_addons_theme_panel_section_description a {
@@ -495,13 +522,15 @@
   color: #23282d;
 }
 
-.trx_addons_theme_panel_section_license_domain {
+.trx_addons_theme_panel_section_license_domain,
+.trx_addons_theme_panel_section_license_info {
   margin: 0.5em 0 0;
   color: #23282d;
 }
 
 .trx_addons_theme_panel_section_license_status_label,
-.trx_addons_theme_panel_section_license_domain_label {
+.trx_addons_theme_panel_section_license_domain_label,
+.trx_addons_theme_panel_section_license_info_label {
   display: inline-block;
   vertical-align: top;
   width: 150px;
@@ -517,6 +546,36 @@
   border-radius: 2px;
   color: #fff;
   background-color: #38bb7a;
+}
+
+.trx_addons_theme_panel_section_license_info_label .trx_addons_theme_doc_link {
+  font-size: 0.9em;
+  padding: 2px;
+  margin-left: 0;
+}
+
+.trx_addons_theme_panel_license_check,
+.trx_addons_theme_panel_license_extend {
+  margin-left: 1em;
+  text-decoration: none;
+  border-bottom: 1px dashed currentColor;
+}
+.trx_addons_theme_panel_license_check:hover,
+.trx_addons_theme_panel_license_extend:hover {
+  border-bottom-style: solid;
+}
+.trx_addons_theme_panel_license_check:focus,
+.trx_addons_theme_panel_license_extend:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+.trx_addons_theme_panel_license_check.trx_addons_loading,
+.trx_addons_theme_panel_license_extend.trx_addons_loading {
+  border-bottom-color: transparent;
+}
+.trx_addons_theme_panel_license_check.trx_addons_loading:before,
+.trx_addons_theme_panel_license_extend.trx_addons_loading:before {
+  font-size: 0.8em;
 }
 
 .trx_addons_theme_panel_section_license_buttons {
@@ -1737,4 +1796,4 @@
   color: #9099a2;
 }
 
-/*# sourceMappingURL=theme-panel.css.map */
+

@@ -283,6 +283,13 @@ body.trx_addons_customizable_theme .trx_addons_loading:after {
   animation: spin 1s linear infinite;
 }
 
+.trx_addons_loading_icon:before {
+  content: '\e800' !important;
+  font-family: "trx_addons_icons" !important;
+  font-size: 0.9em !important;
+  animation: spin 2s linear infinite;
+}
+
 /* Close button */
 .trx_addons_button_close {
   display: block;
@@ -3223,4 +3230,4 @@ body.trx_addons_customizable_theme .mejs-time-float .mejs-time-float-current {
   margin: 2px 4px;
 }
 
-/*# sourceMappingURL=trx_addons.front.css.map */
+
