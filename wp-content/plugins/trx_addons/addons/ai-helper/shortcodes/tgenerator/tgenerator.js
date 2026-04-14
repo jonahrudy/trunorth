@@ -218,19 +218,7 @@ jQuery( document ).ready( function() {
 			// Show answer
 			function show_answer( response ) {
 				// Prepare response
-				var rez = {};
-				if ( response == '' || response == 0 ) {
-					rez = { error: TRX_ADDONS_STORAGE['msg_ai_helper_error'] };
-				} else if ( typeof response == 'string' ) {
-					try {
-						rez = JSON.parse( response );
-					} catch (e) {
-						rez = { error: TRX_ADDONS_STORAGE['msg_ai_helper_error'] };
-						console.log( response );
-					}
-				} else {
-					rez = response;
-				}
+				var rez = trx_addons_parse_ajax_response( response, TRX_ADDONS_STORAGE['msg_ai_helper_error'] );
 
 				// If queued - fetch answer again
 				if ( rez.finish_reason == 'queued' ) {

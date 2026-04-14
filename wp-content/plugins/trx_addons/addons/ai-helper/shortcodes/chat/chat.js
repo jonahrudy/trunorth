@@ -266,6 +266,7 @@ jQuery( document ).ready( function() {
 					args = {
 						nonce: TRX_ADDONS_STORAGE['ajax_nonce'],
 						action: 'trx_addons_ai_helper_chat',
+						is_admin_request: TRX_ADDONS_STORAGE['admin_mode'] ? 1 : 0,
 						count: ( trx_addons_get_cookie( 'trx_addons_ai_helper_chat_count' ) || 0 ) * 1 + 1,
 						chat: attachments_present ? chat : JSON.stringify( chat ),
 						settings: settings,
@@ -292,6 +293,7 @@ jQuery( document ).ready( function() {
 				jQuery.post( TRX_ADDONS_STORAGE['ajax_url'], {
 					nonce: TRX_ADDONS_STORAGE['ajax_nonce'],
 					action: 'trx_addons_ai_helper_chat_fetch',
+					is_admin_request: TRX_ADDONS_STORAGE['admin_mode'] ? 1 : 0,
 					thread_id: data.thread_id || '',
 					run_id: data.run_id || '',
 					response_id: data.response_id || '',
@@ -302,19 +304,7 @@ jQuery( document ).ready( function() {
 			// Show answer
 			function show_answer( response ) {
 				// Prepare response
-				var rez = {};
-				if ( response == '' || response == 0 ) {
-					rez = { error: TRX_ADDONS_STORAGE['msg_ai_helper_error'] };
-				} else if ( typeof response == 'string' ) {
-					try {
-						rez = JSON.parse( response );
-					} catch (e) {
-						rez = { error: TRX_ADDONS_STORAGE['msg_ai_helper_error'] };
-						console.log( response );
-					}
-				} else {
-					rez = response;
-				}
+				var rez = trx_addons_parse_ajax_response( response, TRX_ADDONS_STORAGE['msg_ai_helper_error'] );
 
 				// Save thread ID
 				if ( rez.thread_id ) {

@@ -149,12 +149,12 @@ jQuery( document ).ready( function() {
 				$form.find( '.sc_vgenerator_form_field,.sc_vgenerator_form_settings_field' ).each( function () {
 					var $self = jQuery( this );
 
-					if ( $self.hasClass( 'sc_vgenerator_form_settings_field_resolution' ) || $self.hasClass( 'sc_vgenerator_form_settings_field_duration' ) ) {
-						$self.toggleClass( 'trx_addons_hidden', model == 'lumalabs-ai/ray-1-6' );
-					}
-
-					if ( $self.hasClass( 'sc_vgenerator_form_field_upload_start_keyframe' ) || $self.hasClass( 'sc_vgenerator_form_field_upload_end_keyframe' ) || $self.hasClass( 'sc_vgenerator_form_field_upload_keyframe_wrap' ) ) {
-						$self.toggleClass( 'trx_addons_hidden', model != 'lumalabs-ai/ray-1-6' );
+					if ( $self.hasClass( 'sc_vgenerator_form_settings_field_resolution' ) ) {
+						$self.toggleClass( 'trx_addons_hidden', TRX_ADDONS_STORAGE['ai_helper_vgenerator_models_supporting_resolution'].indexOf( model ) == -1 );
+					} else if ( $self.hasClass( 'sc_vgenerator_form_settings_field_duration' ) ) {
+						$self.toggleClass( 'trx_addons_hidden', TRX_ADDONS_STORAGE['ai_helper_vgenerator_models_supporting_duration'].indexOf( model ) == -1 );
+					} else if ( $self.hasClass( 'sc_vgenerator_form_field_upload_start_keyframe' ) || $self.hasClass( 'sc_vgenerator_form_field_upload_end_keyframe' ) || $self.hasClass( 'sc_vgenerator_form_field_upload_keyframe_wrap' ) ) {
+						$self.toggleClass( 'trx_addons_hidden', TRX_ADDONS_STORAGE['ai_helper_vgenerator_models_supporting_keyframes'].indexOf( model ) == -1 );
 					}
 				} );
 
@@ -239,19 +239,7 @@ jQuery( document ).ready( function() {
                 // Callback to get video from server
 				function getVideos( response ) {
                     // Prepare response
-					var rez = {};
-					if ( response == '' || response == 0 ) {
-						rez = { error: TRX_ADDONS_STORAGE['msg_ai_helper_error'] };
-					} else if ( typeof response == 'string' ) {
-						try {
-							rez = JSON.parse( response );
-						} catch (e) {
-							rez = { error: TRX_ADDONS_STORAGE['msg_ai_helper_error'] };
-							console.log( response );
-						}
-					} else {
-						rez = response;
-					}
+					var rez = trx_addons_parse_ajax_response( response, TRX_ADDONS_STORAGE['msg_ai_helper_error'] );
 
                     $form.removeClass( 'sc_vgenerator_form_loading' );
 
