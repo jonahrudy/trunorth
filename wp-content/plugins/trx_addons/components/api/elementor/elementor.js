@@ -982,7 +982,18 @@
 					}
 				}
 				if ( allowed ) {
-					elementSettings[ controlKey ] = settings.attributes[ controlKey ];
+					// If current field is repeater
+					if ( typeof settings.attributes[ controlKey ] == 'object' && settings.attributes[ controlKey ].hasOwnProperty('models') ) {
+						var tmp = [];
+						for ( var m = 0; m < settings.attributes[ controlKey ]['models'].length; m++ ) {
+							tmp.push( settings[s]['models'][m]['attributes'] );
+						}
+						elementSettings[ controlKey ] = tmp;
+
+					// Else it a plain field
+					} else {
+						elementSettings[ controlKey ] = settings.attributes[ controlKey ];
+					}
 				}
 			} );
 		} else {

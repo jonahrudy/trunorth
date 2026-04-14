@@ -63,8 +63,8 @@ jQuery(document).ready(function() {
 				}
 			})
 		&& (window.VcColumnView.prototype.buildDesignHelpersOld = window.VcColumnView.prototype.buildDesignHelpers)
-		&& (window.VcColumnView.prototype.buildDesignHelpers = function() {
-				this.buildDesignHelpersOld();
+		&& (window.VcColumnView.prototype.buildDesignHelpers = function(e, t) {
+				this.buildDesignHelpersOld(e, t);
 				this.moveAdminLabelsAfterTitle();
 			})
 		&& (window.VcColumnView.prototype.changeShortcodeParamsOld = window.VcColumnView.prototype.changeShortcodeParams)
@@ -73,8 +73,8 @@ jQuery(document).ready(function() {
 				this.moveAdminLabelsAfterTitle();
 			})
 		&& (window.VcRowView.prototype.buildDesignHelpersOld = window.VcRowView.prototype.buildDesignHelpers)
-		&& (window.VcRowView.prototype.buildDesignHelpers = function() {
-				this.buildDesignHelpersOld();
+		&& (window.VcRowView.prototype.buildDesignHelpers = function(e, t) {
+				this.buildDesignHelpersOld(e, t);
 				this.moveAdminLabelsAfterTitle();
 			})
 		&& (window.VcRowView.prototype.changeShortcodeParamsOld = window.VcRowView.prototype.changeShortcodeParams)

@@ -1,5 +1,5 @@
 /**
- * Themes market: Admin utils
+ * Themes market: Frontend utils
  *
  * @package ThemeREX Addons
  * @since v1.6.34
