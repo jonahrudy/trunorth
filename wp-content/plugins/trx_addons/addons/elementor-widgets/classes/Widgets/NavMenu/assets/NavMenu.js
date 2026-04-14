@@ -86,7 +86,7 @@
 				// check if it has children
 				var hasChildern = itemHasChildren( this );
 
-				if ( ! hasChildern ) {
+				if ( ! hasChildern || jQuery(this).attr('href') !== '#' ) {
 					// close mobile menu
 					if ( 'slide' === settings.mainLayout || 'slide' === settings.mobileLayout ) {
 						// if ($scope.hasClass('trx-addons-nav-slide')) {
@@ -115,16 +115,22 @@
 
 			if ( 'hover' === settings.submenuEvent ) {
 
-				$scope.find('.trx-addons-nav-menu-item').on( 'mouseenter.trxItemHover', function(e) {
-					e.stopPropagation();
-					clearTimeout( hoverTimeout );
-					$(this).siblings().removeClass('trx-addons-item-hovered'); // unset hovered items only for this menu.
-					$(this).addClass('trx-addons-item-hovered');
-					if ( $(this).hasClass('trx-addons-sub-menu-item') ) {
-						$(this).parents('.trx-addons-nav-menu-item').addClass('trx-addons-item-hovered');
-					}
-					initHiddenElements( $(this) );
-				} );
+				$scope.find('.trx-addons-nav-menu-item')
+					.on( 'focus.trxItemHover', '> a', function(e) {
+						$(this).parent().trigger('mouseenter.trxItemHover');
+					} )
+					.on( 'mouseenter.trxItemHover', function(e) {
+						var $this = $(this);
+						e.stopPropagation();
+						clearTimeout( hoverTimeout );
+						$this.siblings().removeClass('trx-addons-item-hovered'); // unset hovered items only for this menu.
+						$this.find('.trx-addons-nav-menu-item.trx-addons-item-hovered').removeClass('trx-addons-item-hovered'); // unset hovered items for child submenus.
+						$this.addClass('trx-addons-item-hovered');
+						if ( $this.hasClass('trx-addons-sub-menu-item') ) {
+							$this.parents('.trx-addons-nav-menu-item').addClass('trx-addons-item-hovered');
+						}
+						initHiddenElements( $this );
+					} );
 
 				$scope.on('mouseleave.trxItemHover', function(e) {
 					var delay = getComputedStyle( $scope[0] ).getPropertyValue( '--trx-addons-mega-menu-delay' );
@@ -177,38 +183,58 @@
 		$(document).on('click', '.trx-addons-nav-slide-overlay', function() {
 			$scope.find('.trx-addons-mobile-menu-outer-container, .trx-addons-nav-slide-overlay').removeClass('trx-addons-vertical-toggle-open');
 			$('body').removeClass('trx-addons-scroll-disabled');
-			$menuToggler.removeClass('trx-addons-toggle-opened'); // show/hide close icon/text.
+			$menuToggler
+				.removeClass('trx-addons-toggle-opened') // show/hide close icon/text.
+				.focus();
 		} );
 
 		// Close the menu when clicking on the close button.
-		$hamMenuCloser.on( 'click', function() {
-			$scope.find('.trx-addons-mobile-menu-outer-container, .trx-addons-nav-slide-overlay').removeClass('trx-addons-vertical-toggle-open');
-			$('body').removeClass('trx-addons-scroll-disabled');
-			$menuToggler.removeClass('trx-addons-toggle-opened'); // show/hide close icon/text.
-		} );
+		$hamMenuCloser
+			.on( 'keypress', function (e) {
+				if ( e.which === 13 ) { // Enter key
+					$(this).trigger( 'click' );
+				}
+			} )
+			.on( 'click', function() {
+				$scope.find('.trx-addons-mobile-menu-outer-container, .trx-addons-nav-slide-overlay').removeClass('trx-addons-vertical-toggle-open');
+				$('body').removeClass('trx-addons-scroll-disabled');
+				$menuToggler
+					.removeClass('trx-addons-toggle-opened')	// show/hide close icon/text.
+					.focus();
+			} );
 
 		// Toggle the menu when clicking on the hamburger icon.
-		$menuToggler.on( 'click', function () {
-			if ('slide' === settings.mobileLayout || 'slide' === settings.mainLayout) {
-				$scope.find('.trx-addons-mobile-menu-outer-container, .trx-addons-nav-slide-overlay').addClass('trx-addons-vertical-toggle-open');
-				if ( disablePageScroll ) {
-					$('body').addClass('trx-addons-scroll-disabled');
+		$menuToggler
+			.on( 'keypress', function (e) {
+				if ( e.which === 13 ) { // Enter key
+					$(this).trigger( 'click' );
 				}
-			} else {
-				var $menuParent = $scope.find('.trx-addons-mobile-menu-container');
-				if ( $menuContainer.hasClass('trx-addons-active-menu') ) {
-					$menuParent.slideUp( mobileMenuTransitionSpeed, function () {
-						$menuContainer.removeClass('trx-addons-active-menu');
-						$menuParent.show();
-					} );
+			} )
+			.on( 'click', function () {
+				if ('slide' === settings.mobileLayout || 'slide' === settings.mainLayout) {
+					$scope.find('.trx-addons-mobile-menu-outer-container, .trx-addons-nav-slide-overlay')
+						.addClass('trx-addons-vertical-toggle-open');
+					setTimeout( function() {
+						$scope.find('.trx-addons-mobile-menu-outer-container' ).find( 'a,button' ).eq(0).focus();
+					}, 300 );
+					if ( disablePageScroll ) {
+						$('body').addClass('trx-addons-scroll-disabled');
+					}
 				} else {
-					$menuParent.hide();
-					$menuContainer.addClass('trx-addons-active-menu');
-					$menuParent.slideDown( mobileMenuTransitionSpeed );
+					var $menuParent = $scope.find('.trx-addons-mobile-menu-container');
+					if ( $menuContainer.hasClass('trx-addons-active-menu') ) {
+						$menuParent.slideUp( mobileMenuTransitionSpeed, function () {
+							$menuContainer.removeClass('trx-addons-active-menu');
+							$menuParent.show();
+						} );
+					} else {
+						$menuParent.hide();
+						$menuContainer.addClass('trx-addons-active-menu');
+						$menuParent.slideDown( mobileMenuTransitionSpeed );
+					}
 				}
-			}
-			$menuToggler.toggleClass('trx-addons-toggle-opened'); // show/hide close icon/text.
-		} );
+				$menuToggler.toggleClass('trx-addons-toggle-opened'); // show/hide close icon/text.
+			} );
 
 		$menuContainer
 			.find( '.trx-addons-nav-menu-item.menu-item-has-children a[href="#"]'
@@ -298,6 +324,13 @@
 		// Call action.init_hidden_elements to initialize hidden elements.
 		function initHiddenElements( $item ) {
 			checkMegaContentWidth();
+			if ( typeof window.trx_addons_shift_submenu !== 'undefined' ) {
+				var $submenu = $item.find('> .trx-addons-submenu, > .trx-addons-mega-content-container');
+				if ( $submenu.length ) {
+					window.trx_addons_shift_submenu( $submenu );
+				}
+			}
+
 			$(document).trigger( 'action.init_hidden_elements', [ $item ] );
 			// setTimeout( function() {
 			// }, 400 );
@@ -312,7 +345,7 @@
 
 		// Full Width Mega Content.
 		function fullWidthContent( $item ) {
-			if ( typeof window.trx_addons_stretch_submenu !== 'undefined' ) {
+			if ( typeof window.trx_addons_shift_submenu !== 'undefined' ) {
 				//window.trx_addons_stretch_submenu( $item );
 				window.trx_addons_shift_submenu( $item );
 			} else {

@@ -80,9 +80,22 @@ h1.trx-addons-posts-item-title, h2.trx-addons-posts-item-title, h3.trx-addons-po
   overflow: hidden;
 }
 
-.trx-addons-posts-button {
+.trx-addons-posts-item .trx-addons-posts-button {
   display: inline-flex;
   vertical-align: top;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.trx-addons-posts-item .trx-addons-posts-button .trx-addons-button-icon {
+  display: inline-block;
+  vertical-align: top;
+  line-height: 0;
+  margin-right: 6px;
+}
+.trx-addons-posts-item .trx-addons-posts-button .trx-addons-button-text + .trx-addons-button-icon {
+  margin-right: 0;
+  margin-left: 6px;
 }
 
 .trx-addons-posts-item-separator-wrap {
@@ -333,7 +346,43 @@ h1.trx-addons-posts-item-title, h2.trx-addons-posts-item-title, h3.trx-addons-po
 @media (max-width: 767px) {
   .trx-addons-posts-skin-stripe .trx-addons-posts-item-content-column-one,
   .trx-addons-posts-skin-stripe .trx-addons-posts-item-content-column-two {
-    width: 100%;
+    width: 100% !important;
+  }
+}
+.trx-addons-posts-skin-stripe .trx-addons-posts-item-content-column-start,
+.trx-addons-posts-skin-stripe .trx-addons-posts-item-content-column-end {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  -webkit-align-items: flex-start;
+  -ms-flex-align: start;
+  align-items: flex-start;
+  width: 100%;
+}
+@media (max-width: 767px) {
+  .elementor-widget-trx_elm_posts.trx-addons-posts-hide-content-on-mobile-yes .trx-addons-posts-skin-stripe .trx-addons-posts-item-excerpt {
+    display: none;
+  }
+  .elementor-widget-trx_elm_posts.trx-addons-posts-image-over-content-on-mobile-yes .trx-addons-posts-skin-stripe .trx-addons-posts-item-thumbnail,
+  .elementor-widget-trx_elm_posts.trx-addons-posts-image-over-content-on-mobile-yes .trx-addons-posts-skin-stripe .trx-addons-posts-item-content-wrap {
+    width: 100% !important;
+  }
+  .elementor-widget-trx_elm_posts.trx-addons-posts-image-over-content-on-mobile-yes .trx-addons-posts-skin-stripe .trx-addons-posts-item {
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-justify-content: flex-start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    -webkit-align-items: flex-start;
+    -ms-flex-align: start;
+    align-items: flex-start;
   }
 }
 
@@ -418,4 +467,4 @@ h1.trx-addons-posts-item-title, h2.trx-addons-posts-item-title, h3.trx-addons-po
   }
 }
 
-/*# sourceMappingURL=Posts.css.map */
+
