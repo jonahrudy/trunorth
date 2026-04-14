@@ -7,7 +7,7 @@ jQuery( document ).ready(
 		// Hide empty meta-boxes
 		jQuery( '.postbox > .inside' ).each(
 			function() {
-				if (jQuery( this ).html().length < 5) {
+				if ( jQuery( this ).html().length < 5 && elementra_apply_filters( 'elementra_filter_hide_empty_meta_boxes', true, jQuery( this ).parent() ) ) {
 					jQuery( this ).parent().hide();
 				}
 			}
@@ -22,7 +22,7 @@ jQuery( document ).ready(
 						'nonce': ELEMENTRA_STORAGE['ajax_nonce'],
 						is_admin_request: 1
 					},
-					function(response){}
+					function( response ) {}
 				);
 				e.preventDefault();
 				return false;
@@ -788,14 +788,14 @@ jQuery( document ).ready(
 					is_admin_request: 1
 				}
 			).done(
-				function(response) {
+				function( response ) {
 					var rez = {};
 					if (response == '' || response == 0) {
 						rez = { error: ELEMENTRA_STORAGE['msg_ajax_error'] };
 					} else {
 						try {
 							var pos = response.indexOf( '{"error":' );
-							if (pos > 0) {
+							if ( pos > 0 ) {
 								console.log( ELEMENTRA_STORAGE['msg_get_pro_upgrader'] );
 								var log = response.substr( 0, pos ),
 								msg     = '';

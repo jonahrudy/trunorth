@@ -423,12 +423,10 @@
   /* Simple icon */
   font-size: 1.25em;
   color: #9099a2;
-  /* Round icon */
 }
 #customize-theme-controls .accordion-section .accordion-section-title:hover:before {
   /* Simple icon */
   color: #0073aa;
-  /* Round icon */
 }
 #customize-theme-controls #accordion-section-title_tagline .accordion-section-title:before {
   content: '\e95e';
@@ -661,4 +659,4 @@ body.elementra_decorate_fonts_section .in-sub-panel #customize-theme-controls .c
   display: none;
 }
 
-/*# sourceMappingURL=theme-customizer.css.map */
+

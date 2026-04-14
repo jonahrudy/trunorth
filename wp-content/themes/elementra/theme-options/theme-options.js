@@ -51,18 +51,20 @@ jQuery( document ).ready( function() {
 		}
 	} );
 
-	// Set a global state 'changed' on any field is changed
+	// Add some hooks after delay to allow Gutenberg to init its controls
 	setTimeout( function() {
+	// Set a global state 'changed' on any field is changed
 		jQuery( '.elementra_options .elementra_options_item_field [name^="elementra_options_field_"]' )
 			.on( 'change', function () {
 				elementra_options_changed( true );
 			} );
-	}, 600 );
 	
 	// Clear a global state 'changed' on the button "Publish" is pressed
-	jQuery( '#submitpost #publish' ).on( 'click', function(e) {
+		jQuery( '#submitpost #publish,.editor-header__settings .editor-post-publish-button' ).on( 'click', function(e) {
 		elementra_options_changed( false );
 	} );
+
+	}, 600 );
 
 	// --------------------------- SAVE / RESET & EXPORT / IMPORT OPTIONS ------------------------------
 
@@ -301,18 +303,8 @@ jQuery( document ).ready( function() {
 					preset_data: data,
 					preset_type: jQuery( '.elementra_options_presets_list' ).data( 'type' ),
 					is_admin_request: 1
-				}).done(function(response) {
-					var rez = {};
-					if (response === '' || response === 0) {
-						rez = { error: ELEMENTRA_STORAGE['msg_ajax_error'] };
-					} else {
-						try {
-							rez = JSON.parse(response);
-						} catch (e) {
-							rez = { error: ELEMENTRA_STORAGE['msg_ajax_error'] };
-							console.log(response);
-						}
-					}
+				}).done( function( response ) {
+					var rez = elementra_parse_ajax_response( response );
 					if ( rez.success ) {
 						var presets_list = jQuery( '.elementra_options_presets_list' ).get(0),
 							idx = elementra_find_listbox_item_by_text( presets_list, preset_name );
@@ -482,18 +474,8 @@ jQuery( document ).ready( function() {
 					preset_name: preset_name,
 					preset_type: jQuery( '.elementra_options_presets_list' ).data( 'type' ),
 					is_admin_request: 1
-				}).done(function(response) {
-					var rez = {};
-					if (response === '' || response === 0) {
-						rez = { error: ELEMENTRA_STORAGE['msg_ajax_error'] };
-					} else {
-						try {
-							rez = JSON.parse(response);
-						} catch (e) {
-							rez = { error: ELEMENTRA_STORAGE['msg_ajax_error'] };
-							console.log(response);
-						}
-					}
+				}).done( function( response ) {
+					var rez = elementra_parse_ajax_response( response );
 					if ( rez.success ) {
 						elementra_del_listbox_item_by_text( presets_list, preset_name );
 						elementra_select_listbox_item_by_value( presets_list, '' );
@@ -621,18 +603,8 @@ jQuery( document ).ready( function() {
 						action: button.data('action'),
 						nonce: ELEMENTRA_STORAGE['ajax_nonce'],
 						is_admin_request: 1
-					}).done(function(response) {
-						var rez = {};
-						if (response === '' || response === 0) {
-							rez = { error: ELEMENTRA_STORAGE['msg_ajax_error'] };
-						} else {
-							try {
-								rez = JSON.parse(response);
-							} catch (e) {
-								rez = { error: ELEMENTRA_STORAGE['msg_ajax_error'] };
-								console.log(response);
-							}
-						}
+					}).done( function( response ) {
+						var rez = elementra_parse_ajax_response( response );
 						if ( typeof window.trx_addons_msgbox != 'undefined' ) {
 							trx_addons_msgbox({
 								msg: typeof rez.data != 'undefined' ? rez.data : '',
@@ -892,7 +864,8 @@ jQuery( document ).ready( function() {
 					}
 				}
 
-				//wp.editor.initialize( new_id, init );
+				// ToDo: check and remove next line
+				// ??? wp.editor.initialize( new_id, init );
 			}
 			// Fire init actions for other cloned fields
 			jQuery(document).trigger( 'action.init_hidden_elements', [clone.parents('.elementra_options')] );
@@ -927,15 +900,9 @@ jQuery( document ).ready( function() {
 				is_admin_request: 1
 			};
 			jQuery.post(
-				ELEMENTRA_STORAGE['ajax_url'], data, function(response) {
-					var rez = {};
-					try {
-						rez = JSON.parse( response );
-					} catch (e) {
-						rez = { error: ELEMENTRA_STORAGE['msg_ajax_error'] };
-						console.log( response );
-					}
-					if (rez.error === '') {
+				ELEMENTRA_STORAGE['ajax_url'], data, function( response ) {
+					var rez = elementra_parse_ajax_response( response );
+					if ( rez.error === '' ) {
 						if (linked_field_type == 'select') {
 							var opt_list = '';
 							for (var i in rez.list) {
@@ -1067,6 +1034,9 @@ jQuery( document ).ready( function() {
 			return false;
 		} );
 
+	// ---------------------------- CHECK FOR DEPENDENCIES -------------------------------
+	elementra_options_check_internal_dependencies();
+
 } );
 
 
@@ -1092,9 +1062,7 @@ jQuery( window ).on( 'load', function() {
 } );
 
 // Check for internal dependencies
-jQuery( document ).ready( function() {
-	"use strict";
-
+function elementra_options_check_internal_dependencies() {
 	// Check all inner dependencies
 	jQuery( '.elementra_options .elementra_options_section' ).each( function () {
 		elementra_options_check_dependencies( jQuery( this ) );
@@ -1111,8 +1079,7 @@ jQuery( document ).ready( function() {
 			elementra_options_check_dependencies( jQuery( this ) );
 		} );
 	} );
-
-} );
+}
 
 // Check for dependencies
 function elementra_options_check_dependencies(cont) {

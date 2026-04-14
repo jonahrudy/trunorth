@@ -554,7 +554,19 @@
 					if ( wp && wp.customize ) {
 						var $control = self.element.parents( '.customize-control-color' );
 						if ( $control.length ) {
-							wp.customize( $control.attr( 'id' ).replace( 'customize-control-', '' ) ).set( ui.color.to_s( self.alphaOptions.alphaColorType ) );
+							// Old way: not compatible with controls with names different than the id (for example, Tribe Events Calendar create controls like that 'tribe_events[global_settings][title_color]').
+							// wp.customize( $control.attr( 'id' ).replace( 'customize-control-', '' ) ).set( ui.color.to_s( self.alphaOptions.alphaColorType ) );
+							// New way: loop all controls and find the correct one.
+							wp.customize.control.each( function( control ) {
+								if (   control.params.type === 'color'
+									|| control.params.type === 'kirki-color'
+									|| control.params.type === 'alpha-color'
+								) {
+									if ( control.container.find( 'input.wp-color-picker' ).get( 0 ) === self.element.get( 0 ) ) {
+										control.setting.set( ui.color.to_s( self.alphaOptions.alphaColorType ) );
+									}
+								}
+							} );
 						}
 					}
 				}

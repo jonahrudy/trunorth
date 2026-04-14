@@ -593,7 +593,7 @@
 			// Make styles and add its to the css
 
 			// Attention! This way generate error 'Maximum call stack size exceeded' in Chrome!
-			// css += cssTemplate['scheme_'+scheme]( colors );
+			// Commented: css += cssTemplate['scheme_'+scheme]( colors );
 
 			// This way work correctly in any browser
 			var tmpl = jQuery( '#tmpl-elementra-color-scheme-' + scheme ).html().trim();
