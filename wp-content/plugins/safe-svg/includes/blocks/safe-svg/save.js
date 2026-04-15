@@ -1,6 +1,1 @@
-/**
- * @return string Dynamic SVG icon block HTML.
- */
-const SafeSVGBlockSave = () => null;
-
-export default SafeSVGBlockSave;
+const SafeSVGBlockSave=()=>null;export default SafeSVGBlockSave;
