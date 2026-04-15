@@ -1,4 +1,1 @@
-__( 'Item removed', 'elementor' );
-__( 'Elements moved', 'elementor' );
-__( 'Item duplicated', 'elementor' );
-__( 'Item added', 'elementor' );
+__('Item removed','elementor');__('Elements moved','elementor');__('Item duplicated','elementor');__('Item added','elementor');
