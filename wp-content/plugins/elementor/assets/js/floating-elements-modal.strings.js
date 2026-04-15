@@ -1,1 +1,1 @@
-__( 'New Floating Elements', 'elementor' );
+__('New Floating Elements','elementor');
