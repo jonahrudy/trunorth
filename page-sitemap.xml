@@ -90,19 +90,6 @@
 		</image:image>
 	</url>
 	<url>
-		<loc>https://trunorth.pages.dev/about-us/</loc>
-		<lastmod>2026-04-14T19:09:06+00:00</lastmod>
-		<image:image>
-			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/05/sarah-oberman-797x1024.jpg</image:loc>
-		</image:image>
-		<image:image>
-			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/NBAA-award-10-24-1024x683.jpg</image:loc>
-		</image:image>
-		<image:image>
-			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/DC-2018-1024x683.jpg</image:loc>
-		</image:image>
-	</url>
-	<url>
 		<loc>https://trunorth.pages.dev/aircraft-guide/jet-charter-heavy-jets/</loc>
 		<lastmod>2026-04-15T22:05:55+00:00</lastmod>
 		<image:image>
@@ -368,6 +355,19 @@
 		</image:image>
 		<image:image>
 			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/05/icons8-runway-64.png</image:loc>
+		</image:image>
+	</url>
+	<url>
+		<loc>https://trunorth.pages.dev/about-us/</loc>
+		<lastmod>2026-04-17T22:37:46+00:00</lastmod>
+		<image:image>
+			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/05/sarah-oberman-797x1024.jpg</image:loc>
+		</image:image>
+		<image:image>
+			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/NBAA-award-10-24-1024x683.jpg</image:loc>
+		</image:image>
+		<image:image>
+			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/DC-2018-1024x683.jpg</image:loc>
 		</image:image>
 	</url>
 </urlset>
