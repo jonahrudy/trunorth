@@ -1,1 +1,2 @@
-__('CSS code','elementor-pro');__('Custom CSS','elementor-pro');
+__( 'CSS code', 'elementor-pro' );
+__( 'Custom CSS', 'elementor-pro' );
