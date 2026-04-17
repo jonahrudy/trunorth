@@ -1,1 +1,1 @@
-__('Notifications','elementor');
+__( 'Notifications', 'elementor' );

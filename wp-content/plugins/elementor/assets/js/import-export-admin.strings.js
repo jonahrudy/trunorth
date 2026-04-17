@@ -1,16 +1,118 @@
-__('Are you sure?','elementor');__('Removing %s will permanently delete changes made to the Websites Template\'s content and site settings','elementor');__('Delete','elementor');__('Cancel','elementor');__('Try a different Website Template or build your site from scratch.','elementor');__('OK','elementor');__('Library','elementor');__('You\'re ready to apply a new Kit!','elementor');__('Continue to new Kit','elementor');__('Close','elementor');__('%s was successfully deleted','elementor');__('Your Kit','elementor');__('Import','elementor');__('Export','elementor');__('Unable to download the Website Template','elementor');__('We couldn’t download the Website Template due to technical difficulties on our part. Try again and if the problem persists contact ','elementor');__('Support','elementor');__('Couldn’t handle the Website Template','elementor');__('Seems like your server is missing the PHP zip module. Install it on your server or contact your site host for further instructions.','elementor');__('Couldn’t use the .zip file','elementor');__('Seems like there is a problem with the zip’s files. Try installing again and if the problem persists contact ','elementor');__('Support','elementor');__('Unable to download the Website Template','elementor');__('It took too much time to download your Website Template and we were unable to complete the process. If all the Website Template’s parts don’t appear in ','elementor');__('Pages','elementor');__(', try again and if the problem persists contact ','elementor');__('Support','elementor');__('Unable to download the Website Template','elementor');__('We couldn’t download the Website Template due to technical difficulty on our part. Try again in a few minutes and if the problem persists contact ','elementor');__('Support','elementor');__('Couldn’t access the file','elementor');__('Seems like Elementor isn’t authorized to access relevant files for installing this Website Template. Contact your site host to get permission.','elementor');__('Couldn’t install the Website Template','elementor');__('The Website Template includes plugins you don’t have permission to install. Contact your site admin to change your permissions.','elementor');__('Unable to download the Website Template','elementor');__('This is due to a conflict with one or more third-party plugins already active on your site. Try disabling them, and then give the download another go.','elementor');__('Unable to download the Website Template','elementor');__('This download requires the \'DOMDocument\' PHP extension, which we couldn’t detect on your server. Enable this extension, or get in touch with your hosting service for support, and then give the download another go.','elementor');__('Couldn’t Export the Website Template','elementor');__('The export failed because it will pass the maximum Website Templates you can export.','elementor');__('Couldn’t fetch quota','elementor');__('Failed to fetch quota.','elementor');__('Couldn’t Export the Website Template','elementor');__('The export failed because it will pass the maximum Website Templates storage you have available.','elementor');__('Try Again','elementor');__('Learn More','elementor');__('Close','elementor');__('Site Area','elementor');__('Included','elementor');__('Elementor Templates','elementor');__('Site Settings','elementor');__('Content','elementor');__('Plugins','elementor');__('Templates','elementor');__('Saved Templates','elementor');__('Headers','elementor');__('Footers','elementor');__('Archives','elementor');__('Single Posts','elementor');__('Single Pages','elementor');__('Search Results','elementor');__('404 Error Page','elementor');__('Popups','elementor');__('Global widgets','elementor');__('To import or export these components, you’ll need Elementor Pro.','elementor');__('Content','elementor');__('Elementor Pages','elementor');__('Landing Pages','elementor');__('Elementor Posts','elementor');__('WP Pages','elementor');__('WP Posts','elementor');__('WP Menus','elementor');__('Custom Post Types','elementor');__('Site Settings','elementor');__('Global Colors','elementor');__('Global Fonts','elementor');__('Theme Style settings','elementor');__('Layout Settings','elementor');__('Lightbox Settings','elementor');__('Background Settings','elementor');__('Kit Info','elementor');__('Import a Website Template','elementor');__('What’s a Website Template?','elementor');__('A Website Template is a .zip file that contains all the parts of a complete site. It’s an easy way to get a site up and running quickly.','elementor');__(' Learn more about Website Templates','elementor');__('How does importing work?','elementor');__('Start by uploading the file and selecting the parts and plugins you want to apply. If there are any overlaps between the kit and your current design, you’ll be able to choose which imported parts you want to apply or ignore. Once the file is ready, the kit will be applied to your site and you’ll be able to see it live.','elementor');__('Learn More','elementor');__('Export a Website Kit','elementor');__('What’s a Website Kit?','elementor');__('A Website Kit is a .zip file that contains all the parts of a complete site. It’s an easy way to get a site up and running quickly.','elementor');__(' Learn more about Website Kits','elementor');__('How does exporting work?','elementor');__('To turn your site into a Website Kit, select the templates, content, settings and plugins you want to include. Once it’s ready, you’ll get a .zip file that you can import to other sites.','elementor');__('Learn More','elementor');__('Setting up your website template...','elementor');__('This usually takes a few moments.','elementor');__("Don't close this window until the process is finished.",'elementor');__('Custom Post Type','elementor');__('Click to select custom post types','elementor');__('No custom post types in your site...','elementor');__('Add the custom posts types to export. The latest 20 items from each type will be included.','elementor');__('Version')}${cellLinkProps.text}` } <Icon className="eicon-editor-external-link" />
-  </InlineLink>
- );
+__( 'Are you sure?', 'elementor' );
+__( 'Removing %s will permanently delete changes made to the Websites Template\'s content and site settings', 'elementor' );
+__( 'Delete', 'elementor' );
+__( 'Cancel', 'elementor' );
+__( 'Try a different Website Template or build your site from scratch.', 'elementor' );
+__( 'OK', 'elementor' );
+__( 'Library', 'elementor' );
+__( 'You\'re ready to apply a new Kit!', 'elementor' );
+__( 'Continue to new Kit', 'elementor' );
+__( 'Close', 'elementor' );
+__( '%s was successfully deleted', 'elementor' );
+__( 'Your Kit', 'elementor' );
+__( 'Import', 'elementor' );
+__( 'Export', 'elementor' );
+__( 'Unable to download the Website Template', 'elementor' );
+__( 'We couldn’t download the Website Template due to technical difficulties on our part. Try again and if the problem persists contact ', 'elementor' );
+__( 'Support', 'elementor' );
+__( 'Couldn’t handle the Website Template', 'elementor' );
+__( 'Seems like your server is missing the PHP zip module. Install it on your server or contact your site host for further instructions.', 'elementor' );
+__( 'Couldn’t use the .zip file', 'elementor' );
+__( 'Seems like there is a problem with the zip’s files. Try installing again and if the problem persists contact ', 'elementor' );
+__( 'Support', 'elementor' );
+__( 'Unable to download the Website Template', 'elementor' );
+__( 'It took too much time to download your Website Template and we were unable to complete the process. If all the Website Template’s parts don’t appear in ', 'elementor' );
+__( 'Pages', 'elementor' );
+__( ', try again and if the problem persists contact ', 'elementor' );
+__( 'Support', 'elementor' );
+__( 'Unable to download the Website Template', 'elementor' );
+__( 'We couldn’t download the Website Template due to technical difficulty on our part. Try again in a few minutes and if the problem persists contact ', 'elementor' );
+__( 'Support', 'elementor' );
+__( 'Couldn’t access the file', 'elementor' );
+__( 'Seems like Elementor isn’t authorized to access relevant files for installing this Website Template. Contact your site host to get permission.', 'elementor' );
+__( 'Couldn’t install the Website Template', 'elementor' );
+__( 'The Website Template includes plugins you don’t have permission to install. Contact your site admin to change your permissions.', 'elementor' );
+__( 'Unable to download the Website Template', 'elementor' );
+__( 'This is due to a conflict with one or more third-party plugins already active on your site. Try disabling them, and then give the download another go.', 'elementor' );
+__( 'Unable to download the Website Template', 'elementor' );
+__( 'This download requires the \'DOMDocument\' PHP extension, which we couldn’t detect on your server. Enable this extension, or get in touch with your hosting service for support, and then give the download another go.', 'elementor' );
+__( 'Couldn’t Export the Website Template', 'elementor' );
+__( 'The export failed because it will pass the maximum Website Templates you can export.', 'elementor' );
+__( 'Couldn’t fetch quota', 'elementor' );
+__( 'Failed to fetch quota.', 'elementor' );
+__( 'Couldn’t Export the Website Template', 'elementor' );
+__( 'The export failed because it will pass the maximum Website Templates storage you have available.', 'elementor' );
+__( 'Try Again', 'elementor' );
+__( 'Learn More', 'elementor' );
+__( 'Close', 'elementor' );
+__( 'Site Area', 'elementor' );
+__( 'Included', 'elementor' );
+__( 'Elementor Templates', 'elementor' );
+__( 'Site Settings', 'elementor' );
+__( 'Content', 'elementor' );
+__( 'Plugins', 'elementor' );
+__( 'Templates', 'elementor' );
+__( 'Saved Templates', 'elementor' );
+__( 'Headers', 'elementor' );
+__( 'Footers', 'elementor' );
+__( 'Archives', 'elementor' );
+__( 'Single Posts', 'elementor' );
+__( 'Single Pages', 'elementor' );
+__( 'Search Results', 'elementor' );
+__( '404 Error Page', 'elementor' );
+__( 'Popups', 'elementor' );
+__( 'Global widgets', 'elementor' );
+__( 'To import or export these components, you’ll need Elementor Pro.', 'elementor' );
+__( 'Content', 'elementor' );
+__( 'Elementor Pages', 'elementor' );
+__( 'Landing Pages', 'elementor' );
+__( 'Elementor Posts', 'elementor' );
+__( 'WP Pages', 'elementor' );
+__( 'WP Posts', 'elementor' );
+__( 'WP Menus', 'elementor' );
+__( 'Custom Post Types', 'elementor' );
+__( 'Site Settings', 'elementor' );
+__( 'Global Colors', 'elementor' );
+__( 'Global Fonts', 'elementor' );
+__( 'Theme Style settings', 'elementor' );
+__( 'Layout Settings', 'elementor' );
+__( 'Lightbox Settings', 'elementor' );
+__( 'Background Settings', 'elementor' );
+__( 'Kit Info', 'elementor' );
+__( 'Import a Website Template', 'elementor' );
+__( 'What’s a Website Template?', 'elementor' );
+__( 'A Website Template is a .zip file that contains all the parts of a complete site. It’s an easy way to get a site up and running quickly.', 'elementor' );
+__( ' Learn more about Website Templates', 'elementor' );
+__( 'How does importing work?', 'elementor' );
+__( 'Start by uploading the file and selecting the parts and plugins you want to apply. If there are any overlaps between the kit and your current design, you’ll be able to choose which imported parts you want to apply or ignore. Once the file is ready, the kit will be applied to your site and you’ll be able to see it live.', 'elementor' );
+__( 'Learn More', 'elementor' );
+__( 'Export a Website Kit', 'elementor' );
+__( 'What’s a Website Kit?', 'elementor' );
+__( 'A Website Kit is a .zip file that contains all the parts of a complete site. It’s an easy way to get a site up and running quickly.', 'elementor' );
+__( ' Learn more about Website Kits', 'elementor' );
+__( 'How does exporting work?', 'elementor' );
+__( 'To turn your site into a Website Kit, select the templates, content, settings and plugins you want to include. Once it’s ready, you’ll get a .zip file that you can import to other sites.', 'elementor' );
+__( 'Learn More', 'elementor' );
+__( 'Setting up your website template...', 'elementor' );
+__( 'This usually takes a few moments.', 'elementor' );
+__( "Don't close this window until the process is finished.", 'elementor' );
+__( 'Custom Post Type', 'elementor' );
+__( 'Click to select custom post types', 'elementor' );
+__( 'No custom post types in your site...', 'elementor' );
+__( 'Add the custom posts types to export. The latest 20 items from each type will be included.', 'elementor' );
+__( 'Version' ) } ${ cellLinkProps.text }` } <Icon className="eicon-editor-external-link" />
+		</InlineLink>
+	);
 
- const getHeaders = () => {
-  if ( ! withHeader ) {
-   return [];
-  }
+	const getHeaders = () => {
+		if ( ! withHeader ) {
+			return [];
+		}
 
-  const headers = [ 'Plugin Name', 'Version' ];
+		const headers = [ 'Plugin Name', 'Version' ];
 
-  if ( withStatus ) {
-   headers.splice( 1, 0, 'Status' );
+		if ( withStatus ) {
+			headers.splice( 1, 0, 'Status' );
 __( 'Previous', 'elementor' );
 __( 'Next', 'elementor' );
 __( 'Learn More', 'elementor' );
@@ -110,4 +212,3 @@ __( 'Name', 'elementor' );
 __( 'Type name here...', 'elementor' );
 __( 'Description (Optional)', 'elementor' );
 __( 'Type description here...', 'elementor' );
-
