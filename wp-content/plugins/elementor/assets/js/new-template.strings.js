@@ -1,1 +1,1 @@
-__('New Template','elementor');
+__( 'New Template', 'elementor' );
