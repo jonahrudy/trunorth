@@ -1,6 +1,6 @@
 /*! elementor-pro - v4.0.0 - 13-04-2026 */
 "use strict";
-(self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["woocommerce-cart"],{
+(self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["woocommerce-checkout-page"],{
 
 /***/ "../modules/woocommerce/assets/js/frontend/handlers/base.js"
 /*!******************************************************************!*\
@@ -135,10 +135,10 @@ exports["default"] = Base;
 
 /***/ },
 
-/***/ "../modules/woocommerce/assets/js/frontend/handlers/cart.js"
-/*!******************************************************************!*\
-  !*** ../modules/woocommerce/assets/js/frontend/handlers/cart.js ***!
-  \******************************************************************/
+/***/ "../modules/woocommerce/assets/js/frontend/handlers/checkout-page.js"
+/*!***************************************************************************!*\
+  !*** ../modules/woocommerce/assets/js/frontend/handlers/checkout-page.js ***!
+  \***************************************************************************/
 (__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -149,18 +149,24 @@ Object.defineProperty(exports, "__esModule", ({
 }));
 exports["default"] = void 0;
 var _base = _interopRequireDefault(__webpack_require__(/*! ./base */ "../modules/woocommerce/assets/js/frontend/handlers/base.js"));
-class Cart extends _base.default {
+class Checkout extends _base.default {
   getDefaultSettings(...args) {
     const defaultSettings = super.getDefaultSettings(...args);
     return {
       selectors: {
         ...defaultSettings.selectors,
-        shippingForm: '.shipping-calculator-form',
-        quantityInput: '.qty',
-        updateCartButton: 'button[name=update_cart]',
-        wpHttpRefererInputs: '[name=_wp_http_referer]',
-        hiddenInput: 'input[type=hidden]',
-        productRemove: '.product-remove a'
+        container: '.elementor-widget-woocommerce-checkout-page',
+        loginForm: '.e-woocommerce-login-anchor',
+        loginSubmit: '.e-woocommerce-form-login-submit',
+        loginSection: '.e-woocommerce-login-section',
+        showCouponForm: '.e-show-coupon-form',
+        couponSection: '.e-coupon-anchor',
+        showLoginForm: '.e-show-login',
+        applyCoupon: '.e-apply-coupon',
+        checkoutForm: 'form.woocommerce-checkout',
+        couponBox: '.e-coupon-box',
+        address: 'address',
+        wpHttpRefererInputs: '[name="_wp_http_referer"]'
       },
       classes: defaultSettings.classes,
       ajaxUrl: elementorProFrontend.config.ajaxurl
@@ -170,114 +176,157 @@ class Cart extends _base.default {
     const selectors = this.getSettings('selectors');
     return {
       ...super.getDefaultElements(...args),
-      $shippingForm: this.$element.find(selectors.shippingForm),
-      $stickyColumn: this.$element.find(selectors.stickyColumn),
-      $hiddenInput: this.$element.find(selectors.hiddenInput)
+      $container: this.$element.find(selectors.container),
+      $loginForm: this.$element.find(selectors.loginForm),
+      $showCouponForm: this.$element.find(selectors.showCouponForm),
+      $couponSection: this.$element.find(selectors.couponSection),
+      $showLoginForm: this.$element.find(selectors.showLoginForm),
+      $applyCoupon: this.$element.find(selectors.applyCoupon),
+      $loginSubmit: this.$element.find(selectors.loginSubmit),
+      $couponBox: this.$element.find(selectors.couponBox),
+      $checkoutForm: this.$element.find(selectors.checkoutForm),
+      $loginSection: this.$element.find(selectors.loginSection),
+      $address: this.$element.find(selectors.address)
     };
   }
-  bindEvents() {
-    super.bindEvents();
-    const selectors = this.getSettings('selectors');
-    elementorFrontend.elements.$body.on('wc_fragments_refreshed', () => this.applyButtonsHoverAnimation());
-    if ('yes' === this.getElementSettings('update_cart_automatically')) {
-      this.$element.on('input', selectors.quantityInput, () => this.updateCart());
-    }
-    elementorFrontend.elements.$body.on('wc_fragments_loaded wc_fragments_refreshed', () => {
-      this.updateWpReferers();
-      if (elementorFrontend.isEditMode() || elementorFrontend.isWPPreviewMode()) {
-        this.disableActions();
-      }
+  bindEvents(...args) {
+    super.bindEvents(...args);
+    this.elements.$showCouponForm.on('click', event => {
+      event.preventDefault();
+      this.elements.$couponSection.slideToggle();
     });
-    elementorFrontend.elements.$body.on('added_to_cart', function (e, data) {
-      // We do not want the page to reload in the Editor after we triggered the 'added_to_cart' event.
-      if (data.e_manually_triggered) {
-        return false;
-      }
+    this.elements.$showLoginForm.on('click', event => {
+      event.preventDefault();
+      this.elements.$loginForm.slideToggle();
+    });
+    this.elements.$applyCoupon.on('click', event => {
+      event.preventDefault();
+      this.applyCoupon();
+    });
+    this.elements.$loginSubmit.on('click', event => {
+      event.preventDefault();
+      this.loginUser();
+    });
+    elementorFrontend.elements.$body.on('updated_checkout', () => {
+      this.applyPurchaseButtonHoverAnimation();
+      this.updateWpReferers();
     });
   }
   onInit(...args) {
     super.onInit(...args);
     this.toggleStickyRightColumn();
-    this.hideHiddenInputsParentElements();
-    if (elementorFrontend.isEditMode()) {
-      this.elements.$shippingForm.show();
-    }
-    this.applyButtonsHoverAnimation();
     this.updateWpReferers();
-    if (elementorFrontend.isEditMode() || elementorFrontend.isWPPreviewMode()) {
-      this.disableActions();
-    }
-  }
+    this.equalizeElementHeight(this.elements.$address); // Equalize <address> boxes height
 
-  /**
-   * Using the WooCommerce Cart controls (quantity, remove product) in the editor will cause the cart to disappear.
-   * This is because WooCommerce does an ajax round trip where it modifies the cart, then loads that cart into the
-   * current page and attempts to grab the elements from that page via ajax. In the Editor, if the page is not
-   * published yet, it fetches an empty page that does not contain the required elements. As a result, the cart
-   * is rendered empty.
-   *
-   * Due to this issue, the cart controls (quantity, remove product) need to be disabled in the Editor.
-   */
-  disableActions() {
-    const selectors = this.getSettings('selectors');
-    this.$element.find(selectors.updateCartButton).attr({
-      disabled: 'disabled',
-      'aria-disabled': 'true'
-    });
     if (elementorFrontend.isEditMode()) {
-      this.$element.find(selectors.quantityInput).attr('disabled', 'disabled');
-      this.$element.find(selectors.productRemove).css('pointer-events', 'none');
+      this.elements.$loginForm.show();
+      this.elements.$couponSection.show();
+      this.applyPurchaseButtonHoverAnimation();
     }
   }
   onElementChange(propertyName) {
     if ('sticky_right_column' === propertyName) {
       this.toggleStickyRightColumn();
     }
-    if ('additional_template_select' === propertyName) {
-      elementorPro.modules.woocommerce.onTemplateIdChange('additional_template_select');
-    }
   }
   onDestroy(...args) {
     super.onDestroy(...args);
     this.deactivateStickyRightColumn();
   }
-  updateCart() {
-    const selectors = this.getSettings('selectors');
-    clearTimeout(this._debounce);
-    this._debounce = setTimeout(() => {
-      this.$element.find(selectors.updateCartButton).trigger('click');
-    }, 1500);
-  }
-  applyButtonsHoverAnimation() {
-    const elementSettings = this.getElementSettings();
-    if (elementSettings.checkout_button_hover_animation) {
-      // This element is recaptured every time because the cart markup can refresh
-      jQuery('.checkout-button').addClass('elementor-animation-' + elementSettings.checkout_button_hover_animation);
-    }
-    if (elementSettings.forms_buttons_hover_animation) {
-      // This element is recaptured every time because the cart markup can refresh
-      jQuery('.shop_table .button').addClass('elementor-animation-' + elementSettings.forms_buttons_hover_animation);
+  applyPurchaseButtonHoverAnimation() {
+    const purchaseButtonHoverAnimation = this.getElementSettings('purchase_button_hover_animation');
+    if (purchaseButtonHoverAnimation) {
+      // This element is recaptured every time because the checkout markup can refresh
+      jQuery('#place_order').addClass('elementor-animation-' + purchaseButtonHoverAnimation);
     }
   }
-
-  /**
-   * In the editor, WC Frontend JS does not fire (not registered).
-   * This causes that hidden inputs parent paragraph elements do not get display:none
-   * as they would have on the front end.
-   * So this function manually display:none the parent elements of these hidden inputs to avoid having
-   * gaps/spaces in the layout caused by these parent elements' margins/paddings.
-   */
-  hideHiddenInputsParentElements() {
-    if (this.isEdit) {
-      if (this.elements.$hiddenInput) {
-        this.elements.$hiddenInput.parent('.form-row').addClass('elementor-hidden');
+  applyCoupon() {
+    // Wc_checkout_params is required to continue, ensure the object exists
+    // eslint-disable-next-line camelcase
+    if (!wc_checkout_params) {
+      return;
+    }
+    this.startProcessing(this.elements.$couponBox);
+    const data = {
+      // eslint-disable-next-line camelcase
+      security: wc_checkout_params.apply_coupon_nonce,
+      coupon_code: this.elements.$couponBox.find('input[name="coupon_code"]').val()
+    };
+    jQuery.ajax({
+      type: 'POST',
+      // eslint-disable-next-line camelcase
+      url: wc_checkout_params.wc_ajax_url.toString().replace('%%endpoint%%', 'apply_coupon'),
+      context: this,
+      data,
+      success(code) {
+        jQuery('.woocommerce-error, .woocommerce-message').remove();
+        this.elements.$couponBox.removeClass('processing').unblock();
+        if (code.includes('woocommerce-error') || code.includes('does not exist')) {
+          jQuery('html, body').animate({
+            scrollTop: 0
+          }, 'fast');
+        }
+        if (code) {
+          this.elements.$checkoutForm.before(code);
+          this.elements.$couponSection.slideUp();
+          elementorFrontend.elements.$body.trigger('applied_coupon_in_checkout', [data.coupon_code]);
+          elementorFrontend.elements.$body.trigger('update_checkout', {
+            update_shipping_method: false
+          });
+        }
+      },
+      dataType: 'html'
+    });
+  }
+  loginUser() {
+    this.startProcessing(this.elements.$loginSection);
+    const data = {
+      action: 'elementor_woocommerce_checkout_login_user',
+      username: this.elements.$loginSection.find('input[name="username"]').val(),
+      password: this.elements.$loginSection.find('input[name="password"]').val(),
+      nonce: this.elements.$loginSection.find('input[name="woocommerce-login-nonce"]').val(),
+      remember: this.elements.$loginSection.find('input#rememberme').prop('checked')
+    };
+    jQuery.ajax({
+      type: 'POST',
+      url: this.getSettings('ajaxUrl'),
+      context: this,
+      data,
+      success(code) {
+        code = JSON.parse(code);
+        this.elements.$loginSection.removeClass('processing').unblock();
+        const messages = jQuery('.woocommerce-error, .woocommerce-message');
+        messages.remove();
+        if (code.logged_in) {
+          location.reload();
+        } else {
+          this.elements.$checkoutForm.before(code.message);
+          elementorFrontend.elements.$body.trigger('checkout_error', [code.message]);
+        }
       }
+    });
+  }
+  startProcessing($form) {
+    if ($form.is('.processing')) {
+      return;
     }
+
+    /**
+     * .block() is from a jQuery blockUI plugin loaded by WooCommerce. This code is based on WooCommerce
+     * core in order for the Checkout widget to behave the same as WooCommerce Checkout pages.
+     */
+    $form.addClass('processing').block({
+      message: null,
+      overlayCSS: {
+        background: '#fff',
+        opacity: 0.6
+      }
+    });
   }
 }
-exports["default"] = Cart;
+exports["default"] = Checkout;
 
 /***/ }
 
 }]);
-//# sourceMappingURL=woocommerce-cart.b85d04bc7b7a472432cf.bundle.js.map
+//# sourceMappingURL=woocommerce-checkout-page.1e854a92527f7870a712.bundle.js.map
