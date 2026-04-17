@@ -2,10 +2,10 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "../license/assets/js/admin.js"
-/*!*************************************!*\
-  !*** ../license/assets/js/admin.js ***!
-  \*************************************/
+/***/ "../modules/page-transitions/assets/js/frontend/components/index.js"
+/*!**************************************************************************!*\
+  !*** ../modules/page-transitions/assets/js/frontend/components/index.js ***!
+  \**************************************************************************/
 (__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -14,90 +14,27 @@
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
-exports["default"] = void 0;
-__webpack_require__(/*! core-js/modules/esnext.iterator.constructor.js */ "../node_modules/core-js/modules/esnext.iterator.constructor.js");
-__webpack_require__(/*! core-js/modules/esnext.iterator.for-each.js */ "../node_modules/core-js/modules/esnext.iterator.for-each.js");
-class Module extends elementorModules.Module {
-  #actionLinks = [{
-    href: 'elementor_pro_renew_license_menu_link',
-    external_url: 'https://go.elementor.com/wp-menu-renew/'
-  }, {
-    href: 'elementor_pro_upgrade_license_menu_link',
-    external_url: 'https://go.elementor.com/go-pro-advanced-elementor-menu/'
-  }];
-  onInit() {
-    this.assignMenuItemActions();
-    this.assignProLicenseActivateEvent();
+Object.defineProperty(exports, "PageTransition", ({
+  enumerable: true,
+  get: function () {
+    return _pageTransition.PageTransition;
   }
-  assignMenuItemActions() {
-    window.addEventListener('DOMContentLoaded', () => {
-      this.#actionLinks.forEach(item => {
-        const link = document.querySelector(`a[href="${item.href}"]`);
-        if (!link) {
-          return;
-        }
-        link.addEventListener('click', e => {
-          e.preventDefault();
-          window.open(item.external_url, '_blank');
-        });
-      });
-    });
+}));
+Object.defineProperty(exports, "Preloader", ({
+  enumerable: true,
+  get: function () {
+    return _preloader.Preloader;
   }
-  assignProLicenseActivateEvent() {
-    window.addEventListener('DOMContentLoaded', () => {
-      const activateButton = document.querySelector('.button-primary[href*="elementor-connect"]');
-      if (activateButton) {
-        activateButton.addEventListener('click', () => {
-          if (!window.elementorCommon?.config?.experimentalFeatures?.editor_events) {
-            return;
-          }
-          const eventsManager = window.elementorCommon?.eventsManager || {};
-          const dispatchEvent = eventsManager.dispatchEvent?.bind(eventsManager);
-          const eventName = 'pro_license_activate';
-          const eventData = {
-            app_type: 'editor',
-            location: 'Elementor WP-admin pages',
-            secondaryLocation: 'license page',
-            trigger: 'click'
-          };
-          dispatchEvent?.(eventName, eventData);
-        });
-      }
-    });
-  }
-}
-exports["default"] = Module;
+}));
+var _pageTransition = __webpack_require__(/*! ./page-transition/page-transition */ "../modules/page-transitions/assets/js/frontend/components/page-transition/page-transition.js");
+var _preloader = __webpack_require__(/*! ./preloader/preloader */ "../modules/page-transitions/assets/js/frontend/components/preloader/preloader.js");
 
 /***/ },
 
-/***/ "../modules/assets-manager/assets/js/admin.js"
-/*!****************************************************!*\
-  !*** ../modules/assets-manager/assets/js/admin.js ***!
-  \****************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-
-var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "../node_modules/@babel/runtime/helpers/interopRequireDefault.js");
-var _elementorFontManager = _interopRequireDefault(__webpack_require__(/*! ./admin/elementor-font-manager */ "../modules/assets-manager/assets/js/admin/elementor-font-manager.js"));
-var _elementorCustomIcons = _interopRequireDefault(__webpack_require__(/*! ./admin/elementor-custom-icons */ "../modules/assets-manager/assets/js/admin/elementor-custom-icons.js"));
-module.exports = function () {
-  const TypekitAdmin = __webpack_require__(/*! ./admin/typekit */ "../modules/assets-manager/assets/js/admin/typekit.js"),
-    CustomIcon = _elementorCustomIcons.default,
-    FontAwesomeProAdmin = (__webpack_require__(/*! ./admin/font-awesome-pro */ "../modules/assets-manager/assets/js/admin/font-awesome-pro.js")["default"]);
-  this.fontManager = new _elementorFontManager.default();
-  this.typekit = new TypekitAdmin();
-  this.fontAwesomePro = new FontAwesomeProAdmin();
-  this.customIcons = new CustomIcon();
-};
-
-/***/ },
-
-/***/ "../modules/assets-manager/assets/js/admin/custom-assets-base.js"
-/*!***********************************************************************!*\
-  !*** ../modules/assets-manager/assets/js/admin/custom-assets-base.js ***!
-  \***********************************************************************/
+/***/ "../modules/page-transitions/assets/js/frontend/components/page-transition/filters.js"
+/*!********************************************************************************************!*\
+  !*** ../modules/page-transitions/assets/js/frontend/components/page-transition/filters.js ***!
+  \********************************************************************************************/
 (__unused_webpack_module, exports) {
 
 "use strict";
@@ -107,1601 +44,1111 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = void 0;
-class CustomAssetsBase extends elementorModules.ViewModule {
-  showAlertDialog(id, message, onConfirm = false, onHide = false) {
-    const alertData = {
-      id,
-      message
-    };
-    if (onConfirm) {
-      alertData.onConfirm = onConfirm;
-    }
-    if (onHide) {
-      alertData.onHide = onHide;
-    }
+// Ref: https://stackoverflow.com/questions/26088849/url-fragment-allowed-characters
+const urlFragmentPattern = /.*#[\w\-/$.+()*@?~!&',;=:%]*$/;
+var _default = exports["default"] = {
+  // Disable using data attribute.
+  isDisabled: a => Object.prototype.hasOwnProperty.call(a.dataset, 'eDisablePageTransition'),
+  // Allow only links from same origin and without a URL fragment (e.g. #some-string).
+  isEmptyHref: a => !a.getAttribute('href'),
+  isTargetBlank: a => '_blank' === a.target,
+  notSameOrigin: a => !a.href.startsWith(window.location.origin),
+  hasFragment: a => !!a.href.match(urlFragmentPattern),
+  // Internal page links, popups, etc.
 
-    // Save the instance of the alert dialog to check for its visibility later
-    if (!this.alertWidget) {
-      this.alertWidget = elementorCommon.dialogsManager.createWidget('alert', alertData);
-    }
-    this.alertWidget.show();
-  }
-  onDialogDismiss() {
-    // WP's publish button gets a disabled class on submit attempt
-    this.elements.$publishButton.removeClass('disabled');
-
-    // Prevent WP's publish spinner from appearing on publish attempt
-    this.elements.$publishButtonSpinner.removeClass('is-active');
-  }
-  handleSubmit(event) {
-    // If we know there is a file already, return to continue submission normally
-    if (this.fileWasUploaded) {
-      return;
-    }
-    const hasValue = this.checkInputsForValues(); // Method exists in the child classes
-
-    // If the file input is not empty, continue the submission process
-    if (hasValue) {
-      this.fileWasUploaded = true;
-      this.elements.$postForm.trigger('submit');
-      return;
-    }
-    event.preventDefault(); // Prevent new asset submission
-
-    // If no value was found, stop submission and display a notice modal
-    this.showAlertDialog('noData', this.getSettings('notice'), () => this.onDialogDismiss(),
-    // OnConfirm
-    () => this.onDialogDismiss() // OnHide
-    );
-    return false;
-  }
-  bindEvents() {
-    this.elements.$postForm.on('submit', this.handleSubmit.bind(this));
-  }
-}
-var _default = exports["default"] = CustomAssetsBase;
+  // Disable for popup links / menu toggles, only when they are closed (to allow opening).
+  isPopup: a => 'true' === a.getAttribute('aria-haspopup') && 'false' === a.getAttribute('aria-expanded'),
+  // Disable in WooCommerce links.
+  isWoocommerce: a => {
+    const isAddToCart = a.href.match(/\?add-to-cart=/),
+      isRemoveFromCart = a.href.match(/\?remove_item=/),
+      isRestoreToCart = a.href.match(/\?undo_item=/),
+      isWoocommercePagination = a.href.match(/\?product-page=/),
+      isWoocommerceLogout = a.href.match(/\?elementor_wc_logout=/),
+      isWoocommerceTab = a.parentElement?.classList.contains('woocommerce-MyAccount-navigation-link');
+    return isAddToCart || isRemoveFromCart || isRestoreToCart || isWoocommercePagination || isWoocommerceLogout || isWoocommerceTab;
+  },
+  // Custom regex filter from attributes.
+  isExcluded: (a, exclude) => a.href.match(new RegExp(exclude))
+};
 
 /***/ },
 
-/***/ "../modules/assets-manager/assets/js/admin/elementor-custom-icons.js"
-/*!***************************************************************************!*\
-  !*** ../modules/assets-manager/assets/js/admin/elementor-custom-icons.js ***!
-  \***************************************************************************/
+/***/ "../modules/page-transitions/assets/js/frontend/components/page-transition/page-transition.js"
+/*!****************************************************************************************************!*\
+  !*** ../modules/page-transitions/assets/js/frontend/components/page-transition/page-transition.js ***!
+  \****************************************************************************************************/
 (__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
-/* provided dependency */ var __ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n")["__"];
 
 
 var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "../node_modules/@babel/runtime/helpers/interopRequireDefault.js");
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
-exports["default"] = void 0;
-__webpack_require__(/*! core-js/modules/es.json.stringify.js */ "../node_modules/core-js/modules/es.json.stringify.js");
+exports["default"] = exports.PageTransition = void 0;
 __webpack_require__(/*! core-js/modules/esnext.iterator.constructor.js */ "../node_modules/core-js/modules/esnext.iterator.constructor.js");
-__webpack_require__(/*! core-js/modules/esnext.iterator.find.js */ "../node_modules/core-js/modules/esnext.iterator.find.js");
-__webpack_require__(/*! core-js/modules/esnext.iterator.map.js */ "../node_modules/core-js/modules/esnext.iterator.map.js");
-var _customAssetsBase = _interopRequireDefault(__webpack_require__(/*! ./custom-assets-base */ "../modules/assets-manager/assets/js/admin/custom-assets-base.js"));
-var _elementorProDropzone = _interopRequireDefault(__webpack_require__(/*! ./fields/elementor-pro-dropzone */ "../modules/assets-manager/assets/js/admin/fields/elementor-pro-dropzone.js"));
-class CustomIcons extends _customAssetsBase.default {
-  getDefaultSettings() {
-    return {
-      fields: {
-        dropzone: _elementorProDropzone.default
-      },
-      classes: {
-        editPageClass: 'post-type-elementor_icons',
-        editPhp: 'edit-php',
-        hasIcons: 'elementor--has-icons'
-      },
-      selectors: {
-        editPageClass: 'post-type-elementor_icons',
-        title: '#title',
-        metaboxContainer: '#elementor-custom-icons-metabox',
-        metabox: '.elementor-custom-icons-metabox',
-        closeHandle: 'button.handlediv',
-        iconsTemplate: '#elementor-icons-template',
-        dataInput: '#elementor_custom_icon_set_config',
-        dropzone: '.zip_upload',
-        submitDelete: '.submitdelete',
-        dayInput: '#hidden_jj',
-        mmInput: '#hidden_mm',
-        yearInput: '#hidden_aa',
-        hourInput: '#hidden_hh',
-        minuteInput: '#hidden_mn',
-        publishButton: '#publish',
-        publishButtonSpinner: '#publishing-action > .spinner',
-        submitMetabox: '#postbox-container-1',
-        postForm: '#post',
-        fileInput: '#zip_upload',
-        iconSetConfigInput: '#elementor_custom_icon_set_config'
-      },
-      templates: {
-        icon: '<li><div class="icon"><i class="{{icon}}"></i><div class="icon-name">{{label}}</div></div></li>',
-        header: jQuery('#elementor-custom-icons-template-header').html(),
-        footer: jQuery('#elementor-custom-icons-template-footer').html(),
-        duplicatePrefix: jQuery('#elementor-custom-icons-template-duplicate-prefix').html()
-      },
-      notice: __('Upload an icon set to publish.', 'elementor-pro')
-    };
-  }
-  getDefaultElements() {
-    const elements = {},
-      selectors = this.getSettings('selectors');
-    jQuery.each(selectors, (element, selector) => {
-      elements['$' + element] = jQuery(selector);
-    });
-    return elements;
-  }
-  bindEvents() {
-    super.bindEvents();
-    if ('' !== this.getData()) {
-      this.bindOnTitleChange();
-    }
-  }
-  bindOnTitleChange() {
-    const {
-        $title
-      } = this.elements,
-      onTitleInput = event => this.onTitleInput(event);
-    $title.on('input change', onTitleInput);
-  }
-  removeCloseHandle() {
-    const {
-      $metaboxContainer
-    } = this.elements;
-    $metaboxContainer.find('h2').remove();
-    $metaboxContainer.find('button').remove();
-    $metaboxContainer.removeClass('closed').removeClass('postbox');
-  }
-  prepareIconName(icon) {
-    const iconName = icon.replace('_', ' ').replace('-', ' ');
-    return elementorCommon.helpers.upperCaseWords(iconName);
-  }
-  getCreatedOn() {
-    const {
-      $dayInput,
-      $mmInput,
-      $yearInput,
-      $hourInput,
-      $minuteInput
-    } = this.elements;
-    return {
-      day: $dayInput.val(),
-      mm: $mmInput.val(),
-      year: $yearInput.val(),
-      hour: $hourInput.val(),
-      minute: $minuteInput.val()
-    };
-  }
-  enqueueCSS(url) {
-    if (!elementorCommon.elements.$document.find('link[href="' + url + '"]').length) {
-      elementorCommon.elements.$document.find('link').last().after('<link href="' + url + '" rel="stylesheet" type="text/css">');
-    }
-  }
-  setData(data) {
-    this.elements.$dataInput.val(JSON.stringify(data));
-  }
-  getData() {
-    const value = this.elements.$dataInput.val();
-    return '' === value ? '' : JSON.parse(value);
-  }
-  renderIconList(config) {
-    const iconTemplate = this.getSettings('templates.icon');
-    return config.icons.map(icon => {
-      const data = {
-        icon: config.displayPrefix + ' ' + config.prefix + icon,
-        label: this.prepareIconName(icon)
-      };
-      return elementorCommon.compileTemplate(iconTemplate, data);
-    }).join('\n');
-  }
-  renderIcons(config) {
-    const {
-      $metaboxContainer,
-      $metabox,
-      $submitMetabox
-    } = this.elements;
-    const {
-      header,
-      footer
-    } = this.getSettings('templates');
-    $metaboxContainer.addClass(this.getSettings('classes.hasIcons'));
-    $submitMetabox.show();
-    this.setData(config);
-    this.enqueueCSS(config.url);
-    $metabox.html('');
-    $metaboxContainer.prepend(elementorCommon.compileTemplate(header, config));
-    $metabox.append('<ul>' + this.renderIconList(config) + '</ul>');
-    $metaboxContainer.append(elementorCommon.compileTemplate(footer, this.getCreatedOn()));
-  }
-  onTitleInput(event) {
-    const data = this.getData();
-    data.label = event.target.value;
-    this.setData(data);
-  }
-  checkInputsForValues() {
-    // If creating new icon set - check the file input for a value
-    // If editing an existing icon set - check the icon set config input for a value
-    if ('' !== this.elements.$fileInput.val() || '' !== this.elements.$iconSetConfigInput.val()) {
-      return true;
-    }
-    return false;
-  }
-  onSuccess(data) {
-    // It is possible to add a `dropzoneElement` param to this method for implementing upload progress bar
-    if (data.data.errors) {
-      let id, message;
-      jQuery.each(data.data.errors, (errorId, errorMessage) => {
-        id = errorId;
-        message = errorMessage;
-        return false;
-      });
-      return this.showAlertDialog(id, message);
-    }
-    if (data.data.config.duplicate_prefix) {
-      delete data.data.config.duplicatePrefix;
-      return this.showAlertDialog('duplicate-prefix', this.getSettings('templates.duplicatePrefix'), () => this.saveInitialUpload(data.data.config));
-    }
-    this.saveInitialUpload(data.data.config);
-  }
-  saveInitialUpload(config) {
-    this.setData(config);
-    const {
-      $publishButton,
-      $title,
-      $submitMetabox
-    } = this.elements;
-    $submitMetabox.show();
-    if ('' === $title.val()) {
-      $title.val(config.name);
-    }
-    this.fileWasUploaded = true; // Flag to prevent infinite loop in the handleSubmit() method
-    $publishButton.trigger('click');
-  }
-  onInit() {
-    const {
-        $body
-      } = elementorCommon.elements,
-      {
-        editPageClass,
-        editPhp
-      } = this.getSettings('classes');
-    if (!$body.hasClass(editPageClass) || $body.hasClass(editPhp)) {
-      return;
-    }
-    super.onInit();
-    this.removeCloseHandle();
-    const dropzoneFieldClass = this.getSettings('fields.dropzone'),
-      dropzoneField = new dropzoneFieldClass(),
-      config = this.getData(),
-      {
-        $dropzone,
-        $metaboxContainer
-      } = this.elements;
-    if ('' === config) {
-      $dropzone.show('fast');
-      dropzoneField.setSettings('onSuccess', (...args) => this.onSuccess(...args));
-    } else {
-      this.renderIcons(config);
-    }
-    $metaboxContainer.show('fast');
-  }
-}
-var _default = exports["default"] = CustomIcons;
-
-/***/ },
-
-/***/ "../modules/assets-manager/assets/js/admin/elementor-font-manager.js"
-/*!***************************************************************************!*\
-  !*** ../modules/assets-manager/assets/js/admin/elementor-font-manager.js ***!
-  \***************************************************************************/
-(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-/* provided dependency */ var __ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n")["__"];
-
-
-var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "../node_modules/@babel/runtime/helpers/interopRequireDefault.js");
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = void 0;
-__webpack_require__(/*! core-js/modules/esnext.iterator.constructor.js */ "../node_modules/core-js/modules/esnext.iterator.constructor.js");
-__webpack_require__(/*! core-js/modules/esnext.iterator.find.js */ "../node_modules/core-js/modules/esnext.iterator.find.js");
-var _customAssetsBase = _interopRequireDefault(__webpack_require__(/*! ./custom-assets-base */ "../modules/assets-manager/assets/js/admin/custom-assets-base.js"));
-var _elementorProUpload = _interopRequireDefault(__webpack_require__(/*! ./fields/elementor-pro-upload */ "../modules/assets-manager/assets/js/admin/fields/elementor-pro-upload.js"));
-var _elementorProRepeater = _interopRequireDefault(__webpack_require__(/*! ./fields/elementor-pro-repeater */ "../modules/assets-manager/assets/js/admin/fields/elementor-pro-repeater.js"));
-class CustomFontsManager extends _customAssetsBase.default {
-  getDefaultSettings() {
-    return {
-      fields: {
-        upload: _elementorProUpload.default,
-        repeater: _elementorProRepeater.default
-      },
-      selectors: {
-        editPageClass: 'post-type-elementor_font',
-        title: '#title',
-        repeaterBlock: '.repeater-block',
-        repeaterTitle: '.repeater-title',
-        removeRowBtn: '.remove-repeater-row',
-        editRowBtn: '.toggle-repeater-row',
-        closeRowBtn: '.close-repeater-row',
-        styleInput: '.font_style',
-        weightInput: '.font_weight',
-        customFontsMetaBox: '#elementor-font-custommetabox',
-        closeHandle: 'button.handlediv',
-        toolbar: '.elementor-field-toolbar',
-        inlinePreview: '.inline-preview',
-        fileUrlInput: '.elementor-field-file input[type="text"]',
-        postForm: '#post',
-        publishButton: '#publish',
-        publishButtonSpinner: '#publishing-action > .spinner'
-      },
-      notice: __('Choose a font to publish.', 'elementor-pro'),
-      fontLabelTemplate: '<ul class="row-font-label">' + '<li class="row-font-weight">{{weight}}</li>' + '<li class="row-font-style">{{style}}</li>' + '<li class="row-font-preview">{{preview}}</li>' + '{{toolbar}}' + '</ul>'
-    };
-  }
-  getDefaultElements() {
-    const selectors = this.getSettings('selectors');
-    return {
-      $postForm: jQuery(selectors.postForm),
-      $publishButton: jQuery(selectors.publishButton),
-      $publishButtonSpinner: jQuery(selectors.publishButtonSpinner),
-      $closeHandle: jQuery(selectors.closeHandle),
-      $customFontsMetaBox: jQuery(selectors.customFontsMetaBox),
-      $title: jQuery(selectors.title)
-    };
-  }
-  renderTemplate(tpl, data) {
-    const re = /{{([^}}]+)?}}/g;
-    let match;
-    while (match = re.exec(tpl)) {
-      // eslint-disable-line no-cond-assign
-      tpl = tpl.replace(match[0], data[match[1]]);
-    }
-    return tpl;
-  }
-  ucFirst(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-  }
-  getPreviewStyle($table) {
-    const selectors = this.getSettings('selectors'),
-      fontFamily = this.elements.$title.val(),
-      style = $table.find('select' + selectors.styleInput).first().val(),
-      weight = $table.find('select' + selectors.weightInput).first().val();
-    return {
-      style: this.ucFirst(style),
-      weight: this.ucFirst(weight),
-      styleAttribute: 'font-family: ' + fontFamily + ' ;font-style: ' + style + '; font-weight: ' + weight + ';'
-    };
-  }
-  updateRowLabel(event, $table) {
-    const selectors = this.getSettings('selectors'),
-      fontLabelTemplate = this.getSettings('fontLabelTemplate'),
-      $block = $table.closest(selectors.repeaterBlock),
-      $deleteBtn = $block.find(selectors.removeRowBtn).first(),
-      $editBtn = $block.find(selectors.editRowBtn).first(),
-      $closeBtn = $block.find(selectors.closeRowBtn).first(),
-      $toolbar = $table.find(selectors.toolbar).last().clone(),
-      previewStyle = this.getPreviewStyle($table);
-    if ($editBtn.length > 0) {
-      $editBtn.not(selectors.toolbar + ' ' + selectors.editRowBtn).remove();
-    }
-    if ($closeBtn.length > 0) {
-      $closeBtn.not(selectors.toolbar + ' ' + selectors.closeRowBtn).remove();
-    }
-    if ($deleteBtn.length > 0) {
-      $deleteBtn.not(selectors.toolbar + ' ' + selectors.removeRowBtn).remove();
-    }
-    const toolbarHtml = jQuery('<li class="row-font-actions">').append($toolbar)[0].outerHTML;
-    return this.renderTemplate(fontLabelTemplate, {
-      weight: '<span class="label">Weight:</span>' + previewStyle.weight,
-      style: '<span class="label">Style:</span>' + previewStyle.style,
-      preview: '<span style="' + previewStyle.styleAttribute + '">Elementor is making the web beautiful</span>',
-      toolbar: toolbarHtml
-    });
-  }
-  onRepeaterToggleVisible(event, $btn, $table) {
-    const selectors = this.getSettings('selectors'),
-      $previewElement = $table.find(selectors.inlinePreview),
-      previewStyle = this.getPreviewStyle($table);
-    $previewElement.attr('style', previewStyle.styleAttribute);
-  }
-  onRepeaterNewRow(event, $btn, $block) {
-    const selectors = this.getSettings('selectors');
-    $block.find(selectors.removeRowBtn).first().remove();
-    $block.find(selectors.editRowBtn).first().remove();
-    $block.find(selectors.closeRowBtn).first().remove();
-  }
-  maybeToggle(event) {
-    event.preventDefault();
-    const selectors = this.getSettings('selectors');
-    if (jQuery(this).is(':visible') && !jQuery(event.target).hasClass(selectors.editRowBtn)) {
-      jQuery(this).find(selectors.editRowBtn).trigger('click');
-    }
-  }
-  onInputChange(event) {
-    const $el = jQuery(event.target).next(),
-      fields = this.getSettings('fields');
-    fields.upload.setFields($el);
-    fields.upload.setLabels($el);
-    fields.upload.replaceButtonClass($el);
-  }
-  bindEvents() {
-    const selectors = this.getSettings('selectors');
-    jQuery(document).on('repeaterComputedLabel', this.updateRowLabel.bind(this)).on('onRepeaterToggleVisible', this.onRepeaterToggleVisible.bind(this)).on('onRepeaterNewRow', this.onRepeaterNewRow.bind(this)).on('click', selectors.repeaterTitle, this.maybeToggle.bind(this)).on('input', selectors.fileUrlInput, this.onInputChange.bind(this));
-    super.bindEvents();
-  }
-  checkInputsForValues() {
-    const selectors = this.getSettings('selectors');
-    let hasValue = false;
-
-    // Check the file inputs for a value
-    jQuery(selectors.fileUrlInput).each((index, element) => {
-      if ('' !== jQuery(element).val()) {
-        hasValue = true;
-        return false; // If a value was found, break the loop
-      }
-    });
-    return hasValue;
-  }
-  removeCloseHandle() {
-    this.elements.$closeHandle.remove();
-    this.elements.$customFontsMetaBox.removeClass('closed').removeClass('postbox');
-  }
-  titleRequired() {
-    this.elements.$title.prop('required', true);
-  }
-  onInit(...args) {
-    const settings = this.getSettings();
-    if (!jQuery('body').hasClass(settings.selectors.editPageClass)) {
-      return;
-    }
-    super.onInit(...args);
-    this.removeCloseHandle();
-    this.titleRequired();
-    settings.fields.upload.init();
-    settings.fields.repeater.init();
-    const $document = jQuery(document);
-    const markMetaboxIfVariableFont = this.markMetaboxIfVariableFont.bind(this);
-    jQuery('#add-variable-font').on('click', () => {
-      jQuery(document).one('onRepeaterNewRow', (event, $repeaterBtn, $repeaterBlock) => {
-        $repeaterBlock.find('input[name$="font_type]"]').val('variable');
-        markMetaboxIfVariableFont();
-      });
-      jQuery('#elementor-font-custommetabox').find('.add-repeater-row').trigger('click');
-    });
-    $document.on('onRepeaterNewRow', markMetaboxIfVariableFont);
-    $document.on('onRepeaterRemoveRow', markMetaboxIfVariableFont);
-    $document.on('change', 'input[name$="variable_width]"], input[name$="variable_weight]"]', this.onFontVariableTypeChange);
-    markMetaboxIfVariableFont();
-  }
-  markMetaboxIfVariableFont() {
-    const $fontType = jQuery('input[name$="font_type]"]');
-    const $metaboxContent = jQuery('.elementor-metabox-content');
-    $metaboxContent.removeClass('has-font-variable has-font-static');
-    if (!$fontType.length) {
-      return;
-    }
-    const hasVariableRow = 'variable' === $fontType.val();
-    if (hasVariableRow) {
-      $metaboxContent.addClass('has-font-variable', hasVariableRow);
-    } else {
-      $metaboxContent.addClass('has-font-static');
-    }
-    jQuery('input[name$="variable_width]"], input[name$="variable_weight]"]').each(this.onFontVariableTypeChange);
-  }
-  onFontVariableTypeChange() {
-    const $this = jQuery(this);
-    const wrapDiv = $this.parents().eq(1);
-    wrapDiv.toggleClass('e-font-variable-hidden', !$this.is(':checked'));
-  }
-}
-exports["default"] = CustomFontsManager;
-
-/***/ },
-
-/***/ "../modules/assets-manager/assets/js/admin/fields/elementor-pro-dropzone.js"
-/*!**********************************************************************************!*\
-  !*** ../modules/assets-manager/assets/js/admin/fields/elementor-pro-dropzone.js ***!
-  \**********************************************************************************/
-(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = void 0;
-__webpack_require__(/*! core-js/modules/es.json.stringify.js */ "../node_modules/core-js/modules/es.json.stringify.js");
-__webpack_require__(/*! core-js/modules/esnext.iterator.constructor.js */ "../node_modules/core-js/modules/esnext.iterator.constructor.js");
+__webpack_require__(/*! core-js/modules/esnext.iterator.every.js */ "../node_modules/core-js/modules/esnext.iterator.every.js");
 __webpack_require__(/*! core-js/modules/esnext.iterator.for-each.js */ "../node_modules/core-js/modules/esnext.iterator.for-each.js");
-class DropZoneField extends elementorModules.ViewModule {
-  getDefaultSettings() {
-    const baseSelector = '.elementor-dropzone-field';
-    return {
-      droppedFiles: false,
-      selectors: {
-        dropZone: baseSelector,
-        input: baseSelector + ' [type="file"]',
-        label: baseSelector + 'label',
-        errorMsg: baseSelector + '.box__error span',
-        restart: baseSelector + '.box__restart',
-        browseButton: baseSelector + ' .elementor--dropzone--upload__browse',
-        postId: '#post_ID'
-      },
-      classes: {
-        drag: 'is-dragover',
-        error: 'is-error',
-        success: 'is-success',
-        upload: 'is-uploading'
-      },
-      onSuccess: null,
-      onError: null
-    };
-  }
-  getDefaultElements() {
-    const elements = {};
-    const selectors = this.getSettings('selectors');
-    jQuery.each(selectors, (element, selector) => {
-      elements['$' + element] = jQuery(selector);
-    });
-    return elements;
-  }
-  bindEvents() {
-    const {
-      $dropZone,
-      $browseButton,
-      $input
-    } = this.elements;
-    const {
-      drag
-    } = this.getSettings('classes');
-    $browseButton.on('click', () => $input.trigger('click'));
-    $dropZone.on('drag dragstart dragend dragover dragenter dragleave drop', event => {
-      event.preventDefault();
-      event.stopPropagation();
-    }).on('dragover dragenter', () => {
-      $dropZone.addClass(drag);
-    }).on('dragleave dragend drop', () => {
-      $dropZone.removeClass(drag);
-    }).on('drop change', event => {
-      if ('change' === event.type) {
-        this.setSettings('droppedFiles', event.originalEvent.target.files);
-      } else {
-        this.setSettings('droppedFiles', event.originalEvent.dataTransfer.files);
-      }
-      this.handleUpload();
-    });
-  }
-  handleUpload() {
-    const droppedFiles = this.getSettings('droppedFiles');
-    if (!droppedFiles) {
-      return;
-    }
-    const {
-        $input,
-        $dropZone,
-        $postId,
-        $errorMsg
-      } = this.elements,
-      {
-        error,
-        success,
-        upload
-      } = this.getSettings('classes'),
-      {
-        onSuccess,
-        onError
-      } = this.getSettings(),
-      ajaxData = new FormData(),
-      fieldName = $input.attr('name'),
-      actionKey = 'pro_assets_manager_custom_icon_upload',
-      self = this;
-    Object.entries(droppedFiles).forEach(file => {
-      ajaxData.append(fieldName, file[1]);
-    });
-    ajaxData.append('actions', JSON.stringify({
-      pro_assets_manager_custom_icon_upload: {
-        action: actionKey,
-        data: {
-          post_id: $postId.val()
-        }
-      }
-    }));
-    $dropZone.removeClass(success).removeClass(error);
-    elementorCommon.ajax.send('ajax', {
-      data: ajaxData,
-      cache: false,
-      enctype: 'multipart/form-data',
-      contentType: false,
-      processData: false,
-      // TODO: Do something with upload progress
-      /* xhr: () => {
-      	const xhr = jQuery.ajaxSettings.xhr();
-      	xhr.upload.onprogress = ( evt ) => {
-      		if ( evt.lengthComputable ) {
-      			const percentComplete = Math.round( ( evt.loaded * 100 / evt.total ) );
-      		}
-      	};
-      		return xhr;
-      },*/
-      complete: () => {
-        $dropZone.removeClass(upload);
-      },
-      success: response => {
-        const data = response.responses[actionKey];
-        $dropZone.addClass(data.success ? success : error);
-        if (data.success) {
-          if (onSuccess) {
-            onSuccess(data, self);
-          }
-        } else {
-          $errorMsg.text(data.error);
-          if (onError) {
-            onError(self, arguments);
-          }
-        }
-      },
-      error: () => {
-        if ('function' === typeof onError) {
-          onError(self, arguments);
-        }
-      }
-    });
-  }
-  onInit() {
-    super.onInit();
-    elementorCommon.elements.$document.trigger('onDropzoneLoaded', [this]);
-  }
-}
-var _default = exports["default"] = DropZoneField;
-
-/***/ },
-
-/***/ "../modules/assets-manager/assets/js/admin/fields/elementor-pro-repeater.js"
-/*!**********************************************************************************!*\
-  !*** ../modules/assets-manager/assets/js/admin/fields/elementor-pro-repeater.js ***!
-  \**********************************************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-
-__webpack_require__(/*! core-js/modules/esnext.iterator.constructor.js */ "../node_modules/core-js/modules/esnext.iterator.constructor.js");
-__webpack_require__(/*! core-js/modules/esnext.iterator.find.js */ "../node_modules/core-js/modules/esnext.iterator.find.js");
-module.exports = {
-  selectors: {
-    add: '.add-repeater-row',
-    remove: '.remove-repeater-row',
-    toggle: '.toggle-repeater-row',
-    close: '.close-repeater-row',
-    sort: '.sort-repeater-row',
-    table: '.form-table',
-    block: '.repeater-block',
-    repeaterLabel: '.repeater-title',
-    repeaterField: '.elementor-field-repeater'
-  },
-  counters: [],
-  trigger(eventName, params) {
-    jQuery(document).trigger(eventName, params);
-  },
-  triggerHandler(eventName, params) {
-    return jQuery(document).triggerHandler(eventName, params);
-  },
-  countBlocks($btn) {
-    return $btn.closest(this.selectors.repeaterField).find(this.selectors.block).length || 0;
-  },
-  add(btn) {
-    var self = this,
-      $btn = jQuery(btn),
-      id = $btn.data('template-id'),
-      repeaterBlock;
-    if (!Object.prototype.hasOwnProperty.call(self.counters, id)) {
-      self.counters[id] = self.countBlocks($btn);
-    }
-    self.counters[id] += 1;
-    repeaterBlock = jQuery('#' + id).html();
-    repeaterBlock = self.replaceAll('__counter__', self.counters[id], repeaterBlock);
-    $btn.before(repeaterBlock);
-    self.trigger('onRepeaterNewRow', [$btn, $btn.prev()]);
-  },
-  remove(btn) {
-    var self = this;
-    jQuery(btn).closest(self.selectors.block).remove();
-    self.trigger('onRepeaterRemoveRow', [btn]);
-  },
-  toggle(btn) {
-    var self = this,
-      $btn = jQuery(btn),
-      $table = $btn.closest(self.selectors.block).find(self.selectors.table),
-      $toggleLabel = $btn.closest(self.selectors.block).find(self.selectors.repeaterLabel);
-    $table.toggle(0, function () {
-      if ($table.is(':visible')) {
-        $table.closest(self.selectors.block).addClass('block-visible');
-        self.trigger('onRepeaterToggleVisible', [$btn, $table, $toggleLabel]);
-      } else {
-        $table.closest(self.selectors.block).removeClass('block-visible');
-        self.trigger('onRepeaterToggleHidden', [$btn, $table, $toggleLabel]);
-      }
-    });
-    $toggleLabel.toggle();
-
-    // Update row label
-    self.updateRowLabel(btn);
-  },
-  close(btn) {
-    var self = this,
-      $btn = jQuery(btn),
-      $table = $btn.closest(self.selectors.block).find(self.selectors.table),
-      $toggleLabel = $btn.closest(self.selectors.block).find(self.selectors.repeaterLabel);
-    $table.closest(self.selectors.block).removeClass('block-visible');
-    $table.hide();
-    self.trigger('onRepeaterToggleHidden', [$btn, $table, $toggleLabel]);
-    $toggleLabel.show();
-    self.updateRowLabel(btn);
-  },
-  updateRowLabel(btn) {
-    var self = this,
-      $btn = jQuery(btn),
-      $table = $btn.closest(self.selectors.block).find(self.selectors.table),
-      $toggleLabel = $btn.closest(self.selectors.block).find(self.selectors.repeaterLabel);
-    var selector = $toggleLabel.data('selector');
-    // For some browsers, `attr` is undefined; for others,  `attr` is false.  Check for both.
-    if (typeof selector !== typeof undefined && false !== selector) {
-      var value = false,
-        std = $toggleLabel.data('default');
-      if ($table.find(selector).length) {
-        value = $table.find(selector).val();
-      }
-
-      // Filter hook
-      var computedLabel = self.triggerHandler('repeaterComputedLabel', [$table, $toggleLabel, value]);
-
-      // For some browsers, `attr` is undefined; for others,  `attr` is false.  Check for both.
-      if (undefined !== computedLabel && false !== computedLabel) {
-        value = computedLabel;
-      }
-
-      // Fallback to default row label
-      if (undefined === value || false === value) {
-        value = std;
-      }
-      $toggleLabel.html(value);
-    }
-  },
-  replaceAll(search, replace, string) {
-    return string.replace(new RegExp(search, 'g'), replace);
-  },
-  init() {
-    var self = this;
-    jQuery(document).on('click', this.selectors.add, function (event) {
-      event.preventDefault();
-      self.add(jQuery(this), event);
-    }).on('click', this.selectors.remove, function (event) {
-      event.preventDefault();
-      // eslint-disable-next-line no-alert
-      var result = confirm(jQuery(this).data('confirm').toString());
-      if (!result) {
-        return;
-      }
-      self.remove(jQuery(this), event);
-    }).on('click', this.selectors.toggle, function (event) {
-      event.preventDefault();
-      event.stopPropagation();
-      self.toggle(jQuery(this), event);
-    }).on('click', this.selectors.close, function (event) {
-      event.preventDefault();
-      event.stopPropagation();
-      self.close(jQuery(this), event);
-    });
-    jQuery(this.selectors.toggle).each(function () {
-      self.updateRowLabel(jQuery(this));
-    });
-    this.trigger('onRepeaterLoaded', [this]);
-  }
-};
-
-/***/ },
-
-/***/ "../modules/assets-manager/assets/js/admin/fields/elementor-pro-upload.js"
-/*!********************************************************************************!*\
-  !*** ../modules/assets-manager/assets/js/admin/fields/elementor-pro-upload.js ***!
-  \********************************************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-
-__webpack_require__(/*! core-js/modules/esnext.iterator.constructor.js */ "../node_modules/core-js/modules/esnext.iterator.constructor.js");
-__webpack_require__(/*! core-js/modules/esnext.iterator.find.js */ "../node_modules/core-js/modules/esnext.iterator.find.js");
-module.exports = {
-  $btn: null,
-  fileId: null,
-  fileUrl: null,
-  fileFrame: [],
-  selectors: {
-    uploadBtnClass: 'elementor-upload-btn',
-    clearBtnClass: 'elementor-upload-clear-btn',
-    uploadBtn: '.elementor-upload-btn',
-    clearBtn: '.elementor-upload-clear-btn',
-    inputURLField: '.elementor-field-file input[type="text"]'
-  },
-  hasValue() {
-    return '' !== jQuery(this.fileUrl).val();
-  },
-  setLabels($el) {
-    if (!this.hasValue()) {
-      $el.val($el.data('upload_text'));
-    } else {
-      $el.val($el.data('remove_text'));
-    }
-  },
-  setFields(el) {
-    const self = this;
-    self.fileUrl = jQuery(el).prev();
-    self.fileId = jQuery(self.fileUrl).prev();
-  },
-  setUploadParams(ext, name) {
-    const uploader = this.fileFrame[name].uploader.uploader;
-    uploader.param('uploadType', ext);
-    uploader.param('uploadTypeCaller', 'elementor-admin-font-upload');
-    uploader.param('post_id', this.getPostId());
-  },
-  setUploadMimeType(frame, ext) {
-    // Set {ext} as only allowed upload extensions
-    const oldExtensions = _wpPluploadSettings.defaults.filters.mime_types[0].extensions,
-      self = this;
-    frame.on('ready', () => {
-      _wpPluploadSettings.defaults.filters.mime_types[0].extensions = ext;
-    });
-    frame.on('close', () => {
-      // Restore allowed upload extensions
-      _wpPluploadSettings.defaults.filters.mime_types[0].extensions = oldExtensions;
-      self.replaceButtonClass(self.$btn);
-    });
-  },
-  replaceButtonClass(el) {
-    if (this.hasValue()) {
-      jQuery(el).removeClass(this.selectors.uploadBtnClass).addClass(this.selectors.clearBtnClass);
-    } else {
-      jQuery(el).removeClass(this.selectors.clearBtnClass).addClass(this.selectors.uploadBtnClass);
-    }
-    this.setLabels(el);
-  },
-  uploadFile(el) {
-    const self = this,
-      $el = jQuery(el),
-      mime = $el.attr('data-mime_type') || '',
-      ext = $el.attr('data-ext') || false,
-      name = $el.attr('id');
-    // If the media frame already exists, reopen it.
-    if ('undefined' !== typeof self.fileFrame[name]) {
-      if (ext) {
-        self.setUploadParams(ext, name);
-      }
-      self.fileFrame[name].open();
-      return;
-    }
-
-    // Create the media frame.
-    self.fileFrame[name] = wp.media({
-      library: {
-        type: [...mime.split(','), mime.split(',').join('')]
-      },
-      title: $el.data('box_title'),
-      button: {
-        text: $el.data('box_action')
-      },
-      multiple: false
-    });
-
-    // When an file is selected, run a callback.
-    self.fileFrame[name].on('select', function () {
-      // We set multiple to false so only get one image from the uploader
-      const attachment = self.fileFrame[name].state().get('selection').first().toJSON();
-      // Do something with attachment.id and/or attachment.url here
-      jQuery(self.fileId).val(attachment.id);
-      jQuery(self.fileUrl).val(attachment.url);
-      self.replaceButtonClass(el);
-      self.updatePreview(el);
-    });
-    self.fileFrame[name].on('open', () => {
-      const selectedId = this.fileId.val();
-      if (!selectedId) {
-        return;
-      }
-      const selection = self.fileFrame[name].state().get('selection');
-      selection.add(wp.media.attachment(selectedId));
-    });
-    self.setUploadMimeType(self.fileFrame[name], ext);
-
-    // Finally, open the modal
-    self.fileFrame[name].open();
-    if (ext) {
-      self.setUploadParams(ext, name);
-    }
-  },
-  updatePreview(el) {
-    const self = this,
-      $ul = jQuery(el).parent().find('ul'),
-      $li = jQuery('<li>'),
-      showUrlType = jQuery(el).data('preview_anchor') || 'full';
-    $ul.html('');
-    if (self.hasValue() && 'none' !== showUrlType) {
-      let anchor = jQuery(self.fileUrl).val();
-      if ('full' !== showUrlType) {
-        anchor = anchor.substring(anchor.lastIndexOf('/') + 1);
-      }
-      $li.html('<a href="' + jQuery(self.fileUrl).val() + '" download>' + anchor + '</a>');
-      $ul.append($li);
-    }
-  },
-  setup() {
-    const self = this;
-    jQuery(self.selectors.uploadBtn + ', ' + self.selectors.clearBtn).each(function () {
-      self.setFields(jQuery(this));
-      self.updatePreview(jQuery(this));
-      self.setLabels(jQuery(this));
-      self.replaceButtonClass(jQuery(this));
-    });
-  },
-  getPostId() {
-    return jQuery('#post_ID').val();
-  },
-  handleUploadClick(event) {
-    event.preventDefault();
-    const $element = jQuery(event.target);
-    if ('text' === $element.attr('type')) {
-      return $element.next().removeClass(this.selectors.clearBtnClass).addClass(this.selectors.uploadBtnClass).trigger('click');
-    }
-    this.$btn = $element;
-    this.setFields($element);
-    this.uploadFile($element);
-  },
-  init() {
-    const self = this,
-      {
-        uploadBtn,
-        inputURLField,
-        clearBtn
-      } = this.selectors,
-      handleUpload = event => this.handleUploadClick(event);
-    jQuery(document).on('click', uploadBtn, handleUpload);
-    jQuery(document).on('click', inputURLField, event => {
-      if ('' !== event.target.value) {
-        handleUpload(event);
-      }
-    });
-    jQuery(document).on('click', clearBtn, function (event) {
-      event.preventDefault();
-      const $element = jQuery(this);
-      self.setFields($element);
-      jQuery(self.fileUrl).val('');
-      jQuery(self.fileId).val('');
-      self.updatePreview($element);
-      self.replaceButtonClass($element);
-    });
-    this.setup();
-    jQuery(document).on('onRepeaterNewRow', function () {
-      self.setup();
-    });
-  }
-};
-
-/***/ },
-
-/***/ "../modules/assets-manager/assets/js/admin/font-awesome-pro.js"
-/*!*********************************************************************!*\
-  !*** ../modules/assets-manager/assets/js/admin/font-awesome-pro.js ***!
-  \*********************************************************************/
-(__unused_webpack_module, exports) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = void 0;
-class _default extends elementorModules.ViewModule {
-  getDefaultSettings() {
-    return {
-      selectors: {
-        button: '#elementor_pro_fa_pro_validate_button',
-        kitIdField: '#elementor_font_awesome_pro_kit_id'
-      }
-    };
-  }
-  getDefaultElements() {
-    const elements = {};
-    const selectors = this.getSettings('selectors');
-    jQuery.each(selectors, (element, selector) => {
-      elements['$' + element] = jQuery(selector);
-    });
-    return elements;
-  }
-  bindEvents() {
-    const {
-      $button,
-      $kitIdField
-    } = this.elements;
-    $button.on('click', event => {
-      event.preventDefault();
-      this.testKitUrl();
-    });
-    $kitIdField.on('change', () => {
-      this.setState('clear');
-    });
-  }
-  setState(type) {
-    const classes = ['loading', 'success', 'error'],
-      {
-        $button
-      } = this.elements;
-    let currentClass, classIndex;
-    for (classIndex in classes) {
-      currentClass = classes[classIndex];
-      if (type === currentClass) {
-        $button.addClass(currentClass);
-      } else {
-        $button.removeClass(currentClass);
-      }
-    }
-  }
-  testKitUrl() {
-    this.setState('loading');
-    const self = this,
-      kitID = this.elements.$kitIdField.val();
-    if ('' === kitID) {
-      this.setState('clear');
-      return;
-    }
-    jQuery.ajax({
-      url: 'https://kit.fontawesome.com/' + kitID + '.js',
-      method: 'GET',
-      complete: xhr => {
-        if (200 !== xhr.status) {
-          self.setState('error');
-        } else {
-          self.setState('success');
-        }
-      }
-    });
-  }
-}
-exports["default"] = _default;
-
-/***/ },
-
-/***/ "../modules/assets-manager/assets/js/admin/typekit.js"
-/*!************************************************************!*\
-  !*** ../modules/assets-manager/assets/js/admin/typekit.js ***!
-  \************************************************************/
-(module) {
-
-"use strict";
-
-
-module.exports = function () {
-  var self = this;
-  self.cacheElements = function () {
-    this.cache = {
-      $button: jQuery('#elementor_pro_typekit_validate_button'),
-      $kitIdField: jQuery('#elementor_typekit-kit-id'),
-      $dataLabelSpan: jQuery('.elementor-pro-typekit-data')
-    };
-  };
-  self.bindEvents = function () {
-    this.cache.$button.on('click', function (event) {
-      event.preventDefault();
-      self.fetchFonts();
-    });
-    this.cache.$kitIdField.on('change', function () {
-      self.setState('clear');
-    });
-  };
-  self.fetchFonts = function () {
-    this.setState('loading');
-    this.cache.$dataLabelSpan.addClass('hidden');
-    var kitID = this.cache.$kitIdField.val();
-    if ('' === kitID) {
-      this.setState('clear');
-      return;
-    }
-    jQuery.post(ajaxurl, {
-      action: 'elementor_pro_admin_fetch_fonts',
-      kit_id: kitID,
-      _nonce: self.cache.$button.data('nonce')
-    }).done(function (data) {
-      if (data.success) {
-        var template = self.cache.$button.data('found');
-        template = template.replace('{{count}}', data.data.count);
-        self.cache.$dataLabelSpan.html(template).removeClass('hidden');
-        self.setState('success');
-      } else {
-        self.setState('error');
-      }
-    }).fail(function () {
-      self.setState();
-    });
-  };
-  self.setState = function (type) {
-    var classes = ['loading', 'success', 'error'],
-      currentClass,
-      classIndex;
-    for (classIndex in classes) {
-      currentClass = classes[classIndex];
-      if (type === currentClass) {
-        this.cache.$button.addClass(currentClass);
-      } else {
-        this.cache.$button.removeClass(currentClass);
-      }
-    }
-  };
-  self.init = function () {
-    this.cacheElements();
-    this.bindEvents();
-  };
-  self.init();
-};
-
-/***/ },
-
-/***/ "../modules/forms/assets/js/admin.js"
-/*!*******************************************!*\
-  !*** ../modules/forms/assets/js/admin.js ***!
-  \*******************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = function () {
-  var ApiValidations = __webpack_require__(/*! ./admin/api-validations */ "../modules/forms/assets/js/admin/api-validations.js");
-  this.dripButton = new ApiValidations('drip_api_token');
-  this.getResponse = new ApiValidations('getresponse_api_key');
-  this.convertKit = new ApiValidations('convertkit_api_key');
-  this.mailChimp = new ApiValidations('mailchimp_api_key');
-  this.mailerLite = new ApiValidations('mailerlite_api_key');
-  this.activeCcampaign = new ApiValidations('activecampaign_api_key', 'activecampaign_api_url');
-  document.querySelector('.e-notice--cta.e-notice--dismissible[data-notice_id="site_mailer_forms_submissions_notice"] a.e-button--cta')?.addEventListener('click', function () {
-    const $notice = $(this).closest('.e-notice');
-    const source = $notice.data('source') || 'sm-submission-install';
-    elementorCommon.ajax.addRequest('elementor_site_mailer_campaign', {
-      data: {
-        source
-      }
-    });
-  });
-};
-
-/***/ },
-
-/***/ "../modules/forms/assets/js/admin/api-validations.js"
-/*!***********************************************************!*\
-  !*** ../modules/forms/assets/js/admin/api-validations.js ***!
-  \***********************************************************/
-(module) {
-
-"use strict";
-
-
-module.exports = function (key, fieldID) {
-  var self = this;
-  self.cacheElements = function () {
-    this.cache = {
-      $button: jQuery('#elementor_pro_' + key + '_button'),
-      $apiKeyField: jQuery('#elementor_pro_' + key),
-      $apiUrlField: jQuery('#elementor_pro_' + fieldID)
-    };
-  };
-  self.bindEvents = function () {
-    this.cache.$button.on('click', function (event) {
-      event.preventDefault();
-      self.validateApi();
-    });
-    this.cache.$apiKeyField.on('change', function () {
-      self.setState('clear');
-    });
-  };
-  self.validateApi = function () {
-    this.setState('loading');
-    var apiKey = this.cache.$apiKeyField.val();
-    if ('' === apiKey) {
-      this.setState('clear');
-      return;
-    }
-    if (this.cache.$apiUrlField.length && '' === this.cache.$apiUrlField.val()) {
-      this.setState('clear');
-      return;
-    }
-    jQuery.post(ajaxurl, {
-      action: self.cache.$button.data('action'),
-      api_key: apiKey,
-      api_url: this.cache.$apiUrlField.val(),
-      _nonce: self.cache.$button.data('nonce')
-    }).done(function (data) {
-      if (data.success) {
-        self.setState('success');
-      } else {
-        self.setState('error');
-      }
-    }).fail(function () {
-      self.setState();
-    });
-  };
-  self.setState = function (type) {
-    var classes = ['loading', 'success', 'error'],
-      currentClass,
-      classIndex;
-    for (classIndex in classes) {
-      currentClass = classes[classIndex];
-      if (type === currentClass) {
-        this.cache.$button.addClass(currentClass);
-      } else {
-        this.cache.$button.removeClass(currentClass);
-      }
-    }
-  };
-  self.init = function () {
-    this.cacheElements();
-    this.bindEvents();
-  };
-  self.init();
-};
-
-/***/ },
-
-/***/ "../modules/library/assets/js/admin.js"
-/*!*********************************************!*\
-  !*** ../modules/library/assets/js/admin.js ***!
-  \*********************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = function () {
-  var EditButton = __webpack_require__(/*! ./admin/edit-button */ "../modules/library/assets/js/admin/edit-button.js");
-  var ShortcodeTextarea = __webpack_require__(/*! ./admin/shortcode-textarea */ "../modules/library/assets/js/admin/shortcode-textarea.js");
-  this.editButton = new EditButton();
-  this.shortcodeTextarea = new ShortcodeTextarea();
-};
-
-/***/ },
-
-/***/ "../modules/library/assets/js/admin/edit-button.js"
-/*!*********************************************************!*\
-  !*** ../modules/library/assets/js/admin/edit-button.js ***!
-  \*********************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-
-__webpack_require__(/*! core-js/modules/esnext.iterator.constructor.js */ "../node_modules/core-js/modules/esnext.iterator.constructor.js");
-__webpack_require__(/*! core-js/modules/esnext.iterator.find.js */ "../node_modules/core-js/modules/esnext.iterator.find.js");
-module.exports = function () {
-  var self = this;
-  self.init = function () {
-    jQuery(document).on('change', '.elementor-widget-template-select', function () {
-      var $this = jQuery(this),
-        templateID = $this.val(),
-        $editButton = $this.parents('p').find('.elementor-edit-template'),
-        type = $this.find('[value="' + templateID + '"]').data('type');
-      if ('page' !== type) {
-        // 'widget' is editable only from Elementor page
-        $editButton.hide();
-        return;
-      }
-      var editUrl = elementorAdmin.config.home_url + '?p=' + templateID + '&elementor';
-      $editButton.prop('href', editUrl).show();
-    });
-  };
-  self.init();
-};
-
-/***/ },
-
-/***/ "../modules/library/assets/js/admin/shortcode-textarea.js"
-/*!****************************************************************!*\
-  !*** ../modules/library/assets/js/admin/shortcode-textarea.js ***!
-  \****************************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-
-__webpack_require__(/*! core-js/modules/esnext.iterator.constructor.js */ "../node_modules/core-js/modules/esnext.iterator.constructor.js");
-__webpack_require__(/*! core-js/modules/esnext.iterator.for-each.js */ "../node_modules/core-js/modules/esnext.iterator.for-each.js");
-module.exports = function () {
-  const resizeAllTextareas = () => {
-    const textareas = document.querySelectorAll('.elementor-shortcode-textarea');
-    textareas.forEach(textarea => {
-      textarea.style.height = 'auto';
-      textarea.style.height = textarea.scrollHeight + 5 + 'px';
-    });
-  };
-  const init = () => {
-    resizeAllTextareas();
-    window.addEventListener('resize', () => {
-      resizeAllTextareas();
-    });
-    document.addEventListener('click', event => {
-      if (event.target.matches('button.toggle-row')) {
-        resizeAllTextareas();
-      }
-    });
-  };
-  init();
-};
-
-/***/ },
-
-/***/ "../modules/payments/assets/js/admin.js"
-/*!**********************************************!*\
-  !*** ../modules/payments/assets/js/admin.js ***!
-  \**********************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = function () {
-  const ApiValidations = __webpack_require__(/*! ./admin/api-validations */ "../modules/payments/assets/js/admin/api-validations.js");
-  this.stripeTestSecretKey = new ApiValidations('stripe_test_secret_key');
-  this.stripeLiveSecretKey = new ApiValidations('stripe_live_secret_key');
-};
-
-/***/ },
-
-/***/ "../modules/payments/assets/js/admin/api-validations.js"
-/*!**************************************************************!*\
-  !*** ../modules/payments/assets/js/admin/api-validations.js ***!
-  \**************************************************************/
-(module) {
-
-"use strict";
-
-
-module.exports = function (key) {
-  var self = this;
-  self.cacheElements = function () {
-    this.cache = {
-      $button: jQuery('#elementor_pro_' + key + '_button'),
-      $apiKeyField: jQuery('#elementor_pro_' + key)
-    };
-  };
-  self.bindEvents = function () {
-    this.cache.$button.on('click', function (event) {
-      event.preventDefault();
-      self.validateApi();
-    });
-    this.cache.$apiKeyField.on('change', function () {
-      self.setState('clear');
-    });
-  };
-  self.validateApi = function () {
-    this.setState('loading');
-    var apiKey = this.cache.$apiKeyField.val();
-    if ('' === apiKey) {
-      this.setState('clear');
-      return;
-    }
-    jQuery.post(ajaxurl, {
-      action: self.cache.$button.data('action'),
-      secret_key: apiKey,
-      _nonce: self.cache.$button.data('nonce')
-    }).done(function (data) {
-      if (data.success) {
-        self.setState('success');
-      } else {
-        self.setState('error');
-      }
-    }).fail(function () {
-      self.setState();
-    });
-  };
-  self.setState = function (type) {
-    var classes = ['loading', 'success', 'error'],
-      currentClass,
-      classIndex;
-    for (classIndex in classes) {
-      currentClass = classes[classIndex];
-      if (type === currentClass) {
-        this.cache.$button.addClass(currentClass);
-      } else {
-        this.cache.$button.removeClass(currentClass);
-      }
-    }
-  };
-  self.init = function () {
-    this.cacheElements();
-    this.bindEvents();
-  };
-  self.init();
-};
-
-/***/ },
-
-/***/ "../modules/popup/assets/js/admin/admin.js"
-/*!*************************************************!*\
-  !*** ../modules/popup/assets/js/admin/admin.js ***!
-  \*************************************************/
-(__unused_webpack_module, exports) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = void 0;
-class _default extends elementorModules.Module {
+var _pageTransitionComponent = _interopRequireDefault(__webpack_require__(/*! ./page-transition.component.scss */ "../modules/page-transitions/assets/js/frontend/components/page-transition/page-transition.component.scss"));
+var _filters = _interopRequireDefault(__webpack_require__(/*! ./filters */ "../modules/page-transitions/assets/js/frontend/components/page-transition/filters.js"));
+class PageTransition extends HTMLElement {
+  /**
+   * Initialize the Page Transitions element.
+   *
+   * @return {void}
+   */
   constructor() {
     super();
-    if (!elementorModules.admin?.MenuHandler) {
-      return;
+    this.classes = this.getClasses();
+    this.elements = this.getElements();
+    this.bindEvents();
+  }
+
+  /**
+   * Get a list of classes that are used in the code.
+   *
+   * @return {Object} - List of classes.
+   */
+  getClasses() {
+    return {
+      preloader: 'e-page-transition--preloader',
+      entering: 'e-page-transition--entering',
+      exiting: 'e-page-transition--exiting',
+      entered: 'e-page-transition--entered',
+      preview: 'e-page-transition--preview'
+    };
+  }
+
+  /**
+   * Get the Page Transition CSS.
+   *
+   * @return {string} - CSS code.
+   */
+  getStyle() {
+    return `<style>${_pageTransitionComponent.default.toString()}</style>`;
+  }
+
+  /**
+   * A list of attributes to observe for changes.
+   *
+   * @return {string[]} - Attributes to observe.
+   */
+  static get observedAttributes() {
+    return ['preloader-type', 'preloader-icon', 'preloader-image-url', 'preloader-animation-type', 'disabled'];
+  }
+
+  /**
+   * Get the Page Transitions elements.
+   *
+   * @return {Object} - Elements.
+   */
+  getElements() {
+    const triggers = this.getAttribute('triggers'),
+      selector = triggers || 'a:not( [data-elementor-open-lightbox="yes"] )';
+    return {
+      links: document.querySelectorAll(selector)
+    };
+  }
+
+  /**
+   * Determine if a link should trigger a Page Transition effect.
+   *
+   * @param {HTMLAnchorElement} a - The anchor element to check.
+   * @return {boolean} - Whether the given link should activate the Page Transition.
+   */
+  shouldPageTriggerTransition(a) {
+    return Object.values(_filters.default).every(shouldDisable => !shouldDisable(a, this.getAttribute('exclude')));
+  }
+
+  /**
+   * Hide the loader on page show.
+   *
+   * @return {void}
+   */
+  onPageShow() {
+    // To disable animation on back / forward click.
+    if (this.classList.contains(this.classes.exiting)) {
+      this.classList.add(this.classes.entered);
+      this.classList.remove(this.classes.exiting);
     }
-    new elementorModules.admin.MenuHandler({
-      path: 'edit.php?post_type=elementor_library&tabs_group=popup&elementor_library_type=popup'
+
+    // Animate the loader on page load.
+    this.animateState('entering').then(() => {
+      this.classList.add(this.classes.entered);
     });
   }
+
+  /**
+   * Trigger the Page Transition on link click.
+   *
+   * @param {MouseEvent} e - The click Event.
+   * @return {void}
+   */
+  onLinkClick(e) {
+    if (!this.shouldPageTriggerTransition(e.currentTarget)) {
+      return;
+    }
+    e.preventDefault();
+    const href = e.currentTarget.href;
+    this.classList.remove(this.classes.entered);
+    this.animateState('exiting', this.getPreloaderDelay()).then(() => {
+      this.classList.add(this.classes.exiting);
+
+      // Redirect the user to the clicked href only after the Page Transition has entered.
+      location.href = href;
+    });
+  }
+
+  /**
+   * Prerender a webpage using `rel=prerender`.
+   *
+   * @param {string} href
+   * @return {void}
+   */
+  prerender(href) {
+    if (document.querySelector(`link[href="${href}"]`)) {
+      return;
+    }
+    const link = document.createElement('link');
+    link.setAttribute('rel', 'prerender');
+    link.setAttribute('href', href);
+    document.head.appendChild(link);
+  }
+
+  /**
+   * Trigger a `prerender` on link mouse enter.
+   *
+   * @param {MouseEvent} e
+   * @return {void}
+   */
+  onLinkMouseEnter(e) {
+    if (!this.shouldPageTriggerTransition(e.currentTarget)) {
+      return;
+    }
+    this.prerender(e.currentTarget.href);
+  }
+
+  /**
+   * Bind events to the window & links.
+   *
+   * @return {void}
+   */
+  bindEvents() {
+    window.addEventListener('pageshow', this.onPageShow.bind(this));
+    window.addEventListener('DOMContentLoaded', () => {
+      this.elements = this.getElements();
+      this.elements.links.forEach(a => {
+        a.addEventListener('click', this.onLinkClick.bind(this));
+        a.addEventListener('mouseenter', this.onLinkMouseEnter.bind(this));
+        a.addEventListener('touchstart', this.onLinkMouseEnter.bind(this));
+      });
+    });
+  }
+
+  /**
+   * Escape HTML special chars to prevent XSS.
+   *
+   * @param {string} str - String to escape.
+   *
+   * @return {string} escaped string
+   */
+  escapeHTML(str) {
+    const specialChars = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      "'": '&#39;',
+      '"': '&quot;'
+    };
+    return str.replace(/[&<>'"]/g, tag => specialChars[tag] || tag);
+  }
+
+  /**
+   * Retrieve an icon loader HTML markup.
+   *
+   * @return {string} - HTML markup.
+   */
+  getIconLoader() {
+    const icon = this.getAttribute('preloader-icon') || '';
+    return `
+			<i class="${this.escapeHTML(icon)} ${this.classes.preloader}"></i>
+		`;
+  }
+
+  /**
+   * Retrieve an image loader HTML markup.
+   *
+   * @return {string} - HTML markup.
+   */
+  getImageLoader() {
+    const url = this.getAttribute('preloader-image-url') || '';
+    return `
+			<img class="${this.classes.preloader}" src="${this.escapeHTML(url)}" />
+		`;
+  }
+
+  /**
+   * Retrieve a custom loader HTML markup.
+   *
+   * @return {string} - HTML markup.
+   */
+  getAnimationLoader() {
+    const type = this.getAttribute('preloader-animation-type');
+    if (!type) {
+      return '';
+    }
+    return `
+			<e-preloader type="${type}"></e-preloader>
+		`;
+  }
+
+  /**
+   * Render the Page Transition element.
+   *
+   * @return {void}
+   */
+  render() {
+    // Don't render when the Page Transition is disabled.
+    if (this.hasAttribute('disabled')) {
+      this.innerHTML = '';
+      return;
+    }
+    const loaderType = this.getAttribute('preloader-type');
+    switch (loaderType) {
+      case 'icon':
+        this.innerHTML = this.getIconLoader();
+        break;
+      case 'image':
+        this.innerHTML = this.getImageLoader();
+        break;
+      case 'animation':
+        this.innerHTML = this.getAnimationLoader();
+        break;
+      default:
+        this.innerHTML = '';
+        break;
+    }
+    this.innerHTML += this.getStyle();
+  }
+
+  /**
+   * Get a CSS variable value from the current element's context.
+   *
+   * @param {string} variable - Variable name.
+   * @param {string} prefix   - Variable prefix, defaults to `e-page-transition`.
+   * @return {string} - CSS variable value.
+   */
+  getCssVar(variable, prefix = 'e-page-transition-') {
+    return window.getComputedStyle(this).getPropertyValue(`--${prefix}${variable}`);
+  }
+
+  /**
+   * Get the animation duration as an integer in order to be used inside a `setTimeout`.
+   *
+   * Assumes that all of the timings are in `ms`.
+   *
+   * @return {number} - Animation duration.
+   */
+  getAnimationDuration() {
+    return parseInt(this.getCssVar('animation-duration')) || 0;
+  }
+
+  /**
+   * Get the preloader delay.
+   *
+   * Assumes that all of the timings are in `ms`.
+   *
+   * @return {number} - Preloader delay.
+   */
+  getPreloaderDelay() {
+    return parseInt(this.getCssVar('delay', 'e-preloader-')) || 0;
+  }
+
+  /**
+   * Start the animate sequence of the Page Transition (enter && exit).
+   *
+   * @return {Promise} - Animation sequence Promise.
+   */
+  animate() {
+    // Don't animate if there is already an animation in progress.
+    if (this.isAnimating) {
+      return new Promise((resolve, reject) => {
+        reject('Animation is already in progress.');
+      });
+    }
+    this.isAnimating = true;
+
+    // Delay the exit animation so the user will be able to see the loader for a second.
+    const delay = this.getPreloaderDelay() + 1500;
+    this.classList.remove(this.classes.entered);
+    return new Promise(resolve => {
+      // Defer to make sure that the `entered` class is fully removed before animating.
+      // Return a Promise for animations chaining.
+      setTimeout(() => {
+        this.animateState('exiting', delay).then(() => {
+          this.animateState('entering').then(() => {
+            this.classList.add(this.classes.entered);
+            this.isAnimating = false;
+            resolve();
+          });
+        });
+      });
+    });
+  }
+
+  /**
+   * Animate a state of the Page Transition (enter || exit).
+   *
+   * @param {('entering'|'exiting')} state - The state name to animate.
+   * @param {number}                 delay - Delay (in ms) before resolving the Promise.
+   * @return {Promise} - Animation sequence Promise.
+   */
+  animateState(state, delay = 0) {
+    const className = this.classes?.[state];
+    if (!className) {
+      return new Promise((resolve, reject) => {
+        reject(state);
+      });
+    }
+
+    // Remove and add the class again to force the animation, since it's using `animation-fill-mode: forwards`.
+    this.classList.remove(className);
+    this.classList.add(className);
+
+    // Return a Promise for animations chaining.
+    const animationDuration = this.getAnimationDuration();
+    return new Promise(resolve => {
+      setTimeout(() => {
+        this.classList.remove(className);
+        resolve(state);
+      }, animationDuration + delay);
+    });
+  }
+
+  /**
+   * Listen to attribute changes and re-render the element.
+   *
+   * @return {void}
+   */
+  attributeChangedCallback() {
+    this.render();
+  }
+
+  /**
+   * Render the element when attached to the document.
+   *
+   * @return {void}
+   */
+  connectedCallback() {
+    this.render();
+  }
 }
-exports["default"] = _default;
+exports.PageTransition = PageTransition;
+var _default = exports["default"] = PageTransition;
 
 /***/ },
 
-/***/ "../modules/role-manager/assets/js/admin.js"
-/*!**************************************************!*\
-  !*** ../modules/role-manager/assets/js/admin.js ***!
-  \**************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
+/***/ "../modules/page-transitions/assets/js/frontend/components/preloader/preloader.js"
+/*!****************************************************************************************!*\
+  !*** ../modules/page-transitions/assets/js/frontend/components/preloader/preloader.js ***!
+  \****************************************************************************************/
+(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
 
 
-module.exports = function () {
-  var AdvancedRoleManager = __webpack_require__(/*! ./admin/role-mananger */ "../modules/role-manager/assets/js/admin/role-mananger.js");
-  this.advancedRoleManager = new AdvancedRoleManager();
-};
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "../node_modules/@babel/runtime/helpers/interopRequireDefault.js");
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports["default"] = exports.Preloader = void 0;
+var _preloaderComponent = _interopRequireDefault(__webpack_require__(/*! ./preloader.component.scss */ "../modules/page-transitions/assets/js/frontend/components/preloader/preloader.component.scss"));
+class Preloader extends HTMLElement {
+  /**
+   * A list of attributes to observe for changes.
+   *
+   * @return {string[]} - Attributes to observe.
+   */
+  static get observedAttributes() {
+    return ['type'];
+  }
 
-/***/ },
+  /**
+   * Listen to attribute changes and re-render the element.
+   *
+   * @return {void}
+   */
+  attributeChangedCallback() {
+    this.render();
+  }
 
-/***/ "../modules/role-manager/assets/js/admin/role-mananger.js"
-/*!****************************************************************!*\
-  !*** ../modules/role-manager/assets/js/admin/role-mananger.js ***!
-  \****************************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
+  /**
+   * Get the Preloader CSS.
+   *
+   * @return {string} - CSS code.
+   */
+  getStyle() {
+    return `<style>${_preloaderComponent.default.toString()}</style>`;
+  }
 
-"use strict";
-
-
-__webpack_require__(/*! core-js/modules/esnext.iterator.constructor.js */ "../node_modules/core-js/modules/esnext.iterator.constructor.js");
-__webpack_require__(/*! core-js/modules/esnext.iterator.find.js */ "../node_modules/core-js/modules/esnext.iterator.find.js");
-module.exports = function () {
-  var self = this;
-  self.cacheElements = function () {
-    this.cache = {
-      $checkBox: jQuery('input[name="elementor_exclude_user_roles[]"]'),
-      $advanced: jQuery('#elementor_advanced_role_manager')
-    };
-  };
-  self.bindEvents = function () {
-    this.cache.$checkBox.on('change', function (event) {
-      event.preventDefault();
-      self.checkBoxUpdate(jQuery(this));
-    });
-  };
-  self.checkBoxUpdate = function ($element) {
-    var role = $element.val();
-    if ($element.is(':checked')) {
-      self.cache.$advanced.find('div.' + role).addClass('hidden');
-    } else {
-      self.cache.$advanced.find('div.' + role).removeClass('hidden');
-    }
-  };
-  self.init = function () {
-    if (!jQuery('body').hasClass('elementor_page_elementor-role-manager')) {
+  /**
+   * Render the Preloader element.
+   *
+   * @return {void}
+   */
+  render() {
+    const type = this.getAttribute('type'),
+      dotsTypes = ['bouncing-dots', 'pulsing-dots'];
+    this.innerHTML = '';
+    if (!type) {
       return;
     }
-    this.cacheElements();
-    this.bindEvents();
-  };
-  self.init();
-};
-
-/***/ },
-
-/***/ "../modules/theme-builder/assets/js/admin/admin.js"
-/*!*********************************************************!*\
-  !*** ../modules/theme-builder/assets/js/admin/admin.js ***!
-  \*********************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = function () {
-  var CreateTemplateDialog = __webpack_require__(/*! ./create-template-dialog */ "../modules/theme-builder/assets/js/admin/create-template-dialog.js");
-  this.createTemplateDialog = new CreateTemplateDialog();
-};
-
-/***/ },
-
-/***/ "../modules/theme-builder/assets/js/admin/create-template-dialog.js"
-/*!**************************************************************************!*\
-  !*** ../modules/theme-builder/assets/js/admin/create-template-dialog.js ***!
-  \**************************************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-
-__webpack_require__(/*! core-js/modules/esnext.iterator.constructor.js */ "../node_modules/core-js/modules/esnext.iterator.constructor.js");
-__webpack_require__(/*! core-js/modules/esnext.iterator.find.js */ "../node_modules/core-js/modules/esnext.iterator.find.js");
-module.exports = function () {
-  var selectors = {
-    templateTypeInput: '#elementor-new-template__form__template-type',
-    locationWrapper: '#elementor-new-template__form__location__wrapper',
-    postTypeWrapper: '#elementor-new-template__form__post-type__wrapper'
-  };
-  var elements = {
-    $templateTypeInput: null,
-    $locationWrapper: null,
-    $postTypeWrapper: null
-  };
-  var setElements = function () {
-    jQuery.each(selectors, function (key, selector) {
-      key = '$' + key;
-      elements[key] = elementorNewTemplate.layout.getModal().getElements('content').find(selector);
-    });
-  };
-  var setLocationFieldVisibility = function () {
-    elements.$locationWrapper.toggle('section' === elements.$templateTypeInput.val());
-    elements.$postTypeWrapper.toggle('single' === elements.$templateTypeInput.val());
-  };
-  const setPostType = () => {
-    const postTypeMap = {
-      'error-404': 'not_found404'
-    };
-    const postType = postTypeMap[elements.$templateTypeInput.val()] || '';
-    elements.$postTypeWrapper.find('select').val(postType);
-  };
-  var run = function () {
-    setElements();
-    setLocationFieldVisibility();
-    elements.$templateTypeInput.on('change', () => {
-      setLocationFieldVisibility();
-      setPostType();
-    });
-  };
-  this.init = function () {
-    if (!window.elementorNewTemplate) {
-      return;
+    if (dotsTypes.includes(type)) {
+      this.innerHTML += `
+				<i></i>
+				<i></i>
+				<i></i>
+				<i></i>
+			`;
     }
+    this.innerHTML += this.getStyle();
+  }
 
-    // Make sure the modal has already been initialized
-    elementorNewTemplate.layout.getModal();
-    run();
-  };
-  jQuery(setTimeout.bind(window, this.init));
-};
+  /**
+   * Render the element when attached to the document.
+   *
+   * @return {void}
+   */
+  connectedCallback() {
+    this.render();
+  }
+}
+exports.Preloader = Preloader;
+var _default = exports["default"] = Preloader;
 
 /***/ },
 
-/***/ "@wordpress/i18n"
-/*!**************************!*\
-  !*** external "wp.i18n" ***!
-  \**************************/
+/***/ "../modules/page-transitions/assets/js/frontend/components/page-transition/page-transition.component.scss"
+/*!****************************************************************************************************************!*\
+  !*** ../modules/page-transitions/assets/js/frontend/components/page-transition/page-transition.component.scss ***!
+  \****************************************************************************************************************/
+(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../../../../node_modules/css-loader/dist/runtime/noSourceMaps.js */ "../node_modules/css-loader/dist/runtime/noSourceMaps.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../../../../node_modules/css-loader/dist/runtime/api.js */ "../node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+// Imports
+
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, `e-page-transition {
+  --preloader-fade-duration: .5s;
+  --preloader-delay: calc( var( --e-page-transition-animation-duration, 0s ) + var( --e-preloader-delay, 0s ) );
+  --page-transition-delay: var( --preloader-fade-duration );
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  z-index: 10000;
+  background: #FFF;
+  animation-fill-mode: both;
+  animation-duration: var(--e-page-transition-animation-duration);
+}
+e-page-transition[disabled] {
+  display: none;
+}
+e-page-transition e-preloader,
+e-page-transition .e-page-transition--preloader {
+  opacity: 0;
+}
+e-page-transition .e-page-transition--preloader {
+  position: absolute;
+  font-size: var(--e-preloader-size);
+  color: var(--e-preloader-color);
+  fill: var(--e-preloader-color);
+  width: var(--e-preloader-width);
+  max-width: var(--e-preloader-max-width);
+  transform: rotate(var(--e-preloader-rotate, 0deg));
+  animation-name: var(--e-preloader-animation);
+  animation-duration: var(--e-preloader-animation-duration, 1000ms);
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+e-page-transition svg.e-page-transition--preloader {
+  width: var(--e-preloader-size);
+}
+
+.e-page-transition--entering {
+  animation-name: var(--e-page-transition-entrance-animation);
+  animation-delay: var(--preloader-fade-duration, 0s);
+}
+.e-page-transition--entering e-preloader,
+.e-page-transition--entering .e-page-transition--preloader {
+  animation: var(--e-preloader-animation, none) var(--e-preloader-animation-duration, 0s) linear infinite, e-page-transition-fade-out var(--preloader-fade-duration) both;
+  transition: none;
+}
+.e-page-transition--exiting {
+  animation-name: var(--e-page-transition-exit-animation);
+}
+.e-page-transition--exiting e-preloader,
+.e-page-transition--exiting .e-page-transition--preloader {
+  opacity: var(--e-preloader-opacity, 1);
+  transition: var(--preloader-fade-duration) all;
+  transition-delay: var(--preloader-delay, 0s);
+}
+.e-page-transition--entered:not(.e-page-transition--preview) {
+  display: none;
+}
+.e-page-transition--preview {
+  /* Fix preview not working for some animations. */
+  animation-fill-mode: initial;
+}
+.e-page-transition--preview.e-page-transition--entered e-preloader,
+.e-page-transition--preview.e-page-transition--entered .e-page-transition--preloader {
+  opacity: var(--e-preloader-opacity, 1);
+}
+
+/* Hide the page transition if the user has disabled animations. */
+@media (prefers-reduced-motion: reduce) {
+  e-page-transition {
+    display: none;
+  }
+}
+/* Animations */
+@keyframes e-page-transition-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes e-page-transition-fade-in-down {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -100%, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes e-page-transition-fade-in-left {
+  from {
+    opacity: 0;
+    transform: translate3d(-100%, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes e-page-transition-fade-in-right {
+  from {
+    opacity: 0;
+    transform: translate3d(100%, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes e-page-transition-fade-in-up {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes e-page-transition-zoom-in {
+  from {
+    opacity: 0;
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+  50% {
+    opacity: 1;
+  }
+}
+@keyframes e-page-transition-slide-in-down {
+  from {
+    transform: translate3d(0, -100%, 0);
+    visibility: visible;
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+@keyframes e-page-transition-slide-in-left {
+  from {
+    transform: translate3d(-100%, 0, 0);
+    visibility: visible;
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+@keyframes e-page-transition-slide-in-right {
+  from {
+    transform: translate3d(100%, 0, 0);
+    visibility: visible;
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+@keyframes e-page-transition-slide-in-up {
+  from {
+    transform: translate3d(0, 100%, 0);
+    visibility: visible;
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+@keyframes e-page-transition-fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@keyframes e-page-transition-fade-out-up {
+  from {
+    opacity: 1;
+    transform: none;
+  }
+  to {
+    opacity: 0;
+    transform: translate3d(0, -100%, 0);
+  }
+}
+@keyframes e-page-transition-fade-out-left {
+  from {
+    opacity: 1;
+    transform: none;
+  }
+  to {
+    opacity: 0;
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+@keyframes e-page-transition-fade-out-right {
+  from {
+    opacity: 1;
+    transform: none;
+  }
+  to {
+    opacity: 0;
+    transform: translate3d(100%, 0, 0);
+  }
+}
+@keyframes e-page-transition-fade-out-down {
+  from {
+    opacity: 1;
+    transform: none;
+  }
+  to {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
+  }
+}
+@keyframes e-page-transition-slide-out-up {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(0, -100%, 0);
+    visibility: visible;
+  }
+}
+@keyframes e-page-transition-slide-out-left {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-100%, 0, 0);
+    visibility: visible;
+  }
+}
+@keyframes e-page-transition-slide-out-right {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(100%, 0, 0);
+    visibility: visible;
+  }
+}
+@keyframes e-page-transition-slide-out-down {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(0, 100%, 0);
+    visibility: visible;
+  }
+}
+@keyframes e-page-transition-zoom-out {
+  from {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+}`, ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ },
+
+/***/ "../modules/page-transitions/assets/js/frontend/components/preloader/preloader.component.scss"
+/*!****************************************************************************************************!*\
+  !*** ../modules/page-transitions/assets/js/frontend/components/preloader/preloader.component.scss ***!
+  \****************************************************************************************************/
+(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../../../../node_modules/css-loader/dist/runtime/noSourceMaps.js */ "../node_modules/css-loader/dist/runtime/noSourceMaps.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../../../../node_modules/css-loader/dist/runtime/api.js */ "../node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+// Imports
+
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, `e-preloader {
+  --default-duartion: 1000ms;
+  --duration: var( --e-preloader-animation-duration, var( --default-duration ) );
+  display: block;
+  font-size: var(--e-preloader-size);
+}
+e-preloader[type=circle], e-preloader[type=circle-dashed], e-preloader[type=spinners] {
+  --e-preloader-animation: e-preloader-spin;
+  height: 1em;
+  width: 1em;
+  border: 0.1em solid var(--e-preloader-color);
+  border-top-color: transparent;
+  border-radius: 100%;
+  animation: var(--duration) var(--e-preloader-animation) linear infinite;
+}
+e-preloader[type=circle-dashed] {
+  border: 0.1em solid rgba(255, 255, 255, 0.3);
+  border-top-color: var(--e-preloader-color);
+}
+e-preloader[type=spinners] {
+  border-bottom-color: transparent;
+}
+e-preloader[type=bouncing-dots], e-preloader[type=pulsing-dots] {
+  display: flex;
+  gap: 1em;
+}
+e-preloader[type=bouncing-dots] i, e-preloader[type=pulsing-dots] i {
+  height: 1em;
+  width: 1em;
+  border-radius: 100%;
+  background-color: var(--e-preloader-color);
+}
+e-preloader[type=bouncing-dots] i:nth-child(2), e-preloader[type=pulsing-dots] i:nth-child(2) {
+  animation-delay: var(--delay);
+}
+e-preloader[type=bouncing-dots] i:nth-child(3), e-preloader[type=pulsing-dots] i:nth-child(3) {
+  animation-delay: calc(var(--delay) * 2);
+}
+e-preloader[type=bouncing-dots] i:nth-child(4), e-preloader[type=pulsing-dots] i:nth-child(4) {
+  animation-delay: calc(var(--delay) * 3);
+}
+e-preloader[type=bouncing-dots] i {
+  --delay: calc( var( --duration ) / 10 );
+  animation: var(--duration) e-preloader-bounce linear infinite;
+}
+e-preloader[type=pulsing-dots] i {
+  --delay: calc( var( --duration ) / 6 );
+  animation: var(--duration) e-preloader-pulsing-dots linear infinite;
+}
+e-preloader[type=pulse] {
+  height: 1em;
+  width: 1em;
+  position: relative;
+}
+e-preloader[type=pulse]::before, e-preloader[type=pulse]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 0.05em solid var(--e-preloader-color);
+  border-radius: 100%;
+  animation: 1.2s e-preloader-pulse infinite both ease-out;
+}
+e-preloader[type=pulse]::after {
+  animation-delay: 0.6s;
+}
+e-preloader[type=overlap] {
+  height: 1em;
+  width: 1em;
+  position: relative;
+}
+e-preloader[type=overlap]::before, e-preloader[type=overlap]::after {
+  content: "";
+  inset: 0;
+  position: absolute;
+  background: var(--e-preloader-color);
+  border-radius: 100%;
+  opacity: 0.5;
+  animation: 2s e-preloader-overlap infinite both ease-in-out;
+}
+e-preloader[type=overlap]::after {
+  animation-delay: -1s;
+  animation-direction: reverse;
+}
+e-preloader[type=nested-spinners], e-preloader[type=opposing-nested-spinners], e-preloader[type=opposing-nested-rings] {
+  height: 1em;
+  width: 1em;
+  position: relative;
+}
+e-preloader[type=nested-spinners]::before, e-preloader[type=nested-spinners]::after, e-preloader[type=opposing-nested-spinners]::before, e-preloader[type=opposing-nested-spinners]::after, e-preloader[type=opposing-nested-rings]::before, e-preloader[type=opposing-nested-rings]::after {
+  content: "";
+  display: block;
+  position: absolute;
+  border-radius: 100%;
+  border: 0.1em solid var(--e-preloader-color);
+  border-top-color: transparent;
+  animation: var(--duration) e-preloader-spin linear infinite;
+}
+e-preloader[type=nested-spinners]::before, e-preloader[type=opposing-nested-spinners]::before, e-preloader[type=opposing-nested-rings]::before {
+  inset: -0.3em;
+}
+e-preloader[type=nested-spinners]::after, e-preloader[type=opposing-nested-spinners]::after, e-preloader[type=opposing-nested-rings]::after {
+  animation-duration: calc(var(--duration) - 0.2s);
+  inset: 0;
+  opacity: 0.5;
+}
+e-preloader[type=nested-spinners]::before, e-preloader[type=nested-spinners]::after, e-preloader[type=opposing-nested-spinners]::before, e-preloader[type=opposing-nested-spinners]::after {
+  border-bottom-color: transparent;
+}
+e-preloader[type=opposing-nested-rings]::after, e-preloader[type=opposing-nested-spinners]::after {
+  animation-direction: reverse;
+}
+e-preloader[type=progress-bar], e-preloader[type=two-way-progress-bar], e-preloader[type=repeating-bar] {
+  --e-preloader-animation: e-preloader-progress-bar;
+  height: 0.05em;
+  width: 5em;
+  max-width: 50vw;
+  background: var(--e-preloader-color);
+  animation: var(--duration) var(--e-preloader-animation) linear infinite both;
+}
+e-preloader[type=progress-bar] {
+  transform-origin: 0 50%;
+}
+e-preloader[type=repeating-bar] {
+  --e-preloader-animation: e-preloader-repeating-bar;
+}
+
+/* Hide the preloader if the user has disabled animations. */
+@media (prefers-reduced-motion: reduce) {
+  e-preloader {
+    display: none;
+  }
+}
+/* Animations */
+@keyframes e-preloader-spin {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@keyframes e-preloader-bounce {
+  0%, 40%, 100% {
+    transform: translateY(0);
+  }
+  20% {
+    transform: translateY(-80%);
+  }
+}
+@keyframes e-preloader-pulsing-dots {
+  0%, 40%, 100% {
+    transform: scale(1);
+  }
+  20% {
+    transform: scale(1.5);
+  }
+}
+@keyframes e-preloader-pulse {
+  from {
+    transform: scale(0);
+    opacity: 1;
+  }
+  to {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+@keyframes e-preloader-overlap {
+  0%, 100% {
+    transform: scale(0.2);
+  }
+  50% {
+    transform: scale(1);
+  }
+}
+@keyframes e-preloader-progress-bar {
+  0% {
+    transform: scaleX(0);
+  }
+  100% {
+    transform: scaleX(1);
+  }
+}
+@keyframes e-preloader-repeating-bar {
+  0% {
+    transform: scaleX(0);
+    transform-origin: 0 50%;
+  }
+  49% {
+    transform-origin: 0 50%;
+  }
+  50% {
+    transform: scaleX(1);
+    transform-origin: 100% 50%;
+  }
+  100% {
+    transform: scaleX(0);
+    transform-origin: 100% 50%;
+  }
+}`, ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ },
+
+/***/ "../node_modules/css-loader/dist/runtime/api.js"
+/*!******************************************************!*\
+  !*** ../node_modules/css-loader/dist/runtime/api.js ***!
+  \******************************************************/
 (module) {
 
 "use strict";
-module.exports = wp.i18n;
+
+
+/*
+  MIT License http://www.opensource.org/licenses/mit-license.php
+  Author Tobias Koppers @sokra
+*/
+module.exports = function (cssWithMappingToString) {
+  var list = [];
+
+  // return the list of modules as css string
+  list.toString = function toString() {
+    return this.map(function (item) {
+      var content = "";
+      var needLayer = typeof item[5] !== "undefined";
+      if (item[4]) {
+        content += "@supports (".concat(item[4], ") {");
+      }
+      if (item[2]) {
+        content += "@media ".concat(item[2], " {");
+      }
+      if (needLayer) {
+        content += "@layer".concat(item[5].length > 0 ? " ".concat(item[5]) : "", " {");
+      }
+      content += cssWithMappingToString(item);
+      if (needLayer) {
+        content += "}";
+      }
+      if (item[2]) {
+        content += "}";
+      }
+      if (item[4]) {
+        content += "}";
+      }
+      return content;
+    }).join("");
+  };
+
+  // import a list of modules into the list
+  list.i = function i(modules, media, dedupe, supports, layer) {
+    if (typeof modules === "string") {
+      modules = [[null, modules, undefined]];
+    }
+    var alreadyImportedModules = {};
+    if (dedupe) {
+      for (var k = 0; k < this.length; k++) {
+        var id = this[k][0];
+        if (id != null) {
+          alreadyImportedModules[id] = true;
+        }
+      }
+    }
+    for (var _k = 0; _k < modules.length; _k++) {
+      var item = [].concat(modules[_k]);
+      if (dedupe && alreadyImportedModules[item[0]]) {
+        continue;
+      }
+      if (typeof layer !== "undefined") {
+        if (typeof item[5] === "undefined") {
+          item[5] = layer;
+        } else {
+          item[1] = "@layer".concat(item[5].length > 0 ? " ".concat(item[5]) : "", " {").concat(item[1], "}");
+          item[5] = layer;
+        }
+      }
+      if (media) {
+        if (!item[2]) {
+          item[2] = media;
+        } else {
+          item[1] = "@media ".concat(item[2], " {").concat(item[1], "}");
+          item[2] = media;
+        }
+      }
+      if (supports) {
+        if (!item[4]) {
+          item[4] = "".concat(supports);
+        } else {
+          item[1] = "@supports (".concat(item[4], ") {").concat(item[1], "}");
+          item[4] = supports;
+        }
+      }
+      list.push(item);
+    }
+  };
+  return list;
+};
+
+/***/ },
+
+/***/ "../node_modules/css-loader/dist/runtime/noSourceMaps.js"
+/*!***************************************************************!*\
+  !*** ../node_modules/css-loader/dist/runtime/noSourceMaps.js ***!
+  \***************************************************************/
+(module) {
+
+"use strict";
+
+
+module.exports = function (i) {
+  return i[1];
+};
 
 /***/ },
 
@@ -1829,44 +1276,6 @@ module.exports = {
 
 /***/ },
 
-/***/ "../node_modules/core-js/internals/array-slice.js"
-/*!********************************************************!*\
-  !*** ../node_modules/core-js/internals/array-slice.js ***!
-  \********************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var uncurryThis = __webpack_require__(/*! ../internals/function-uncurry-this */ "../node_modules/core-js/internals/function-uncurry-this.js");
-
-module.exports = uncurryThis([].slice);
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/call-with-safe-iteration-closing.js"
-/*!*****************************************************************************!*\
-  !*** ../node_modules/core-js/internals/call-with-safe-iteration-closing.js ***!
-  \*****************************************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var anObject = __webpack_require__(/*! ../internals/an-object */ "../node_modules/core-js/internals/an-object.js");
-var iteratorClose = __webpack_require__(/*! ../internals/iterator-close */ "../node_modules/core-js/internals/iterator-close.js");
-
-// call something on iterator step with safe closing on error
-module.exports = function (iterator, fn, value, ENTRIES) {
-  try {
-    return ENTRIES ? fn(anObject(value)[0], value[1]) : fn(value);
-  } catch (error) {
-    iteratorClose(iterator, 'throw', error);
-  }
-};
-
-
-/***/ },
-
 /***/ "../node_modules/core-js/internals/classof-raw.js"
 /*!********************************************************!*\
   !*** ../node_modules/core-js/internals/classof-raw.js ***!
@@ -1972,23 +1381,6 @@ module.exports = !fails(function () {
   // eslint-disable-next-line es/no-object-getprototypeof -- required for testing
   return Object.getPrototypeOf(new F()) !== F.prototype;
 });
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/create-iter-result-object.js"
-/*!**********************************************************************!*\
-  !*** ../node_modules/core-js/internals/create-iter-result-object.js ***!
-  \**********************************************************************/
-(module) {
-
-"use strict";
-
-// `CreateIterResultObject` abstract operation
-// https://tc39.es/ecma262/#sec-createiterresultobject
-module.exports = function (value, done) {
-  return { value: value, done: done };
-};
 
 
 /***/ },
@@ -2109,24 +1501,6 @@ module.exports = function (O, key, value, options) {
       writable: !options.nonWritable
     });
   } return O;
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/define-built-ins.js"
-/*!*************************************************************!*\
-  !*** ../node_modules/core-js/internals/define-built-ins.js ***!
-  \*************************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var defineBuiltIn = __webpack_require__(/*! ../internals/define-built-in */ "../node_modules/core-js/internals/define-built-in.js");
-
-module.exports = function (target, src, options) {
-  for (var key in src) defineBuiltIn(target, key, src[key], options);
-  return target;
 };
 
 
@@ -2357,28 +1731,6 @@ module.exports = function (exec) {
     return true;
   }
 };
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/function-apply.js"
-/*!***********************************************************!*\
-  !*** ../node_modules/core-js/internals/function-apply.js ***!
-  \***********************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var NATIVE_BIND = __webpack_require__(/*! ../internals/function-bind-native */ "../node_modules/core-js/internals/function-bind-native.js");
-
-var FunctionPrototype = Function.prototype;
-var apply = FunctionPrototype.apply;
-var call = FunctionPrototype.call;
-
-// eslint-disable-next-line es/no-function-prototype-bind, es/no-reflect -- safe
-module.exports = typeof Reflect == 'object' && Reflect.apply || (NATIVE_BIND ? call.bind(apply) : function () {
-  return call.apply(apply, arguments);
-});
 
 
 /***/ },
@@ -2893,26 +2245,6 @@ module.exports = function (it) {
 
 /***/ },
 
-/***/ "../node_modules/core-js/internals/is-array.js"
-/*!*****************************************************!*\
-  !*** ../node_modules/core-js/internals/is-array.js ***!
-  \*****************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var classof = __webpack_require__(/*! ../internals/classof-raw */ "../node_modules/core-js/internals/classof-raw.js");
-
-// `IsArray` abstract operation
-// https://tc39.es/ecma262/#sec-isarray
-// eslint-disable-next-line es/no-array-isarray -- safe
-module.exports = Array.isArray || function isArray(argument) {
-  return classof(argument) === 'Array';
-};
-
-
-/***/ },
-
 /***/ "../node_modules/core-js/internals/is-callable.js"
 /*!********************************************************!*\
   !*** ../node_modules/core-js/internals/is-callable.js ***!
@@ -3013,26 +2345,6 @@ module.exports = function (it) {
 "use strict";
 
 module.exports = false;
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/is-raw-json.js"
-/*!********************************************************!*\
-  !*** ../node_modules/core-js/internals/is-raw-json.js ***!
-  \********************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var isObject = __webpack_require__(/*! ../internals/is-object */ "../node_modules/core-js/internals/is-object.js");
-var getInternalState = (__webpack_require__(/*! ../internals/internal-state */ "../node_modules/core-js/internals/internal-state.js").get);
-
-module.exports = function isRawJSON(O) {
-  if (!isObject(O)) return false;
-  var state = getInternalState(O);
-  return !!state && state.type === 'RawJSON';
-};
 
 
 /***/ },
@@ -3142,33 +2454,6 @@ module.exports = function (iterable, unboundFunction, options) {
 
 /***/ },
 
-/***/ "../node_modules/core-js/internals/iterator-close-all.js"
-/*!***************************************************************!*\
-  !*** ../node_modules/core-js/internals/iterator-close-all.js ***!
-  \***************************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var iteratorClose = __webpack_require__(/*! ../internals/iterator-close */ "../node_modules/core-js/internals/iterator-close.js");
-
-module.exports = function (iters, kind, value) {
-  for (var i = iters.length - 1; i >= 0; i--) {
-    if (iters[i] === undefined) continue;
-    try {
-      value = iteratorClose(iters[i].iterator, kind, value);
-    } catch (error) {
-      kind = 'throw';
-      value = error;
-    }
-  }
-  if (kind === 'throw') throw value;
-  return value;
-};
-
-
-/***/ },
-
 /***/ "../node_modules/core-js/internals/iterator-close.js"
 /*!***********************************************************!*\
   !*** ../node_modules/core-js/internals/iterator-close.js ***!
@@ -3199,126 +2484,6 @@ module.exports = function (iterator, kind, value) {
   if (innerError) throw innerResult;
   anObject(innerResult);
   return value;
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/iterator-create-proxy.js"
-/*!******************************************************************!*\
-  !*** ../node_modules/core-js/internals/iterator-create-proxy.js ***!
-  \******************************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var call = __webpack_require__(/*! ../internals/function-call */ "../node_modules/core-js/internals/function-call.js");
-var create = __webpack_require__(/*! ../internals/object-create */ "../node_modules/core-js/internals/object-create.js");
-var createNonEnumerableProperty = __webpack_require__(/*! ../internals/create-non-enumerable-property */ "../node_modules/core-js/internals/create-non-enumerable-property.js");
-var defineBuiltIns = __webpack_require__(/*! ../internals/define-built-ins */ "../node_modules/core-js/internals/define-built-ins.js");
-var wellKnownSymbol = __webpack_require__(/*! ../internals/well-known-symbol */ "../node_modules/core-js/internals/well-known-symbol.js");
-var InternalStateModule = __webpack_require__(/*! ../internals/internal-state */ "../node_modules/core-js/internals/internal-state.js");
-var getMethod = __webpack_require__(/*! ../internals/get-method */ "../node_modules/core-js/internals/get-method.js");
-var IteratorPrototype = (__webpack_require__(/*! ../internals/iterators-core */ "../node_modules/core-js/internals/iterators-core.js").IteratorPrototype);
-var createIterResultObject = __webpack_require__(/*! ../internals/create-iter-result-object */ "../node_modules/core-js/internals/create-iter-result-object.js");
-var iteratorClose = __webpack_require__(/*! ../internals/iterator-close */ "../node_modules/core-js/internals/iterator-close.js");
-var iteratorCloseAll = __webpack_require__(/*! ../internals/iterator-close-all */ "../node_modules/core-js/internals/iterator-close-all.js");
-
-var TO_STRING_TAG = wellKnownSymbol('toStringTag');
-var ITERATOR_HELPER = 'IteratorHelper';
-var WRAP_FOR_VALID_ITERATOR = 'WrapForValidIterator';
-var NORMAL = 'normal';
-var THROW = 'throw';
-var setInternalState = InternalStateModule.set;
-
-var createIteratorProxyPrototype = function (IS_ITERATOR) {
-  var getInternalState = InternalStateModule.getterFor(IS_ITERATOR ? WRAP_FOR_VALID_ITERATOR : ITERATOR_HELPER);
-
-  return defineBuiltIns(create(IteratorPrototype), {
-    next: function next() {
-      var state = getInternalState(this);
-      // for simplification:
-      //   for `%WrapForValidIteratorPrototype%.next` or with `state.returnHandlerResult` our `nextHandler` returns `IterResultObject`
-      //   for `%IteratorHelperPrototype%.next` - just a value
-      if (IS_ITERATOR) return state.nextHandler();
-      if (state.done) return createIterResultObject(undefined, true);
-      try {
-        var result = state.nextHandler();
-        return state.returnHandlerResult ? result : createIterResultObject(result, state.done);
-      } catch (error) {
-        state.done = true;
-        throw error;
-      }
-    },
-    'return': function () {
-      var state = getInternalState(this);
-      var iterator = state.iterator;
-      state.done = true;
-      if (IS_ITERATOR) {
-        var returnMethod = getMethod(iterator, 'return');
-        return returnMethod ? call(returnMethod, iterator) : createIterResultObject(undefined, true);
-      }
-      if (state.inner) try {
-        iteratorClose(state.inner.iterator, NORMAL);
-      } catch (error) {
-        return iteratorClose(iterator, THROW, error);
-      }
-      if (state.openIters) try {
-        iteratorCloseAll(state.openIters, NORMAL);
-      } catch (error) {
-        return iteratorClose(iterator, THROW, error);
-      }
-      if (iterator) iteratorClose(iterator, NORMAL);
-      return createIterResultObject(undefined, true);
-    }
-  });
-};
-
-var WrapForValidIteratorPrototype = createIteratorProxyPrototype(true);
-var IteratorHelperPrototype = createIteratorProxyPrototype(false);
-
-createNonEnumerableProperty(IteratorHelperPrototype, TO_STRING_TAG, 'Iterator Helper');
-
-module.exports = function (nextHandler, IS_ITERATOR, RETURN_HANDLER_RESULT) {
-  var IteratorProxy = function Iterator(record, state) {
-    if (state) {
-      state.iterator = record.iterator;
-      state.next = record.next;
-    } else state = record;
-    state.type = IS_ITERATOR ? WRAP_FOR_VALID_ITERATOR : ITERATOR_HELPER;
-    state.returnHandlerResult = !!RETURN_HANDLER_RESULT;
-    state.nextHandler = nextHandler;
-    state.counter = 0;
-    state.done = false;
-    setInternalState(this, state);
-  };
-
-  IteratorProxy.prototype = IS_ITERATOR ? WrapForValidIteratorPrototype : IteratorHelperPrototype;
-
-  return IteratorProxy;
-};
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/iterator-helper-throws-on-invalid-iterator.js"
-/*!***************************************************************************************!*\
-  !*** ../node_modules/core-js/internals/iterator-helper-throws-on-invalid-iterator.js ***!
-  \***************************************************************************************/
-(module) {
-
-"use strict";
-
-// Should throw an error on invalid iterator
-// https://issues.chromium.org/issues/336839115
-module.exports = function (methodName, argument) {
-  // eslint-disable-next-line es/no-iterator -- required for testing
-  var method = typeof Iterator == 'function' && Iterator.prototype[methodName];
-  if (method) try {
-    method.call({ next: null }, argument).next();
-  } catch (error) {
-    return true;
-  }
 };
 
 
@@ -3534,28 +2699,6 @@ module.exports = Math.trunc || function trunc(x) {
   var n = +x;
   return (n > 0 ? floor : ceil)(n);
 };
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/internals/native-raw-json.js"
-/*!************************************************************!*\
-  !*** ../node_modules/core-js/internals/native-raw-json.js ***!
-  \************************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-/* eslint-disable es/no-json -- safe */
-var fails = __webpack_require__(/*! ../internals/fails */ "../node_modules/core-js/internals/fails.js");
-
-module.exports = !fails(function () {
-  var unsafeInt = '9007199254740993';
-  // eslint-disable-next-line es/no-json-rawjson -- feature detection
-  var raw = JSON.rawJSON(unsafeInt);
-  // eslint-disable-next-line es/no-json-israwjson -- feature detection
-  return !JSON.isRawJSON(raw) || JSON.stringify(raw) !== unsafeInt;
-});
 
 
 /***/ },
@@ -3993,73 +3136,6 @@ module.exports = getBuiltIn('Reflect', 'ownKeys') || function ownKeys(it) {
 
 /***/ },
 
-/***/ "../node_modules/core-js/internals/parse-json-string.js"
-/*!**************************************************************!*\
-  !*** ../node_modules/core-js/internals/parse-json-string.js ***!
-  \**************************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var uncurryThis = __webpack_require__(/*! ../internals/function-uncurry-this */ "../node_modules/core-js/internals/function-uncurry-this.js");
-var hasOwn = __webpack_require__(/*! ../internals/has-own-property */ "../node_modules/core-js/internals/has-own-property.js");
-
-var $SyntaxError = SyntaxError;
-var $parseInt = parseInt;
-var fromCharCode = String.fromCharCode;
-var at = uncurryThis(''.charAt);
-var slice = uncurryThis(''.slice);
-var exec = uncurryThis(/./.exec);
-
-var codePoints = {
-  '\\"': '"',
-  '\\\\': '\\',
-  '\\/': '/',
-  '\\b': '\b',
-  '\\f': '\f',
-  '\\n': '\n',
-  '\\r': '\r',
-  '\\t': '\t'
-};
-
-var IS_4_HEX_DIGITS = /^[\da-f]{4}$/i;
-// eslint-disable-next-line regexp/no-control-character -- safe
-var IS_C0_CONTROL_CODE = /^[\u0000-\u001F]$/;
-
-module.exports = function (source, i) {
-  var unterminated = true;
-  var value = '';
-  while (i < source.length) {
-    var chr = at(source, i);
-    if (chr === '\\') {
-      var twoChars = slice(source, i, i + 2);
-      if (hasOwn(codePoints, twoChars)) {
-        value += codePoints[twoChars];
-        i += 2;
-      } else if (twoChars === '\\u') {
-        i += 2;
-        var fourHexDigits = slice(source, i, i + 4);
-        if (!exec(IS_4_HEX_DIGITS, fourHexDigits)) throw new $SyntaxError('Bad Unicode escape at: ' + i);
-        value += fromCharCode($parseInt(fourHexDigits, 16));
-        i += 4;
-      } else throw new $SyntaxError('Unknown escape sequence: "' + twoChars + '"');
-    } else if (chr === '"') {
-      unterminated = false;
-      i++;
-      break;
-    } else {
-      if (exec(IS_C0_CONTROL_CODE, chr)) throw new $SyntaxError('Bad control character in string literal at: ' + i);
-      value += chr;
-      i++;
-    }
-  }
-  if (unterminated) throw new $SyntaxError('Unterminated string at: ' + i);
-  return { value: value, end: i };
-};
-
-
-/***/ },
-
 /***/ "../node_modules/core-js/internals/require-object-coercible.js"
 /*!*********************************************************************!*\
   !*** ../node_modules/core-js/internals/require-object-coercible.js ***!
@@ -4360,26 +3436,6 @@ module.exports = String(test) === '[object z]';
 
 /***/ },
 
-/***/ "../node_modules/core-js/internals/to-string.js"
-/*!******************************************************!*\
-  !*** ../node_modules/core-js/internals/to-string.js ***!
-  \******************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var classof = __webpack_require__(/*! ../internals/classof */ "../node_modules/core-js/internals/classof.js");
-
-var $String = String;
-
-module.exports = function (argument) {
-  if (classof(argument) === 'Symbol') throw new TypeError('Cannot convert a Symbol value to a string');
-  return $String(argument);
-};
-
-
-/***/ },
-
 /***/ "../node_modules/core-js/internals/try-to-string.js"
 /*!**********************************************************!*\
   !*** ../node_modules/core-js/internals/try-to-string.js ***!
@@ -4588,10 +3644,10 @@ $({ global: true, constructor: true, forced: FORCED }, {
 
 /***/ },
 
-/***/ "../node_modules/core-js/modules/es.iterator.find.js"
-/*!***********************************************************!*\
-  !*** ../node_modules/core-js/modules/es.iterator.find.js ***!
-  \***********************************************************/
+/***/ "../node_modules/core-js/modules/es.iterator.every.js"
+/*!************************************************************!*\
+  !*** ../node_modules/core-js/modules/es.iterator.every.js ***!
+  \************************************************************/
 (__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
@@ -4605,12 +3661,12 @@ var getIteratorDirect = __webpack_require__(/*! ../internals/get-iterator-direct
 var iteratorClose = __webpack_require__(/*! ../internals/iterator-close */ "../node_modules/core-js/internals/iterator-close.js");
 var iteratorHelperWithoutClosingOnEarlyError = __webpack_require__(/*! ../internals/iterator-helper-without-closing-on-early-error */ "../node_modules/core-js/internals/iterator-helper-without-closing-on-early-error.js");
 
-var findWithoutClosingOnEarlyError = iteratorHelperWithoutClosingOnEarlyError('find', TypeError);
+var everyWithoutClosingOnEarlyError = iteratorHelperWithoutClosingOnEarlyError('every', TypeError);
 
-// `Iterator.prototype.find` method
-// https://tc39.es/ecma262/#sec-iterator.prototype.find
-$({ target: 'Iterator', proto: true, real: true, forced: findWithoutClosingOnEarlyError }, {
-  find: function find(predicate) {
+// `Iterator.prototype.every` method
+// https://tc39.es/ecma262/#sec-iterator.prototype.every
+$({ target: 'Iterator', proto: true, real: true, forced: everyWithoutClosingOnEarlyError }, {
+  every: function every(predicate) {
     anObject(this);
     try {
       aCallable(predicate);
@@ -4618,13 +3674,13 @@ $({ target: 'Iterator', proto: true, real: true, forced: findWithoutClosingOnEar
       iteratorClose(this, 'throw', error);
     }
 
-    if (findWithoutClosingOnEarlyError) return call(findWithoutClosingOnEarlyError, this, predicate);
+    if (everyWithoutClosingOnEarlyError) return call(everyWithoutClosingOnEarlyError, this, predicate);
 
     var record = getIteratorDirect(this);
     var counter = 0;
-    return iterate(record, function (value, stop) {
-      if (predicate(value, counter++)) return stop(value);
-    }, { IS_RECORD: true, INTERRUPTED: true }).result;
+    return !iterate(record, function (value, stop) {
+      if (!predicate(value, counter++)) return stop();
+    }, { IS_RECORD: true, INTERRUPTED: true }).stopped;
   }
 });
 
@@ -4674,204 +3730,6 @@ $({ target: 'Iterator', proto: true, real: true, forced: forEachWithoutClosingOn
 
 /***/ },
 
-/***/ "../node_modules/core-js/modules/es.iterator.map.js"
-/*!**********************************************************!*\
-  !*** ../node_modules/core-js/modules/es.iterator.map.js ***!
-  \**********************************************************/
-(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var $ = __webpack_require__(/*! ../internals/export */ "../node_modules/core-js/internals/export.js");
-var call = __webpack_require__(/*! ../internals/function-call */ "../node_modules/core-js/internals/function-call.js");
-var aCallable = __webpack_require__(/*! ../internals/a-callable */ "../node_modules/core-js/internals/a-callable.js");
-var anObject = __webpack_require__(/*! ../internals/an-object */ "../node_modules/core-js/internals/an-object.js");
-var getIteratorDirect = __webpack_require__(/*! ../internals/get-iterator-direct */ "../node_modules/core-js/internals/get-iterator-direct.js");
-var createIteratorProxy = __webpack_require__(/*! ../internals/iterator-create-proxy */ "../node_modules/core-js/internals/iterator-create-proxy.js");
-var callWithSafeIterationClosing = __webpack_require__(/*! ../internals/call-with-safe-iteration-closing */ "../node_modules/core-js/internals/call-with-safe-iteration-closing.js");
-var iteratorClose = __webpack_require__(/*! ../internals/iterator-close */ "../node_modules/core-js/internals/iterator-close.js");
-var iteratorHelperThrowsOnInvalidIterator = __webpack_require__(/*! ../internals/iterator-helper-throws-on-invalid-iterator */ "../node_modules/core-js/internals/iterator-helper-throws-on-invalid-iterator.js");
-var iteratorHelperWithoutClosingOnEarlyError = __webpack_require__(/*! ../internals/iterator-helper-without-closing-on-early-error */ "../node_modules/core-js/internals/iterator-helper-without-closing-on-early-error.js");
-var IS_PURE = __webpack_require__(/*! ../internals/is-pure */ "../node_modules/core-js/internals/is-pure.js");
-
-var MAP_WITHOUT_THROWING_ON_INVALID_ITERATOR = !IS_PURE && !iteratorHelperThrowsOnInvalidIterator('map', function () { /* empty */ });
-var mapWithoutClosingOnEarlyError = !IS_PURE && !MAP_WITHOUT_THROWING_ON_INVALID_ITERATOR
-  && iteratorHelperWithoutClosingOnEarlyError('map', TypeError);
-
-var FORCED = IS_PURE || MAP_WITHOUT_THROWING_ON_INVALID_ITERATOR || mapWithoutClosingOnEarlyError;
-
-var IteratorProxy = createIteratorProxy(function () {
-  var iterator = this.iterator;
-  var result = anObject(call(this.next, iterator));
-  var done = this.done = !!result.done;
-  if (!done) return callWithSafeIterationClosing(iterator, this.mapper, [result.value, this.counter++], true);
-});
-
-// `Iterator.prototype.map` method
-// https://tc39.es/ecma262/#sec-iterator.prototype.map
-$({ target: 'Iterator', proto: true, real: true, forced: FORCED }, {
-  map: function map(mapper) {
-    anObject(this);
-    try {
-      aCallable(mapper);
-    } catch (error) {
-      iteratorClose(this, 'throw', error);
-    }
-
-    if (mapWithoutClosingOnEarlyError) return call(mapWithoutClosingOnEarlyError, this, mapper);
-
-    return new IteratorProxy(getIteratorDirect(this), {
-      mapper: mapper
-    });
-  }
-});
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/modules/es.json.stringify.js"
-/*!************************************************************!*\
-  !*** ../node_modules/core-js/modules/es.json.stringify.js ***!
-  \************************************************************/
-(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var $ = __webpack_require__(/*! ../internals/export */ "../node_modules/core-js/internals/export.js");
-var getBuiltIn = __webpack_require__(/*! ../internals/get-built-in */ "../node_modules/core-js/internals/get-built-in.js");
-var apply = __webpack_require__(/*! ../internals/function-apply */ "../node_modules/core-js/internals/function-apply.js");
-var call = __webpack_require__(/*! ../internals/function-call */ "../node_modules/core-js/internals/function-call.js");
-var uncurryThis = __webpack_require__(/*! ../internals/function-uncurry-this */ "../node_modules/core-js/internals/function-uncurry-this.js");
-var fails = __webpack_require__(/*! ../internals/fails */ "../node_modules/core-js/internals/fails.js");
-var isArray = __webpack_require__(/*! ../internals/is-array */ "../node_modules/core-js/internals/is-array.js");
-var isCallable = __webpack_require__(/*! ../internals/is-callable */ "../node_modules/core-js/internals/is-callable.js");
-var isRawJSON = __webpack_require__(/*! ../internals/is-raw-json */ "../node_modules/core-js/internals/is-raw-json.js");
-var isSymbol = __webpack_require__(/*! ../internals/is-symbol */ "../node_modules/core-js/internals/is-symbol.js");
-var classof = __webpack_require__(/*! ../internals/classof-raw */ "../node_modules/core-js/internals/classof-raw.js");
-var toString = __webpack_require__(/*! ../internals/to-string */ "../node_modules/core-js/internals/to-string.js");
-var arraySlice = __webpack_require__(/*! ../internals/array-slice */ "../node_modules/core-js/internals/array-slice.js");
-var parseJSONString = __webpack_require__(/*! ../internals/parse-json-string */ "../node_modules/core-js/internals/parse-json-string.js");
-var uid = __webpack_require__(/*! ../internals/uid */ "../node_modules/core-js/internals/uid.js");
-var NATIVE_SYMBOL = __webpack_require__(/*! ../internals/symbol-constructor-detection */ "../node_modules/core-js/internals/symbol-constructor-detection.js");
-var NATIVE_RAW_JSON = __webpack_require__(/*! ../internals/native-raw-json */ "../node_modules/core-js/internals/native-raw-json.js");
-
-var $String = String;
-var $stringify = getBuiltIn('JSON', 'stringify');
-var exec = uncurryThis(/./.exec);
-var charAt = uncurryThis(''.charAt);
-var charCodeAt = uncurryThis(''.charCodeAt);
-var replace = uncurryThis(''.replace);
-var slice = uncurryThis(''.slice);
-var push = uncurryThis([].push);
-var numberToString = uncurryThis(1.1.toString);
-
-var surrogates = /[\uD800-\uDFFF]/g;
-var lowSurrogates = /^[\uD800-\uDBFF]$/;
-var hiSurrogates = /^[\uDC00-\uDFFF]$/;
-
-var MARK = uid();
-var MARK_LENGTH = MARK.length;
-
-var WRONG_SYMBOLS_CONVERSION = !NATIVE_SYMBOL || fails(function () {
-  var symbol = getBuiltIn('Symbol')('stringify detection');
-  // MS Edge converts symbol values to JSON as {}
-  return $stringify([symbol]) !== '[null]'
-    // WebKit converts symbol values to JSON as null
-    || $stringify({ a: symbol }) !== '{}'
-    // V8 throws on boxed symbols
-    || $stringify(Object(symbol)) !== '{}';
-});
-
-// https://github.com/tc39/proposal-well-formed-stringify
-var ILL_FORMED_UNICODE = fails(function () {
-  return $stringify('\uDF06\uD834') !== '"\\udf06\\ud834"'
-    || $stringify('\uDEAD') !== '"\\udead"';
-});
-
-var stringifyWithProperSymbolsConversion = WRONG_SYMBOLS_CONVERSION ? function (it, replacer) {
-  var args = arraySlice(arguments);
-  var $replacer = getReplacerFunction(replacer);
-  if (!isCallable($replacer) && (it === undefined || isSymbol(it))) return; // IE8 returns string on undefined
-  args[1] = function (key, value) {
-    // some old implementations (like WebKit) could pass numbers as keys
-    if (isCallable($replacer)) value = call($replacer, this, $String(key), value);
-    if (!isSymbol(value)) return value;
-  };
-  return apply($stringify, null, args);
-} : $stringify;
-
-var fixIllFormedJSON = function (match, offset, string) {
-  var prev = charAt(string, offset - 1);
-  var next = charAt(string, offset + 1);
-  if ((exec(lowSurrogates, match) && !exec(hiSurrogates, next)) || (exec(hiSurrogates, match) && !exec(lowSurrogates, prev))) {
-    return '\\u' + numberToString(charCodeAt(match, 0), 16);
-  } return match;
-};
-
-var getReplacerFunction = function (replacer) {
-  if (isCallable(replacer)) return replacer;
-  if (!isArray(replacer)) return;
-  var rawLength = replacer.length;
-  var keys = [];
-  for (var i = 0; i < rawLength; i++) {
-    var element = replacer[i];
-    if (typeof element == 'string') push(keys, element);
-    else if (typeof element == 'number' || classof(element) === 'Number' || classof(element) === 'String') push(keys, toString(element));
-  }
-  var keysLength = keys.length;
-  var root = true;
-  return function (key, value) {
-    if (root) {
-      root = false;
-      return value;
-    }
-    if (isArray(this)) return value;
-    for (var j = 0; j < keysLength; j++) if (keys[j] === key) return value;
-  };
-};
-
-// `JSON.stringify` method
-// https://tc39.es/ecma262/#sec-json.stringify
-// https://github.com/tc39/proposal-json-parse-with-source
-if ($stringify) $({ target: 'JSON', stat: true, arity: 3, forced: WRONG_SYMBOLS_CONVERSION || ILL_FORMED_UNICODE || !NATIVE_RAW_JSON }, {
-  stringify: function stringify(text, replacer, space) {
-    var replacerFunction = getReplacerFunction(replacer);
-    var rawStrings = [];
-
-    var json = stringifyWithProperSymbolsConversion(text, function (key, value) {
-      // some old implementations (like WebKit) could pass numbers as keys
-      var v = isCallable(replacerFunction) ? call(replacerFunction, this, $String(key), value) : value;
-      return !NATIVE_RAW_JSON && isRawJSON(v) ? MARK + (push(rawStrings, v.rawJSON) - 1) : v;
-    }, space);
-
-    if (typeof json != 'string') return json;
-
-    if (ILL_FORMED_UNICODE) json = replace(json, surrogates, fixIllFormedJSON);
-
-    if (NATIVE_RAW_JSON) return json;
-
-    var result = '';
-    var length = json.length;
-
-    for (var i = 0; i < length; i++) {
-      var chr = charAt(json, i);
-      if (chr === '"') {
-        var end = parseJSONString(json, ++i).end - 1;
-        var string = slice(json, i, end);
-        result += slice(string, 0, MARK_LENGTH) === MARK
-          ? rawStrings[slice(string, MARK_LENGTH)]
-          : '"' + string + '"';
-        i = end;
-      } else result += chr;
-    }
-
-    return result;
-  }
-});
-
-
-/***/ },
-
 /***/ "../node_modules/core-js/modules/esnext.iterator.constructor.js"
 /*!**********************************************************************!*\
   !*** ../node_modules/core-js/modules/esnext.iterator.constructor.js ***!
@@ -4886,16 +3744,16 @@ __webpack_require__(/*! ../modules/es.iterator.constructor */ "../node_modules/c
 
 /***/ },
 
-/***/ "../node_modules/core-js/modules/esnext.iterator.find.js"
-/*!***************************************************************!*\
-  !*** ../node_modules/core-js/modules/esnext.iterator.find.js ***!
-  \***************************************************************/
+/***/ "../node_modules/core-js/modules/esnext.iterator.every.js"
+/*!****************************************************************!*\
+  !*** ../node_modules/core-js/modules/esnext.iterator.every.js ***!
+  \****************************************************************/
 (__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
 // TODO: Remove from `core-js@4`
-__webpack_require__(/*! ../modules/es.iterator.find */ "../node_modules/core-js/modules/es.iterator.find.js");
+__webpack_require__(/*! ../modules/es.iterator.every */ "../node_modules/core-js/modules/es.iterator.every.js");
 
 
 /***/ },
@@ -4910,20 +3768,6 @@ __webpack_require__(/*! ../modules/es.iterator.find */ "../node_modules/core-js/
 
 // TODO: Remove from `core-js@4`
 __webpack_require__(/*! ../modules/es.iterator.for-each */ "../node_modules/core-js/modules/es.iterator.for-each.js");
-
-
-/***/ },
-
-/***/ "../node_modules/core-js/modules/esnext.iterator.map.js"
-/*!**************************************************************!*\
-  !*** ../node_modules/core-js/modules/esnext.iterator.map.js ***!
-  \**************************************************************/
-(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-// TODO: Remove from `core-js@4`
-__webpack_require__(/*! ../modules/es.iterator.map */ "../node_modules/core-js/modules/es.iterator.map.js");
 
 
 /***/ }
@@ -4942,7 +3786,7 @@ __webpack_require__(/*! ../modules/es.iterator.map */ "../node_modules/core-js/m
 /******/ 		}
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = __webpack_module_cache__[moduleId] = {
-/******/ 			// no module.id needed
+/******/ 			id: moduleId,
 /******/ 			// no module.loaded needed
 /******/ 			exports: {}
 /******/ 		};
@@ -4961,6 +3805,30 @@ __webpack_require__(/*! ../modules/es.iterator.map */ "../node_modules/core-js/m
 /******/ 	}
 /******/ 	
 /************************************************************************/
+/******/ 	/* webpack/runtime/compat get default export */
+/******/ 	(() => {
+/******/ 		// getDefaultExport function for compatibility with non-harmony modules
+/******/ 		__webpack_require__.n = (module) => {
+/******/ 			var getter = module && module.__esModule ?
+/******/ 				() => (module['default']) :
+/******/ 				() => (module);
+/******/ 			__webpack_require__.d(getter, { a: getter });
+/******/ 			return getter;
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	(() => {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = (exports, definition) => {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/global */
 /******/ 	(() => {
 /******/ 		__webpack_require__.g = (function() {
@@ -4973,43 +3841,53 @@ __webpack_require__(/*! ../modules/es.iterator.map */ "../node_modules/core-js/m
 /******/ 		})();
 /******/ 	})();
 /******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	(() => {
+/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	(() => {
+/******/ 		// define __esModule on exports
+/******/ 		__webpack_require__.r = (exports) => {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
+/******/ 	})();
+/******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
 // This entry needs to be wrapped in an IIFE because it needs to be in strict mode.
 (() => {
 "use strict";
-/*!***************************************!*\
-  !*** ../assets/dev/js/admin/admin.js ***!
-  \***************************************/
+var exports = __webpack_exports__;
+/*!******************************************************************!*\
+  !*** ../modules/page-transitions/assets/js/frontend/frontend.js ***!
+  \******************************************************************/
 
 
-var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "../node_modules/@babel/runtime/helpers/interopRequireDefault.js");
-var _admin = _interopRequireDefault(__webpack_require__(/*! modules/popup/assets/js/admin/admin */ "../modules/popup/assets/js/admin/admin.js"));
-var _admin2 = _interopRequireDefault(__webpack_require__(/*! ../../../../license/assets/js/admin */ "../license/assets/js/admin.js"));
-const modules = {
-  widget_template_edit_button: __webpack_require__(/*! modules/library/assets/js/admin */ "../modules/library/assets/js/admin.js"),
-  forms_integrations: __webpack_require__(/*! modules/forms/assets/js/admin */ "../modules/forms/assets/js/admin.js"),
-  AssetsManager: __webpack_require__(/*! modules/assets-manager/assets/js/admin */ "../modules/assets-manager/assets/js/admin.js"),
-  RoleManager: __webpack_require__(/*! modules/role-manager/assets/js/admin */ "../modules/role-manager/assets/js/admin.js"),
-  ThemeBuilder: __webpack_require__(/*! modules/theme-builder/assets/js/admin/admin */ "../modules/theme-builder/assets/js/admin/admin.js"),
-  StripeIntegration: __webpack_require__(/*! modules/payments/assets/js/admin */ "../modules/payments/assets/js/admin.js"),
-  License: _admin2.default
-};
-window.elementorProAdmin = {
-  widget_template_edit_button: new modules.widget_template_edit_button(),
-  forms_integrations: new modules.forms_integrations(),
-  assetsManager: new modules.AssetsManager(),
-  roleManager: new modules.RoleManager(),
-  themeBuilder: new modules.ThemeBuilder(),
-  StripeIntegration: new modules.StripeIntegration(),
-  popup: new _admin.default(),
-  license: new modules.License()
-};
-jQuery(function () {
-  elementorProAdmin.roleManager.advancedRoleManager.init();
-});
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports["default"] = void 0;
+var _components = __webpack_require__(/*! ./components */ "../modules/page-transitions/assets/js/frontend/components/index.js");
+class PageTransitionsFrontend {
+  /**
+   * Initialize the module.
+   *
+   * @return {void}
+   */
+  constructor() {
+    customElements.define('e-preloader', _components.Preloader);
+    customElements.define('e-page-transition', _components.PageTransition);
+  }
+}
+exports["default"] = PageTransitionsFrontend;
+new PageTransitionsFrontend();
 })();
 
 /******/ })()
 ;
-//# sourceMappingURL=admin.js.map
+//# sourceMappingURL=page-transitions.js.map
