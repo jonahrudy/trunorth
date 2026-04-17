@@ -2,7 +2,7 @@
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd http://www.google.com/schemas/sitemap-image/1.1 http://www.google.com/schemas/sitemap-image/1.1/sitemap-image.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 	<url>
 		<loc>https://trunorth.pages.dev/</loc>
-		<lastmod>2026-04-15T22:58:44+00:00</lastmod>
+		<lastmod>2026-04-17T22:13:40+00:00</lastmod>
 		<image:image>
 			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/vert-line-light.svg</image:loc>
 		</image:image>
@@ -241,8 +241,62 @@
 		<lastmod>2026-04-15T22:57:12+00:00</lastmod>
 	</url>
 	<url>
+		<loc>https://trunorth.pages.dev/private-jet-experience/private-jet-charter-business-travel/</loc>
+		<lastmod>2026-04-15T23:02:25+00:00</lastmod>
+		<image:image>
+			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/vert-line.svg</image:loc>
+		</image:image>
+		<image:image>
+			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/vert-line.svg</image:loc>
+		</image:image>
+		<image:image>
+			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/vert-line.svg</image:loc>
+		</image:image>
+	</url>
+	<url>
+		<loc>https://trunorth.pages.dev/trunorth-jets-refer-a-friend-program/</loc>
+		<lastmod>2026-04-15T23:04:40+00:00</lastmod>
+		<image:image>
+			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/vert-line.svg</image:loc>
+		</image:image>
+	</url>
+	<url>
+		<loc>https://trunorth.pages.dev/private-jet-experience/private-jet-charter-pet-travel/</loc>
+		<lastmod>2026-04-15T23:20:35+00:00</lastmod>
+		<image:image>
+			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/vert-line.svg</image:loc>
+		</image:image>
+		<image:image>
+			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/vert-line.svg</image:loc>
+		</image:image>
+		<image:image>
+			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/vert-line.svg</image:loc>
+		</image:image>
+	</url>
+	<url>
+		<loc>https://trunorth.pages.dev/private-jet-experience/private-jet-charter-family-travel/</loc>
+		<lastmod>2026-04-15T23:21:54+00:00</lastmod>
+		<image:image>
+			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/vert-line.svg</image:loc>
+		</image:image>
+		<image:image>
+			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/vert-line.svg</image:loc>
+		</image:image>
+		<image:image>
+			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/vert-line.svg</image:loc>
+		</image:image>
+	</url>
+	<url>
+		<loc>https://trunorth.pages.dev/contact/</loc>
+		<lastmod>2026-04-15T23:28:37+00:00</lastmod>
+	</url>
+	<url>
+		<loc>https://trunorth.pages.dev/quote/</loc>
+		<lastmod>2026-04-17T17:45:43+00:00</lastmod>
+	</url>
+	<url>
 		<loc>https://trunorth.pages.dev/private-jet-experience/</loc>
-		<lastmod>2026-04-15T23:00:28+00:00</lastmod>
+		<lastmod>2026-04-17T22:11:19+00:00</lastmod>
 		<image:image>
 			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/suitcases.svg</image:loc>
 		</image:image>
@@ -315,60 +369,6 @@
 		<image:image>
 			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/08/pet-travel.png</image:loc>
 		</image:image>
-	</url>
-	<url>
-		<loc>https://trunorth.pages.dev/private-jet-experience/private-jet-charter-business-travel/</loc>
-		<lastmod>2026-04-15T23:02:25+00:00</lastmod>
-		<image:image>
-			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/vert-line.svg</image:loc>
-		</image:image>
-		<image:image>
-			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/vert-line.svg</image:loc>
-		</image:image>
-		<image:image>
-			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/vert-line.svg</image:loc>
-		</image:image>
-	</url>
-	<url>
-		<loc>https://trunorth.pages.dev/trunorth-jets-refer-a-friend-program/</loc>
-		<lastmod>2026-04-15T23:04:40+00:00</lastmod>
-		<image:image>
-			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/vert-line.svg</image:loc>
-		</image:image>
-	</url>
-	<url>
-		<loc>https://trunorth.pages.dev/private-jet-experience/private-jet-charter-pet-travel/</loc>
-		<lastmod>2026-04-15T23:20:35+00:00</lastmod>
-		<image:image>
-			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/vert-line.svg</image:loc>
-		</image:image>
-		<image:image>
-			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/vert-line.svg</image:loc>
-		</image:image>
-		<image:image>
-			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/vert-line.svg</image:loc>
-		</image:image>
-	</url>
-	<url>
-		<loc>https://trunorth.pages.dev/private-jet-experience/private-jet-charter-family-travel/</loc>
-		<lastmod>2026-04-15T23:21:54+00:00</lastmod>
-		<image:image>
-			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/vert-line.svg</image:loc>
-		</image:image>
-		<image:image>
-			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/vert-line.svg</image:loc>
-		</image:image>
-		<image:image>
-			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/vert-line.svg</image:loc>
-		</image:image>
-	</url>
-	<url>
-		<loc>https://trunorth.pages.dev/contact/</loc>
-		<lastmod>2026-04-15T23:28:37+00:00</lastmod>
-	</url>
-	<url>
-		<loc>https://trunorth.pages.dev/quote/</loc>
-		<lastmod>2026-04-17T17:45:43+00:00</lastmod>
 	</url>
 </urlset>
 <!-- XML Sitemap generated by Yoast SEO -->
