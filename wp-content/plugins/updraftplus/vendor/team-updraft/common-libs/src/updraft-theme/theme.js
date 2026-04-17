@@ -1,1 +1,3 @@
-import"./components/button/button";import"./components/icon/icon";
+// Components.
+import "./components/button/button";
+import "./components/icon/icon";
