@@ -103,55 +103,6 @@
 		</image:image>
 	</url>
 	<url>
-		<loc>https://trunorth.pages.dev/aircraft-guide/</loc>
-		<lastmod>2026-04-15T22:04:27+00:00</lastmod>
-		<image:image>
-			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/vert-line-light.svg</image:loc>
-		</image:image>
-		<image:image>
-			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/vert-line-light.svg</image:loc>
-		</image:image>
-		<image:image>
-			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/07/turboprop-pi.png</image:loc>
-		</image:image>
-		<image:image>
-			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/light-jet.png</image:loc>
-		</image:image>
-		<image:image>
-			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/super-mid-jet.png</image:loc>
-		</image:image>
-		<image:image>
-			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/midsize-jet.png</image:loc>
-		</image:image>
-		<image:image>
-			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/07/turboprop-pi.png</image:loc>
-		</image:image>
-		<image:image>
-			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/light-jet.png</image:loc>
-		</image:image>
-		<image:image>
-			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/super-mid-jet.png</image:loc>
-		</image:image>
-		<image:image>
-			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/midsize-jet.png</image:loc>
-		</image:image>
-		<image:image>
-			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/05/icons8-map-80.png</image:loc>
-		</image:image>
-		<image:image>
-			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/05/icons8-family-80.png</image:loc>
-		</image:image>
-		<image:image>
-			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2026/04/Wifi.svg</image:loc>
-		</image:image>
-		<image:image>
-			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/05/icons8-baggage-60.png</image:loc>
-		</image:image>
-		<image:image>
-			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/05/icons8-runway-64.png</image:loc>
-		</image:image>
-	</url>
-	<url>
 		<loc>https://trunorth.pages.dev/aircraft-guide/jet-charter-heavy-jets/</loc>
 		<lastmod>2026-04-15T22:05:55+00:00</lastmod>
 		<image:image>
@@ -368,6 +319,55 @@
 		</image:image>
 		<image:image>
 			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/08/pet-travel.png</image:loc>
+		</image:image>
+	</url>
+	<url>
+		<loc>https://trunorth.pages.dev/aircraft-guide/</loc>
+		<lastmod>2026-04-17T22:33:47+00:00</lastmod>
+		<image:image>
+			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/vert-line-light.svg</image:loc>
+		</image:image>
+		<image:image>
+			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/vert-line-light.svg</image:loc>
+		</image:image>
+		<image:image>
+			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/07/turboprop-pi.png</image:loc>
+		</image:image>
+		<image:image>
+			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/light-jet.png</image:loc>
+		</image:image>
+		<image:image>
+			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/super-mid-jet.png</image:loc>
+		</image:image>
+		<image:image>
+			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/midsize-jet.png</image:loc>
+		</image:image>
+		<image:image>
+			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/07/turboprop-pi.png</image:loc>
+		</image:image>
+		<image:image>
+			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/light-jet.png</image:loc>
+		</image:image>
+		<image:image>
+			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/super-mid-jet.png</image:loc>
+		</image:image>
+		<image:image>
+			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/midsize-jet.png</image:loc>
+		</image:image>
+		<image:image>
+			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/05/icons8-map-80.png</image:loc>
+		</image:image>
+		<image:image>
+			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/05/icons8-family-80.png</image:loc>
+		</image:image>
+		<image:image>
+			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2026/04/Wifi.svg</image:loc>
+		</image:image>
+		<image:image>
+			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/05/icons8-baggage-60.png</image:loc>
+		</image:image>
+		<image:image>
+			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/05/icons8-runway-64.png</image:loc>
 		</image:image>
 	</url>
 </urlset>
