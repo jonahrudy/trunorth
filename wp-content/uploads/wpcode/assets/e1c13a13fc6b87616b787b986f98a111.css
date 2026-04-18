@@ -183,36 +183,46 @@ body.fixed_blocks_sticky .sidebar:not(.elementor-element) {
     padding: 0 0 0 1.6em;
     margin: 0.5em 0 0.2em 0.7em;
 }
-.wp-block-list.article li::before {
-    content: "f1ea";
-    font-family: "Font Awesome 6 Free";
-    font-weight: 400;
-    position: absolute;
-    left: 0;
-    top: 0.1em;
-    font-size: 1rem;
-    color: #000;
+.wp-block-list.article li,
+.wp-block-list.radio li,
+.wp-block-list.tv li {
+    position: relative;
+    padding-left: 1.5rem;
 }
-.wp-block-list.radio li::before {
-    content: "f8d7";
-    font-family: "Font Awesome 6 Free";
-    font-weight: 900;
-    position: absolute;
-    left: 0;
-    top: 0.1em;
-    font-size: 1rem;
-    color: #000;
-}
+
+.wp-block-list.article li::before,
+.wp-block-list.radio li::before,
 .wp-block-list.tv li::before {
-    content: "f26c";
-    font-family: "Font Awesome 6 Free";
-    font-weight: 900;
+    content: "";
     position: absolute;
     left: 0;
     top: 0.1em;
-    font-size: 1rem;
-    color: #000;
+    width: 1rem;
+    height: 1rem;
+    background-color: #000;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
 }
+
+/* newspaper */
+.wp-block-list.article li::before {
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M3 5a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v11a3 3 0 0 0 3 3H8a5 5 0 0 1-5-5V5zm4 2v2h7V7H7zm0 4v1h7v-1H7zm0 3v1h5v-1H7z'/%3E%3C/svg%3E");
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M3 5a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v11a3 3 0 0 0 3 3H8a5 5 0 0 1-5-5V5zm4 2v2h7V7H7zm0 4v1h7v-1H7zm0 3v1h5v-1H7z'/%3E%3C/svg%3E");
+}
+
+/* radio */
+.wp-block-list.radio li::before {
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M3 7h18a2 2 0 0 1 2 2v8a4 4 0 0 1-4 4H5a4 4 0 0 1-4-4V9a2 2 0 0 1 2-2zm3 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6zm6 1h7v2h-7v-2zm0 4h5v2h-5v-2zM7 2l10 3-1 2L6 4 7 2z'/%3E%3C/svg%3E");
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M3 7h18a2 2 0 0 1 2 2v8a4 4 0 0 1-4 4H5a4 4 0 0 1-4-4V9a2 2 0 0 1 2-2zm3 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6zm6 1h7v2h-7v-2zm0 4h5v2h-5v-2zM7 2l10 3-1 2L6 4 7 2z'/%3E%3C/svg%3E");
+}
+
+/* tv */
+.wp-block-list.tv li::before {
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M8 3l4 4 4-4 1.5 1.5L14.5 8H18a4 4 0 0 1 4 4v5a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4v-5a4 4 0 0 1 4-4h3.5L6.5 4.5 8 3zm-2 7a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5a2 2 0 0 0-2-2H6z'/%3E%3C/svg%3E");
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M8 3l4 4 4-4 1.5 1.5L14.5 8H18a4 4 0 0 1 4 4v5a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4v-5a4 4 0 0 1 4-4h3.5L6.5 4.5 8 3zm-2 7a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5a2 2 0 0 0-2-2H6z'/%3E%3C/svg%3E");
+}
+
 
 /* --- Contact Form 7 (CF7) --- */
 .wpcf7-text,
