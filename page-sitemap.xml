@@ -2,7 +2,7 @@
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd http://www.google.com/schemas/sitemap-image/1.1 http://www.google.com/schemas/sitemap-image/1.1/sitemap-image.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 	<url>
 		<loc>https://trunorth.pages.dev/</loc>
-		<lastmod>2026-04-17T22:20:27+00:00</lastmod>
+		<lastmod>2026-05-04T21:40:20+00:00</lastmod>
 		<image:image>
 			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/vert-line-light.svg</image:loc>
 		</image:image>
@@ -26,8 +26,161 @@
 		</image:image>
 	</url>
 	<url>
+		<loc>https://trunorth.pages.dev/charter/santa-barbara-private-jet-charter/</loc>
+		<lastmod>2026-05-04T16:23:41+00:00</lastmod>
+		<image:image>
+			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2026/03/sba-airport.jpg?auto=format&amp;fit=crop&amp;w=1200&amp;q=80</image:loc>
+		</image:image>
+	</url>
+	<url>
+		<loc>https://trunorth.pages.dev/trunorth-jets-refer-a-friend-program/</loc>
+		<lastmod>2026-05-04T18:22:56+00:00</lastmod>
+		<image:image>
+			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/vert-line.svg</image:loc>
+		</image:image>
+	</url>
+	<url>
+		<loc>https://trunorth.pages.dev/charter/california-private-jet-charter/</loc>
+		<lastmod>2026-05-04T18:38:48+00:00</lastmod>
+		<image:image>
+			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2026/04/private-jet-on-tarmac-ca-trunorthjets.jpg</image:loc>
+		</image:image>
+	</url>
+	<url>
+		<loc>https://trunorth.pages.dev/private-jet-experience/private-jet-charter-family-travel/</loc>
+		<lastmod>2026-05-04T18:53:01+00:00</lastmod>
+		<image:image>
+			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/vert-line.svg</image:loc>
+		</image:image>
+		<image:image>
+			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/vert-line.svg</image:loc>
+		</image:image>
+		<image:image>
+			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/vert-line.svg</image:loc>
+		</image:image>
+	</url>
+	<url>
+		<loc>https://trunorth.pages.dev/charter/los-angeles-private-jet-charter/</loc>
+		<lastmod>2026-05-04T19:20:37+00:00</lastmod>
+		<image:image>
+			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2026/03/vny-charter-scaled.jpg?auto=format&amp;fit=crop&amp;w=1200&amp;q=80</image:loc>
+		</image:image>
+	</url>
+	<url>
+		<loc>https://trunorth.pages.dev/charter/santa-barbara-to-napa-charter/</loc>
+		<lastmod>2026-05-04T21:42:44+00:00</lastmod>
+	</url>
+	<url>
+		<loc>https://trunorth.pages.dev/about-us/</loc>
+		<lastmod>2026-05-04T21:43:13+00:00</lastmod>
+		<image:image>
+			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/05/sarah-oberman-797x1024.jpg</image:loc>
+		</image:image>
+		<image:image>
+			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/NBAA-award-10-24-1024x683.jpg</image:loc>
+		</image:image>
+		<image:image>
+			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/DC-2018-1024x683.jpg</image:loc>
+		</image:image>
+	</url>
+	<url>
+		<loc>https://trunorth.pages.dev/contact/</loc>
+		<lastmod>2026-05-04T21:43:15+00:00</lastmod>
+	</url>
+	<url>
+		<loc>https://trunorth.pages.dev/aircraft-guide/</loc>
+		<lastmod>2026-05-04T21:43:17+00:00</lastmod>
+		<image:image>
+			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/vert-line-light.svg</image:loc>
+		</image:image>
+		<image:image>
+			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/vert-line-light.svg</image:loc>
+		</image:image>
+		<image:image>
+			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/07/turboprop-pi.png</image:loc>
+		</image:image>
+		<image:image>
+			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/light-jet.png</image:loc>
+		</image:image>
+		<image:image>
+			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/super-mid-jet.png</image:loc>
+		</image:image>
+		<image:image>
+			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/midsize-jet.png</image:loc>
+		</image:image>
+		<image:image>
+			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/07/turboprop-pi.png</image:loc>
+		</image:image>
+		<image:image>
+			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/light-jet.png</image:loc>
+		</image:image>
+		<image:image>
+			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/super-mid-jet.png</image:loc>
+		</image:image>
+		<image:image>
+			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/midsize-jet.png</image:loc>
+		</image:image>
+		<image:image>
+			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/05/icons8-map-80.png</image:loc>
+		</image:image>
+		<image:image>
+			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/05/icons8-family-80.png</image:loc>
+		</image:image>
+		<image:image>
+			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2026/04/Wifi.svg</image:loc>
+		</image:image>
+		<image:image>
+			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/05/icons8-baggage-60.png</image:loc>
+		</image:image>
+		<image:image>
+			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/05/icons8-runway-64.png</image:loc>
+		</image:image>
+	</url>
+	<url>
+		<loc>https://trunorth.pages.dev/aircraft-guide/jet-charter-light-jets/</loc>
+		<lastmod>2026-05-04T21:43:25+00:00</lastmod>
+		<image:image>
+			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/07/horiz-line-gradient.svg</image:loc>
+		</image:image>
+		<image:image>
+			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/07/horiz-line-gradient.svg</image:loc>
+		</image:image>
+	</url>
+	<url>
+		<loc>https://trunorth.pages.dev/charter/los-angeles-to-aspen-charter/</loc>
+		<lastmod>2026-05-04T21:43:45+00:00</lastmod>
+	</url>
+	<url>
+		<loc>https://trunorth.pages.dev/aircraft-guide/jet-charter-heavy-jets/</loc>
+		<lastmod>2026-05-04T21:48:16+00:00</lastmod>
+		<image:image>
+			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/07/horiz-line-gradient.svg</image:loc>
+		</image:image>
+		<image:image>
+			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/07/horiz-line-gradient.svg</image:loc>
+		</image:image>
+	</url>
+	<url>
+		<loc>https://trunorth.pages.dev/privacy-policy/</loc>
+		<lastmod>2026-05-04T22:14:19+00:00</lastmod>
+	</url>
+	<url>
+		<loc>https://trunorth.pages.dev/aircraft-guide/jet-charter-midsize-jets/</loc>
+		<lastmod>2026-05-04T23:51:56+00:00</lastmod>
+		<image:image>
+			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/07/horiz-line-gradient.svg</image:loc>
+		</image:image>
+	</url>
+	<url>
+		<loc>https://trunorth.pages.dev/charter/orange-county-private-jet-charter/</loc>
+		<lastmod>2026-05-05T00:05:40+00:00</lastmod>
+		<image:image>
+			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2026/04/vip-jet-charter-scaled.jpg</image:loc>
+		</image:image>
+	</url>
+	<url>
 		<loc>https://trunorth.pages.dev/charter/</loc>
-		<lastmod>2026-02-09T20:01:22+00:00</lastmod>
+		<lastmod>2026-05-05T00:08:44+00:00</lastmod>
 		<image:image>
 			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/vert-line-light.svg</image:loc>
 		</image:image>
@@ -75,95 +228,27 @@
 		</image:image>
 	</url>
 	<url>
-		<loc>https://trunorth.pages.dev/privacy-policy/</loc>
-		<lastmod>2026-03-25T23:34:03+00:00</lastmod>
-	</url>
-	<url>
-		<loc>https://trunorth.pages.dev/terms-and-conditions/</loc>
-		<lastmod>2026-03-25T23:34:34+00:00</lastmod>
-	</url>
-	<url>
-		<loc>https://trunorth.pages.dev/404-2/</loc>
-		<lastmod>2026-04-10T00:59:44+00:00</lastmod>
-		<image:image>
-			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2026/04/isolated-aircraft-1024x404.png</image:loc>
-		</image:image>
-	</url>
-	<url>
-		<loc>https://trunorth.pages.dev/aircraft-guide/jet-charter-heavy-jets/</loc>
-		<lastmod>2026-04-15T22:05:55+00:00</lastmod>
-		<image:image>
-			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/07/horiz-line-gradient.svg</image:loc>
-		</image:image>
-		<image:image>
-			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/07/horiz-line-gradient.svg</image:loc>
-		</image:image>
-	</url>
-	<url>
-		<loc>https://trunorth.pages.dev/aircraft-guide/jet-charter-light-jets/</loc>
-		<lastmod>2026-04-15T22:09:47+00:00</lastmod>
-		<image:image>
-			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/07/horiz-line-gradient.svg</image:loc>
-		</image:image>
-		<image:image>
-			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/07/horiz-line-gradient.svg</image:loc>
-		</image:image>
-	</url>
-	<url>
-		<loc>https://trunorth.pages.dev/aircraft-guide/jet-charter-midsize-jets/</loc>
-		<lastmod>2026-04-15T22:14:17+00:00</lastmod>
-		<image:image>
-			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/07/horiz-line-gradient.svg</image:loc>
-		</image:image>
-	</url>
-	<url>
 		<loc>https://trunorth.pages.dev/aircraft-guide/jet-charter-turboprops/</loc>
-		<lastmod>2026-04-15T22:16:41+00:00</lastmod>
+		<lastmod>2026-05-05T00:44:18+00:00</lastmod>
 	</url>
 	<url>
 		<loc>https://trunorth.pages.dev/aviation-professional-referral-program/</loc>
-		<lastmod>2026-04-15T22:25:06+00:00</lastmod>
+		<lastmod>2026-05-05T01:46:41+00:00</lastmod>
 		<image:image>
 			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/vert-line.svg</image:loc>
 		</image:image>
 	</url>
 	<url>
-		<loc>https://trunorth.pages.dev/charter/california-private-jet-charter/</loc>
-		<lastmod>2026-04-15T22:26:47+00:00</lastmod>
-		<image:image>
-			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2026/04/private-jet-on-tarmac-ca-trunorthjets.jpg</image:loc>
-		</image:image>
+		<loc>https://trunorth.pages.dev/charter/los-angeles-to-las-vegas-charter/</loc>
+		<lastmod>2026-05-05T02:54:06+00:00</lastmod>
 	</url>
 	<url>
-		<loc>https://trunorth.pages.dev/charter/san-francisco-private-jet-charter/</loc>
-		<lastmod>2026-04-15T22:54:34+00:00</lastmod>
-		<image:image>
-			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2026/04/vip-jet-charter-scaled.jpg</image:loc>
-		</image:image>
-	</url>
-	<url>
-		<loc>https://trunorth.pages.dev/private-jet-experience/private-jet-charter-business-travel/</loc>
-		<lastmod>2026-04-15T23:02:25+00:00</lastmod>
-		<image:image>
-			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/vert-line.svg</image:loc>
-		</image:image>
-		<image:image>
-			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/vert-line.svg</image:loc>
-		</image:image>
-		<image:image>
-			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/vert-line.svg</image:loc>
-		</image:image>
-	</url>
-	<url>
-		<loc>https://trunorth.pages.dev/trunorth-jets-refer-a-friend-program/</loc>
-		<lastmod>2026-04-15T23:04:40+00:00</lastmod>
-		<image:image>
-			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/vert-line.svg</image:loc>
-		</image:image>
+		<loc>https://trunorth.pages.dev/charter/santa-barbara-to-lake-tahoe-charter/</loc>
+		<lastmod>2026-05-05T03:03:54+00:00</lastmod>
 	</url>
 	<url>
 		<loc>https://trunorth.pages.dev/private-jet-experience/private-jet-charter-pet-travel/</loc>
-		<lastmod>2026-04-15T23:20:35+00:00</lastmod>
+		<lastmod>2026-05-05T03:27:21+00:00</lastmod>
 		<image:image>
 			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/vert-line.svg</image:loc>
 		</image:image>
@@ -173,27 +258,10 @@
 		<image:image>
 			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/vert-line.svg</image:loc>
 		</image:image>
-	</url>
-	<url>
-		<loc>https://trunorth.pages.dev/private-jet-experience/private-jet-charter-family-travel/</loc>
-		<lastmod>2026-04-15T23:21:54+00:00</lastmod>
-		<image:image>
-			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/vert-line.svg</image:loc>
-		</image:image>
-		<image:image>
-			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/vert-line.svg</image:loc>
-		</image:image>
-		<image:image>
-			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/vert-line.svg</image:loc>
-		</image:image>
-	</url>
-	<url>
-		<loc>https://trunorth.pages.dev/contact/</loc>
-		<lastmod>2026-04-15T23:28:37+00:00</lastmod>
 	</url>
 	<url>
 		<loc>https://trunorth.pages.dev/private-jet-experience/</loc>
-		<lastmod>2026-04-17T22:11:19+00:00</lastmod>
+		<lastmod>2026-05-05T03:27:32+00:00</lastmod>
 		<image:image>
 			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/suitcases.svg</image:loc>
 		</image:image>
@@ -268,114 +336,46 @@
 		</image:image>
 	</url>
 	<url>
-		<loc>https://trunorth.pages.dev/aircraft-guide/</loc>
-		<lastmod>2026-04-17T22:33:47+00:00</lastmod>
+		<loc>https://trunorth.pages.dev/private-jet-experience/private-jet-charter-business-travel/</loc>
+		<lastmod>2026-05-05T05:14:20+00:00</lastmod>
 		<image:image>
-			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/vert-line-light.svg</image:loc>
+			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/vert-line.svg</image:loc>
 		</image:image>
 		<image:image>
-			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/vert-line-light.svg</image:loc>
+			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/vert-line.svg</image:loc>
 		</image:image>
 		<image:image>
-			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/07/turboprop-pi.png</image:loc>
-		</image:image>
-		<image:image>
-			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/light-jet.png</image:loc>
-		</image:image>
-		<image:image>
-			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/super-mid-jet.png</image:loc>
-		</image:image>
-		<image:image>
-			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/midsize-jet.png</image:loc>
-		</image:image>
-		<image:image>
-			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/07/turboprop-pi.png</image:loc>
-		</image:image>
-		<image:image>
-			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/light-jet.png</image:loc>
-		</image:image>
-		<image:image>
-			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/super-mid-jet.png</image:loc>
-		</image:image>
-		<image:image>
-			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/midsize-jet.png</image:loc>
-		</image:image>
-		<image:image>
-			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/05/icons8-map-80.png</image:loc>
-		</image:image>
-		<image:image>
-			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/05/icons8-family-80.png</image:loc>
-		</image:image>
-		<image:image>
-			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2026/04/Wifi.svg</image:loc>
-		</image:image>
-		<image:image>
-			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/05/icons8-baggage-60.png</image:loc>
-		</image:image>
-		<image:image>
-			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/05/icons8-runway-64.png</image:loc>
-		</image:image>
-	</url>
-	<url>
-		<loc>https://trunorth.pages.dev/about-us/</loc>
-		<lastmod>2026-04-17T22:37:46+00:00</lastmod>
-		<image:image>
-			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/05/sarah-oberman-797x1024.jpg</image:loc>
-		</image:image>
-		<image:image>
-			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/NBAA-award-10-24-1024x683.jpg</image:loc>
-		</image:image>
-		<image:image>
-			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/DC-2018-1024x683.jpg</image:loc>
-		</image:image>
-	</url>
-	<url>
-		<loc>https://trunorth.pages.dev/quote/</loc>
-		<lastmod>2026-04-17T23:16:38+00:00</lastmod>
-	</url>
-	<url>
-		<loc>https://trunorth.pages.dev/charter/orange-county-private-jet-charter/</loc>
-		<lastmod>2026-04-22T17:36:02+00:00</lastmod>
-		<image:image>
-			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2026/04/vip-jet-charter-scaled.jpg</image:loc>
-		</image:image>
-	</url>
-	<url>
-		<loc>https://trunorth.pages.dev/charter/los-angeles-private-jet-charter/</loc>
-		<lastmod>2026-04-22T17:36:15+00:00</lastmod>
-		<image:image>
-			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2026/03/vny-charter-scaled.jpg?auto=format&amp;fit=crop&amp;w=1200&amp;q=80</image:loc>
-		</image:image>
-	</url>
-	<url>
-		<loc>https://trunorth.pages.dev/charter/santa-barbara-private-jet-charter/</loc>
-		<lastmod>2026-04-22T17:40:13+00:00</lastmod>
-		<image:image>
-			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2026/03/sba-airport.jpg?auto=format&amp;fit=crop&amp;w=1200&amp;q=80</image:loc>
+			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2025/06/vert-line.svg</image:loc>
 		</image:image>
 	</url>
 	<url>
 		<loc>https://trunorth.pages.dev/charter/san-diego-private-jet-charter/</loc>
-		<lastmod>2026-04-22T22:26:54+00:00</lastmod>
+		<lastmod>2026-05-05T11:47:57+00:00</lastmod>
 		<image:image>
 			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2026/04/san-diego-private-jet-charter.jpg</image:loc>
 		</image:image>
 	</url>
 	<url>
-		<loc>https://trunorth.pages.dev/charter/los-angeles-to-las-vegas-charter/</loc>
-		<lastmod>2026-04-22T22:28:38+00:00</lastmod>
+		<loc>https://trunorth.pages.dev/404-2/</loc>
+		<lastmod>2026-05-05T12:35:27+00:00</lastmod>
+		<image:image>
+			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2026/04/isolated-aircraft-1024x404.png</image:loc>
+		</image:image>
 	</url>
 	<url>
-		<loc>https://trunorth.pages.dev/charter/los-angeles-to-aspen-charter/</loc>
-		<lastmod>2026-04-22T22:34:34+00:00</lastmod>
+		<loc>https://trunorth.pages.dev/quote/</loc>
+		<lastmod>2026-05-05T12:54:05+00:00</lastmod>
 	</url>
 	<url>
-		<loc>https://trunorth.pages.dev/charter/santa-barbara-to-lake-tahoe-charter/</loc>
-		<lastmod>2026-04-22T22:36:22+00:00</lastmod>
+		<loc>https://trunorth.pages.dev/terms-and-conditions/</loc>
+		<lastmod>2026-05-05T13:54:43+00:00</lastmod>
 	</url>
 	<url>
-		<loc>https://trunorth.pages.dev/charter/santa-barbara-to-napa-charter/</loc>
-		<lastmod>2026-04-22T22:37:51+00:00</lastmod>
+		<loc>https://trunorth.pages.dev/charter/san-francisco-private-jet-charter/</loc>
+		<lastmod>2026-05-05T16:45:16+00:00</lastmod>
+		<image:image>
+			<image:loc>https://trunorth.pages.dev/wp-content/uploads/2026/04/vip-jet-charter-scaled.jpg</image:loc>
+		</image:image>
 	</url>
 </urlset>
 <!-- XML Sitemap generated by Yoast SEO -->
